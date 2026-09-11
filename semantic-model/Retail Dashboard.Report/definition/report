@@ -1,0 +1,251 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.3.0/schema.json",
+  "themeCollection": {
+    "baseTheme": {
+      "name": "CY22SU03",
+      "reportVersionAtImport": {
+        "visual": "1.8.68",
+        "report": "2.0.68",
+        "page": "1.3.68"
+      },
+      "type": "SharedResources"
+    },
+    "customTheme": {
+      "name": "Loro_Piana14213645606214387.json",
+      "reportVersionAtImport": {
+        "visual": "1.8.68",
+        "report": "2.0.68",
+        "page": "1.3.68"
+      },
+      "type": "RegisteredResources"
+    }
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "Filter61d1ccc9c8ecc63d8a52",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "GERARCHIA_AREA"
+              }
+            },
+            "Property": "Channel Code"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "g",
+              "Entity": "GERARCHIA_AREA",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "In": {
+                  "Expressions": [
+                    {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "g"
+                          }
+                        },
+                        "Property": "Channel Code"
+                      }
+                    }
+                  ],
+                  "Values": [
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'ECO'"
+                        }
+                      }
+                    ],
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'OUT'"
+                        }
+                      }
+                    ],
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'STO'"
+                        }
+                      }
+                    ]
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "howCreated": "User",
+        "isHiddenInViewMode": true,
+        "isLockedInViewMode": true
+      }
+    ]
+  },
+  "objects": {
+    "section": [
+      {
+        "properties": {
+          "verticalAlignment": {
+            "expr": {
+              "Literal": {
+                "Value": "'Top'"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "outspacePane": [
+      {
+        "properties": {
+          "expanded": {
+            "expr": {
+              "Literal": {
+                "Value": "false"
+              }
+            }
+          },
+          "visible": {
+            "expr": {
+              "Literal": {
+                "Value": "false"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "publicCustomVisuals": [
+    "advanceCardE03760C5AB684758B56AA29F9E6C257B",
+    "BBED0A4D4D8D44CE93CF2DAFADEE466C",
+    "ChicletSlicer1448559807354",
+    "circleCard89937ABCC5E04C55BCD36C1FA960B10E",
+    "kpifree51D0292A0438427096AC459B59FEF2DE",
+    "LaconicCardFreeC4A74023FBD644529F9068B327CF4BF9",
+    "lollipopbar802A5F771F003EC2AAC6A6C54D799B26",
+    "Multi_target_KPI",
+    "multicardkpis",
+    "multiInfoCards9D184BB3D4E44A139DA08142D76EFD36",
+    "PBI_CV_73744D90_4DC9_4F18_8BA5_EE8FA5C98035",
+    "PBI_CV_7B952816_A48F_49B4_9E13_15E3BB2C0337",
+    "PBI_CV_9272D058_BEA0_476A_B090_A712545F92FA"
+  ],
+  "resourcePackages": [
+    {
+      "name": "ChicletSlicer1448559807354",
+      "type": "CustomVisual",
+      "items": [
+        {
+          "name": "ChicletSlicer1448559807354.pbiviz.json",
+          "path": "ChicletSlicer1448559807354.pbiviz.json",
+          "type": "CustomVisualMetadata"
+        }
+      ]
+    },
+    {
+      "name": "RegisteredResources",
+      "type": "RegisteredResources",
+      "items": [
+        {
+          "name": "Drill_Page07567618675730925.jpg",
+          "path": "Drill_Page07567618675730925.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "Drill_Page4073222495886344.jpg",
+          "path": "Drill_Page4073222495886344.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "Drill_Page44595003609143524.jpg",
+          "path": "Drill_Page44595003609143524.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "Drill_Page7561656810505264.jpg",
+          "path": "Drill_Page7561656810505264.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "Drill_Page9189284176494266.jpg",
+          "path": "Drill_Page9189284176494266.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "Loro_Piana14213645606214387.json",
+          "path": "Loro_Piana14213645606214387.json",
+          "type": "Image"
+        },
+        {
+          "name": "Retail_Dashboard2138997158681628.png",
+          "path": "Retail_Dashboard2138997158681628.png",
+          "type": "Image"
+        },
+        {
+          "name": "Standard_Page4012119893554378.jpg",
+          "path": "Standard_Page4012119893554378.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "Standard_Page41243854258401447.jpg",
+          "path": "Standard_Page41243854258401447.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "Standard_Page769672649991346.jpg",
+          "path": "Standard_Page769672649991346.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "Standard_Page881921656667018.jpg",
+          "path": "Standard_Page881921656667018.jpg",
+          "type": "Image"
+        },
+        {
+          "name": "Standard_Page9871656335373509.jpg",
+          "path": "Standard_Page9871656335373509.jpg",
+          "type": "Image"
+        }
+      ]
+    },
+    {
+      "name": "SharedResources",
+      "type": "SharedResources",
+      "items": [
+        {
+          "name": "CY22SU03",
+          "path": "BaseThemes/CY22SU03.json",
+          "type": "BaseTheme"
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "useStylableVisualContainerHeader": true,
+    "exportDataMode": "AllowSummarized",
+    "defaultDrillFilterOtherVisuals": true,
+    "allowChangeFilterTypes": true,
+    "useEnhancedTooltips": false
+  },
+  "slowDataSourceSettings": {
+    "isCrossHighlightingDisabled": false,
+    "isSlicerSelectionsButtonEnabled": false,
+    "isFilterSelectionsButtonEnabled": false,
+    "isFieldWellButtonEnabled": false,
+    "isApplyAllButtonEnabled": false
+  }
+}
