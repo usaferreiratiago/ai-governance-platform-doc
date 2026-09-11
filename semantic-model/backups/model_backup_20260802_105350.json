@@ -1,0 +1,111 @@
+{
+  "model": {
+    "name": "Enterprise Sales Model",
+    "tables": [
+      {
+        "name": "Sales",
+        "description": "Sales fact table",
+        "columns": [
+          {
+            "name": "DateKey",
+            "dataType": "date"
+          },
+          {
+            "name": "RegionKey",
+            "dataType": "int"
+          },
+          {
+            "name": "CountryKey",
+            "dataType": "int"
+          },
+          {
+            "name": "Net Revenue Amount",
+            "dataType": "decimal"
+          },
+          {
+            "name": "Units Sold",
+            "dataType": "int"
+          }
+        ],
+        "measures": [
+          {
+            "name": "Net Revenue",
+            "description": "Revenue excluding taxes and returns"
+          },
+          {
+            "name": "Gross Margin",
+            "description": "Gross margin percentage"
+          },
+          {
+            "name": "Growth %",
+            "description": "Year-over-year growth percentage"
+          }
+        ]
+      },
+      {
+        "name": "Calendar",
+        "description": "Date dimension table",
+        "columns": [
+          {
+            "name": "Date",
+            "dataType": "date"
+          },
+          {
+            "name": "Year",
+            "dataType": "int"
+          },
+          {
+            "name": "Quarter",
+            "dataType": "string"
+          },
+          {
+            "name": "Month",
+            "dataType": "string"
+          }
+        ]
+      },
+      {
+        "name": "Region",
+        "description": "Region dimension table",
+        "columns": [
+          {
+            "name": "Region Name",
+            "dataType": "string"
+          }
+        ]
+      }
+    ],
+    "relationships": [
+      {
+        "fromTable": "Sales",
+        "fromColumn": "DateKey",
+        "toTable": "Calendar",
+        "toColumn": "Date"
+      },
+      {
+        "fromTable": "Sales",
+        "fromColumn": "RegionKey",
+        "toTable": "Region",
+        "toColumn": "Region Name"
+      }
+    ]
+  },
+  "measures": [
+    {
+      "table": "Sales",
+      "measure": "Net Revenue",
+      "description": "Net revenue excluding taxes"
+    }
+  ],
+  "tables": [
+    {
+      "table": "Sales",
+      "description": "Sales fact table"
+    }
+  ],
+  "loaded_at": "2026-08-02T10:53:50.280675",
+  "version": "1.0.0",
+  "model_name": "Retail Semantic Model",
+  "description": ""
+}
+
