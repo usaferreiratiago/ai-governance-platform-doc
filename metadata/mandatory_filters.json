@@ -1,0 +1,23 @@
+{
+  "Net Revenue": [
+    "Date"
+  ],
+  "Gross Margin %": [
+    "Date"
+  ],
+  "Average Unit Price": [
+    "Date"
+  ],
+  "Return Rate": [
+    "Date"
+  ],
+  "Inventory Value": [
+    "Date"
+  ],
+  "Sales": [
+    "Date"
+  ],
+  "Orders": [
+    "Date"
+  ]
+}

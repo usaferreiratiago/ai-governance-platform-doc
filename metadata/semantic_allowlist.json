@@ -1,0 +1,25 @@
+{
+  "tables": [
+    "Sales",
+    "Customer",
+    "Product",
+    "Date"
+  ],
+  "columns": [
+    "Sales.SalesAmount",
+    "Sales.Quantity",
+    "Sales.OrderDate",
+    "Customer.CustomerName",
+    "Product.ProductName",
+    "Date.Date",
+    "Date.Month",
+    "Date.Year"
+  ],
+  "measures": [
+    "Net Revenue",
+    "Gross Margin %",
+    "Average Unit Price",
+    "Return Rate",
+    "Inventory Value"
+  ]
+}

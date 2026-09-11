@@ -1,0 +1,261 @@
+[
+  {
+    "name": "Sales",
+    "description": "Sales transactions used for revenue, margin, and profitability analysis.\nContains detailed transaction-level data including quantity, price, discounts,\nand customer information.",
+    "columns": [
+      "SalesOrderNumber",
+      "ProductKey",
+      "CustomerKey",
+      "DateKey",
+      "NetAmount",
+      "Quantity",
+      "UnitPrice",
+      "DiscountAmount",
+      "ReturnIndicator"
+    ],
+    "primary_key": "SalesOrderNumber",
+    "foreign_keys": [
+      "ProductKey",
+      "CustomerKey",
+      "DateKey"
+    ]
+  },
+  {
+    "name": "Customer",
+    "business_name": "Customer",
+    "description": "Customer master data used for segmentation, analytics, and customer 360 views.\nContains demographic information, customer segments, and contact details.\n",
+    "columns": [
+      {
+        "name": "CustomerKey",
+        "data_type": "integer",
+        "description": "Unique identifier for each customer",
+        "is_primary_key": true,
+        "nullable": false
+      },
+      {
+        "name": "CustomerName",
+        "data_type": "string",
+        "description": "Full name of the customer",
+        "nullable": false,
+        "pii": true
+      },
+      {
+        "name": "Email",
+        "data_type": "string",
+        "description": "Customer email address",
+        "nullable": true,
+        "pii": true
+      },
+      {
+        "name": "Phone",
+        "data_type": "string",
+        "description": "Customer phone number",
+        "nullable": true,
+        "pii": true
+      },
+      {
+        "name": "Region",
+        "data_type": "string",
+        "description": "Geographic region where customer is located",
+        "nullable": false
+      },
+      {
+        "name": "Segment",
+        "data_type": "string",
+        "description": "Customer segment (e.g., Premium, Standard, Enterprise)",
+        "nullable": false
+      },
+      {
+        "name": "CustomerType",
+        "data_type": "string",
+        "description": "Type of customer (e.g., Individual, Corporate, Partner)",
+        "nullable": false
+      },
+      {
+        "name": "CreatedDate",
+        "data_type": "date",
+        "description": "Date when customer was first created",
+        "nullable": false
+      },
+      {
+        "name": "Active",
+        "data_type": "boolean",
+        "description": "Indicates if customer is currently active",
+        "nullable": false,
+        "default": true
+      }
+    ],
+    "primary_key": "CustomerKey",
+    "foreign_keys": [],
+    "owner": "CRM Analytics",
+    "certified": true,
+    "source": "curated"
+  },
+  {
+    "name": "Product",
+    "business_name": "Product",
+    "description": "Product catalog and product hierarchy used for product performance analysis.\nIncludes product categories, subcategories, pricing, and supplier information.\n",
+    "columns": [
+      {
+        "name": "ProductKey",
+        "data_type": "integer",
+        "description": "Unique identifier for each product",
+        "is_primary_key": true,
+        "nullable": false
+      },
+      {
+        "name": "ProductName",
+        "data_type": "string",
+        "description": "Full name of the product",
+        "nullable": false
+      },
+      {
+        "name": "ProductCategory",
+        "data_type": "string",
+        "description": "High-level product category",
+        "nullable": false
+      },
+      {
+        "name": "ProductSubcategory",
+        "data_type": "string",
+        "description": "Detailed product subcategory",
+        "nullable": false
+      },
+      {
+        "name": "UnitPrice",
+        "data_type": "decimal(18,2)",
+        "description": "Standard selling price of the product",
+        "nullable": false
+      },
+      {
+        "name": "CostPrice",
+        "data_type": "decimal(18,2)",
+        "description": "Standard cost of the product",
+        "nullable": false
+      },
+      {
+        "name": "SupplierName",
+        "data_type": "string",
+        "description": "Name of the primary supplier for the product",
+        "nullable": true
+      },
+      {
+        "name": "ProductStatus",
+        "data_type": "string",
+        "description": "Current status (Active, Discontinued, Seasonal, etc.)",
+        "nullable": false,
+        "default": "Active"
+      },
+      {
+        "name": "LaunchDate",
+        "data_type": "date",
+        "description": "Date when the product was launched",
+        "nullable": true
+      },
+      {
+        "name": "DiscontinuedDate",
+        "data_type": "date",
+        "description": "Date when the product was discontinued",
+        "nullable": true
+      }
+    ],
+    "primary_key": "ProductKey",
+    "foreign_keys": [],
+    "owner": "Product Analytics",
+    "certified": true,
+    "source": "curated"
+  },
+  {
+    "name": "Date",
+    "business_name": "Calendar",
+    "description": "Corporate calendar table used for time intelligence, time-based comparisons,\nand date-based filtering across all fact tables.\nIncludes both fiscal and calendar year hierarchies.\n",
+    "columns": [
+      {
+        "name": "DateKey",
+        "data_type": "integer",
+        "description": "Unique date identifier in YYYYMMDD format (e.g., 20260730)",
+        "is_primary_key": true,
+        "nullable": false
+      },
+      {
+        "name": "CalendarDate",
+        "data_type": "date",
+        "description": "Full date value (YYYY-MM-DD)",
+        "nullable": false
+      },
+      {
+        "name": "CalendarYear",
+        "data_type": "integer",
+        "description": "Calendar year (e.g., 2026)",
+        "nullable": false
+      },
+      {
+        "name": "CalendarMonth",
+        "data_type": "integer",
+        "description": "Calendar month number (1-12)",
+        "nullable": false
+      },
+      {
+        "name": "CalendarMonthName",
+        "data_type": "string",
+        "description": "Full month name (e.g., July)",
+        "nullable": false
+      },
+      {
+        "name": "CalendarQuarter",
+        "data_type": "integer",
+        "description": "Calendar quarter number (1-4)",
+        "nullable": false
+      },
+      {
+        "name": "CalendarWeek",
+        "data_type": "integer",
+        "description": "Week number within the year (1-52)",
+        "nullable": false
+      },
+      {
+        "name": "FiscalYear",
+        "data_type": "integer",
+        "description": "Fiscal year (e.g., 2026)",
+        "nullable": false
+      },
+      {
+        "name": "FiscalQuarter",
+        "data_type": "integer",
+        "description": "Fiscal quarter number (1-4)",
+        "nullable": false
+      },
+      {
+        "name": "DayOfWeek",
+        "data_type": "integer",
+        "description": "Day of week number (1-7, Monday=1)",
+        "nullable": false
+      },
+      {
+        "name": "DayName",
+        "data_type": "string",
+        "description": "Full name of the day (e.g., Monday)",
+        "nullable": false
+      },
+      {
+        "name": "IsWeekend",
+        "data_type": "boolean",
+        "description": "Indicates if the day is a weekend",
+        "nullable": false,
+        "default": false
+      },
+      {
+        "name": "IsHoliday",
+        "data_type": "boolean",
+        "description": "Indicates if the day is a corporate holiday",
+        "nullable": false,
+        "default": false
+      }
+    ],
+    "primary_key": "DateKey",
+    "foreign_keys": [],
+    "owner": "BI Platform",
+    "certified": true,
+    "source": "curated"
+  }
+]

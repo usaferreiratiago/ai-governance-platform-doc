@@ -1,0 +1,418 @@
+# =====================================================================
+# Certified Measures - AI Governance Platform
+# =====================================================================
+# This file contains all certified measures that are approved for use
+# in the semantic model. Only certified measures can be used by the LLM.
+# =====================================================================
+
+version: 1.0.0
+last_updated: 2026-08-12
+status: Approved
+domain: Retail & E-commerce
+
+# =====================================================================
+# Certified Measures Definitions
+# =====================================================================
+certified_measures:
+  # -----------------------------------------------------------------
+  # Financial Measures
+  # -----------------------------------------------------------------
+  - id: measure_001
+    name: Net Revenue
+    business_name: Net Revenue
+    description: |
+      Total net sales amount after discounts, returns, and allowances.
+      This is the primary revenue metric for the organization.
+    category: Financial
+    table: sales
+    field: net_revenue
+    dax: SUM(Sales[NetAmount])
+    data_type: decimal(18,2)
+    aggregation: SUM
+    certified: true
+    certification_date: 2026-07-01
+    certified_by: Data Governance Team
+    owner: Retail Analytics
+    owner_email: retail-analytics@company.com
+    sensitivity: Internal
+    data_classification: Internal
+    mandatory_filters:
+      - Date
+      - Organization
+    recommended_filters:
+      - Region
+      - Product Category
+      - Customer Segment
+    usage_guidance: |
+      Use this measure for all revenue analysis, period comparisons, and financial reporting.
+      Always apply Date filter to ensure accurate period-over-period comparisons.
+      For gross revenue before deductions, use Gross Sales.
+    examples:
+      - "Net Revenue for Q2 2026"
+      - "Net Revenue by Product Category"
+      - "Net Revenue YoY Growth"
+    tags:
+      - core_metric
+      - revenue
+      - financial
+      - pnl
+    related_measures:
+      - Gross Revenue
+      - Revenue Growth %
+      - Revenue per Customer
+    validation_rules:
+      - rule: Non-negative
+        description: Net Revenue should never be negative.
+      - rule: Date_range
+        description: Date filter is always required.
+
+  - id: measure_002
+    name: Gross Margin %
+    business_name: Gross Margin Percentage
+    description: |
+      Gross profit percentage over net revenue, calculated as:
+      (Gross Margin Amount / Net Revenue) × 100
+      This is a key profitability KPI.
+    category: Financial
+    table: sales
+    field: gross_margin_percent
+    dax: DIVIDE([Gross Margin Amount], [Net Revenue], 0)
+    data_type: decimal(5,2)
+    aggregation: AVERAGE
+    certified: true
+    certification_date: 2026-07-01
+    certified_by: Data Governance Team
+    owner: Retail Analytics
+    owner_email: retail-analytics@company.com
+    sensitivity: Internal
+    data_classification: Internal
+    mandatory_filters:
+      - Date
+      - Organization
+    recommended_filters:
+      - Product Category
+      - Region
+      - Channel
+    usage_guidance: |
+      Use this measure for profitability analysis, margin trends, and benchmarking.
+      Always apply Date filter.
+      Higher percentages indicate better profitability.
+      Compare across product categories and regions.
+    examples:
+      - "Gross Margin % for Q2 2026"
+      - "Gross Margin % by Product Category"
+      - "Gross Margin % Trend Over Time"
+    tags:
+      - core_metric
+      - margin
+      - profitability
+      - financial
+    related_measures:
+      - Gross Margin Amount
+      - Net Profit Margin %
+      - Operating Margin %
+    validation_rules:
+      - rule: Range_0_to_100
+        description: Gross Margin % should be between 0 and 100.
+      - rule: Not_null
+        description: Both numerator and denominator must be non-zero.
+
+  # -----------------------------------------------------------------
+  # Commercial Measures
+  # -----------------------------------------------------------------
+  - id: measure_003
+    name: Average Unit Price
+    business_name: Average Unit Price
+    description: |
+      Average selling price per unit sold, calculated as:
+      Total Net Revenue / Total Units Sold
+    category: Commercial
+    table: sales
+    field: avg_unit_price
+    dax: DIVIDE([Net Revenue], [Units Sold], 0)
+    data_type: decimal(18,2)
+    aggregation: AVERAGE
+    certified: true
+    certification_date: 2026-07-01
+    certified_by: Data Governance Team
+    owner: Retail Analytics
+    owner_email: retail-analytics@company.com
+    sensitivity: Internal
+    data_classification: Internal
+    mandatory_filters:
+      - Date
+      - Organization
+    recommended_filters:
+      - Product Category
+      - Region
+      - Customer Segment
+    usage_guidance: |
+      Use this measure for pricing analysis, product mix analysis, and revenue optimization.
+      Always apply Date filter.
+      When users ask for "average price", "unit price", or "average receipt", use this measure.
+      For product-level analysis, apply Product Category or Product Name filters.
+    examples:
+      - "Average Unit Price for Product A"
+      - "Average Unit Price by Product Category"
+      - "Average Unit Price by Region"
+    tags:
+      - commercial
+      - pricing
+      - sales
+    related_measures:
+      - Unit Price Variance
+      - Price Index
+      - Revenue per Unit
+    validation_rules:
+      - rule: Positive
+        description: Average Unit Price should always be greater than zero.
+
+  # -----------------------------------------------------------------
+  # Inventory Measures
+  # -----------------------------------------------------------------
+  - id: measure_004
+    name: Inventory Value
+    business_name: Inventory Value
+    description: |
+      Total monetary value of inventory on hand, calculated at standard cost.
+      Includes all finished goods available for sale.
+    category: Inventory
+    table: product
+    field: inventory_value
+    dax: SUM(Product[InventoryValue])
+    data_type: decimal(18,2)
+    aggregation: SUM
+    certified: true
+    certification_date: 2026-07-01
+    certified_by: Data Governance Team
+    owner: Supply Chain Analytics
+    owner_email: supply-chain@company.com
+    sensitivity: Internal
+    data_classification: Internal
+    mandatory_filters:
+      - Date
+      - Organization
+      - Warehouse
+    recommended_filters:
+      - Product Category
+      - Supplier
+    usage_guidance: |
+      Use this measure for inventory valuation analysis, stock management, and supply chain reporting.
+      Always apply Date and Warehouse filters.
+      Value is based on standard cost, not market value.
+      For accurate results, ensure Inventory Valuation method is consistent.
+    examples:
+      - "Inventory Value as of June 2026"
+      - "Inventory Value by Warehouse"
+      - "Inventory Value by Product Category"
+    tags:
+      - inventory
+      - supply_chain
+      - stock
+    related_measures:
+      - Inventory Turnover
+      - Days Inventory Outstanding (DIO)
+      - Stock-to-Sales Ratio
+    validation_rules:
+      - rule: Non-negative
+        description: Inventory Value should never be negative.
+      - rule: Consistent_valuation
+        description: Valuation method should be consistent over time.
+
+  # -----------------------------------------------------------------
+  # Operational Measures
+  # -----------------------------------------------------------------
+  - id: measure_005
+    name: Return Rate
+    business_name: Return Rate
+    description: |
+      Percentage of sold units returned by customers, calculated as:
+      (Returned Units / Units Sold) × 100
+    category: Operational
+    table: sales
+    field: return_rate
+    dax: DIVIDE([Returned Units], [Units Sold], 0)
+    data_type: decimal(5,2)
+    aggregation: AVERAGE
+    certified: true
+    certification_date: 2026-07-01
+    certified_by: Data Governance Team
+    owner: Retail Analytics
+    owner_email: retail-analytics@company.com
+    sensitivity: Internal
+    data_classification: Internal
+    mandatory_filters:
+      - Date
+      - Organization
+    recommended_filters:
+      - Product Category
+      - Region
+      - Reason Code
+    usage_guidance: |
+      Use this measure for returns analysis, quality assessment, and customer satisfaction evaluation.
+      Always apply Date and Product Category filters.
+      Lower percentages indicate better product quality and customer satisfaction.
+      For product-level analysis, apply Product Category or Product Name filters.
+    examples:
+      - "Return Rate for Q2 2026"
+      - "Return Rate by Product Category"
+      - "Return Rate by Reason Code"
+    tags:
+      - operational
+      - quality
+      - returns
+    related_measures:
+      - Return Amount
+      - Return Rate %
+      - Customer Satisfaction Score
+    validation_rules:
+      - rule: Range_0_to_100
+        description: Return Rate should be between 0 and 100.
+      - rule: Not_null
+        description: Both numerator and denominator must be non-zero.
+
+  # -----------------------------------------------------------------
+  # Customer Measures (from TMDL semantic model)
+  # -----------------------------------------------------------------
+  - id: measure_006
+    name: __superprova Hi ticket
+    business_name: Hi Ticket
+    description: |
+      Calculated measure representing ticket value using SUMX over SCONTRINI table.
+      This measure aggregates the INCASSATO_VAL (collected value) from the SCONTRINI table.
+      Used for customer value analysis and tier calculation.
+    category: Customer
+    table: ACTIVE_CUSTOMER_MONTH
+    field: INCASSATO_VAL
+    dax: CALCULATE(SUMX(SCONTRINI, SCONTRINI[INCASSATO_VAL]))
+    data_type: decimal(18,2)
+    aggregation: SUM
+    certified: true
+    certification_date: 2026-08-12
+    certified_by: Data Governance Team
+    owner: CRM Analytics
+    owner_email: crm-analytics@company.com
+    sensitivity: Internal
+    data_classification: Internal
+    is_hidden: true
+    format: 0
+    mandatory_filters:
+      - Date
+      - Organization
+    recommended_filters:
+      - Customer Tier
+      - Year
+      - Month
+    usage_guidance: |
+      Use this measure for customer ticket analysis, customer tier validation, and customer value tracking.
+      This is a hidden measure used for internal calculations and tier assignment.
+      Apply Date and Organization filters when querying.
+    examples:
+      - "Hi ticket value by customer tier"
+      - "Average hi ticket by month"
+      - "Customer ticket value trend"
+    tags:
+      - customer
+      - ticket
+      - crm
+      - hidden
+    related_measures:
+      - Customer Count
+      - Average Ticket Value
+    validation_rules:
+      - rule: Non-negative
+        description: Ticket value should never be negative.
+      - rule: Date_range
+        description: Date filter is always required.
+
+# =====================================================================
+# Quality Standards for Certified Measures
+# =====================================================================
+quality_standards:
+  - standard: All measures must be certified
+    description: Before production use, all measures must go through the certification process.
+  
+  - standard: Mandatory filters
+    description: Each measure must have at least Date as a mandatory filter.
+  
+  - standard: Business description
+    description: Each measure must have a clear, business-friendly description.
+  
+  - standard: Usage guidance
+    description: Each measure must include usage guidance for end users.
+  
+  - standard: Data classification
+    description: All measures must have a data classification level (Public, Internal, Confidential).
+  
+  - standard: Validation rules
+    description: Each measure must have at least one validation rule.
+
+# =====================================================================
+# Certification Process
+# =====================================================================
+certification_process:
+  steps:
+    - step: 1
+      name: Business Requirement Review
+      description: Business team validates the measure meets requirements.
+    
+    - step: 2
+      name: Data Engineering Review
+      description: Data engineering validates data sources and calculations.
+    
+    - step: 3
+      name: Governance Approval
+      description: Data Governance team approves the measure for production.
+    
+    - step: 4
+      name: Documentation
+      description: Measure is documented in the semantic model.
+    
+    - step: 5
+      name: Certification
+      description: Measure is marked as certified and available for use.
+
+  requirements:
+    - Clear business description
+    - Valid DAX expression
+    - Mandatory filters defined
+    - Usage guidance provided
+    - Validation rules defined
+    - Owner assigned
+
+# =====================================================================
+# Change Log
+# =====================================================================
+change_log:
+  - date: 2026-08-12
+    version: 1.0.1
+    changes: |
+      - Added __superprova Hi ticket measure (measure_006)
+      - Updated measure statistics
+    author: Data Governance Team
+  
+  - date: 2026-07-31
+    version: 1.0.0
+    changes: |
+      - Initial version of certified measures
+      - Added 5 core certified measures (Net Revenue, Gross Margin %, Average Unit Price, Inventory Value, Return Rate)
+      - Established quality standards and certification process
+      - Defined validation rules for each measure
+    author: Data Governance Team
+
+# =====================================================================
+# Measure Statistics
+# =====================================================================
+measure_statistics:
+  total_measures: 6
+  certified_measures: 6
+  categories:
+    Financial: 2
+    Commercial: 1
+    Inventory: 1
+    Operational: 1
+    Customer: 1
+  avg_mandatory_filters: 2.4
+  hidden_measures: 1
+  last_validated: 2026-08-12
+  next_review: 2026-09-12
