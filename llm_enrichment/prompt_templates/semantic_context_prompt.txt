@@ -1,0 +1,195 @@
+You are an expert in building semantic contexts for AI governance platforms with advanced context memory capabilities.
+
+Your task is to generate a comprehensive, memory-aware semantic context for a Power BI model that can be used for ongoing conversational AI interactions.
+
+## Input
+
+**Model Name:** {{model_name}}
+
+**Tables:** {{tables}}
+
+**Measures:** {{measures}}
+
+**Relationships:** {{relationships}}
+
+**Glossary:** {{glossary}}
+
+**Conversation History:** {{conversation_history}}
+
+**Frequently Accessed:** {{frequently_accessed}}
+
+**User Context:** {{user_context}}
+
+## Context Memory Instructions
+
+### 1. Context Memory Integration
+- Analyze the conversation history to identify patterns in user queries
+- Highlight frequently accessed measures and tables
+- Identify common question patterns and themes
+- Surface relevant context from previous interactions
+- Track user preferences and query patterns
+
+### 2. Smart Context Prioritization
+- Prioritize information relevant to the current conversation
+- Surface frequently accessed measures and tables first
+- Include recent conversation context
+- Highlight related topics from history
+- Suggest relevant follow-up questions
+
+### 3. Context Enrichment
+- Add temporal context (time-based relevance)
+- Include usage patterns and trends
+- Surface related measures and tables
+- Highlight dependencies and relationships
+- Provide example queries for context
+
+## Instructions
+
+Generate a comprehensive, memory-aware semantic context document that includes:
+
+### 1. **Model Overview**
+- Purpose of the model
+- Business domain and scope
+- Key stakeholders and owners
+- Recent usage statistics (from conversation history)
+
+### 2. **Table Descriptions with Usage Patterns**
+- Each table with business name and description
+- Key columns with descriptions and data types
+- Recent access frequency (from history)
+- Common join patterns (from relationships)
+- Sample queries for context
+
+### 3. **Measure Definitions with Context**
+- Business name and description
+- DAX expression with explanation
+- Usage guidance with examples
+- Frequently asked questions about the measure
+- Related measures and dependencies
+- Mandatory filters and constraints
+
+### 4. **Relationship Mapping with Usage**
+- Table relationships with cardinality
+- Business purpose of each relationship
+- Common join patterns
+- Recent usage frequency
+
+### 5. **Governance Rules with Enforcement**
+- Mandatory filters by measure
+- Access controls and permissions
+- Data classification and sensitivity
+- Validation rules and constraints
+
+### 6. **Conversation Context**
+- Summary of recent conversations
+- Common question patterns
+- Frequently used measures and tables
+- User preferences and query styles
+- Follow-up questions based on history
+
+## Output Format
+
+```markdown
+# Semantic Context: [Model Name]
+
+## Model Overview
+- **Purpose:** [Model purpose]
+- **Domain:** [Business domain]
+- **Owners:** [Stakeholders]
+- **Last Updated:** [Date]
+- **Conversation Usage:** [Summary of recent usage]
+
+## Frequently Accessed Entities
+### Top Measures
+1. [Measure Name] - [Usage Count] times
+2. [Measure Name] - [Usage Count] times
+
+### Top Tables
+1. [Table Name] - [Usage Count] times
+2. [Table Name] - [Usage Count] times
+
+### Common Question Patterns
+- [Pattern 1]
+- [Pattern 2]
+
+## Tables
+### [Table Name]
+- **Business Name:** [Name]
+- **Description:** [Description]
+- **Access Frequency:** [High/Medium/Low]
+- **Columns:**
+  - [Column Name]: [Description] ([Data Type])
+  - [Column Name]: [Description] ([Data Type])
+- **Relationships:**
+  - [Related Table] via [Column]
+- **Sample Queries:**
+  - [Sample query 1]
+  - [Sample query 2]
+
+## Measures
+### [Measure Name]
+- **Business Name:** [Name]
+- **Description:** [Description]
+- **DAX:** `[DAX Expression]`
+- **Usage Guidance:** [When and how to use]
+- **Mandatory Filters:** [Filters required]
+- **Related Measures:** [Related measures]
+- **Frequently Asked:**
+  - Q: [Common question]
+    A: [Answer with context]
+- **Example Queries:**
+  - [Example query 1]
+  - [Example query 2]
+
+## Relationships
+### [Relationship Name]
+- **From:** [Table.Column]
+- **To:** [Table.Column]
+- **Cardinality:** [Cardinality]
+- **Business Purpose:** [Purpose]
+- **Usage Frequency:** [Frequency]
+- **Common Joins:** [Join patterns]
+
+## Governance
+### Mandatory Filters
+- **[Measure]:** [Filters required]
+- **[Measure]:** [Filters required]
+
+### Access Controls
+- **[Table/Measure]:** [Access level]
+- **[Table/Measure]:** [Access level]
+
+### Data Classification
+- **[Table]:** [Classification level]
+- **[Measure]:** [Classification level]
+
+## Conversation Context
+### Recent Conversations
+- [Summary of recent interactions]
+- [Key topics discussed]
+- [Unresolved questions]
+
+### Common Question Patterns
+1. [Pattern] - [Example]
+2. [Pattern] - [Example]
+
+### Follow-up Suggestions
+- [Suggested question 1]
+- [Suggested question 2]
+- [Suggested question 3]
+
+### User Preferences
+- [Preferred measures]
+- [Preferred time periods]
+- [Preferred dimensions]
+
+## Usage Statistics
+- **Total Queries:** [Number]
+- **Most Active Period:** [Time]
+- **Top Measures:** [List]
+- **Top Dimensions:** [List]
+
+## Context Memory Summary
+- **Conversation Continuity:** [Summary of ongoing context]
+- **Knowledge Gaps:** [What hasn't been explored]
+- **Next Steps:** [Suggested next questions]

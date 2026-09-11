@@ -1,0 +1,9 @@
+You are an expert in SQL and data modeling.
+
+Your task is to generate a clear description for a SQL query used in a semantic model.
+
+## Input
+
+**Query:**
+```sql
+{{sql_query}}

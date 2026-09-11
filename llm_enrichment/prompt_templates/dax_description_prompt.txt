@@ -1,1 +1,105 @@
+You are an expert in Power BI DAX and semantic model governance.
+
+Your task is to generate a clear, structured, and business-friendly description for a DAX measure based on its technical definition.
+
+## Input
+
+**Measure Name:** {{measure_name}}
+
+**DAX Expression:**
+
+{{dax_expression}}
+
+
+**Table:** {{table_name}}
+
+**Additional Context:**
+{{additional_context}}
+
+## Instructions
+
+1. **Parse the DAX Expression**
+   - Identify the aggregation functions used (SUM, AVERAGE, COUNT, DIVIDE, etc.)
+   - Identify the base measures and tables referenced
+   - Understand the business logic behind the calculation
+
+2. **Generate a Business Description**
+   - Start with a clear statement of what the measure calculates
+   - Use business terminology, not technical jargon
+   - Explain the business value of the measure
+   - Keep it concise but informative (2-4 sentences)
+
+3. **Define Usage Guidance**
+   - When should this measure be used?
+   - What filters should be applied?
+   - What are common use cases?
+   - Any limitations or assumptions?
+
+4. **Identify Dependencies**
+   - List other measures or tables this depends on
+   - Note any prerequisites for accurate results
+
+5. **Classify the Measure**
+   - Category: Financial, Commercial, Operational, Inventory, etc.
+   - Calculation Type: Simple, Derived, Complex, etc.
+   - Sensitivity Level: Public, Internal, Confidential
+
+## Output Format
+
+**Business Name:** [Clear business-friendly name]
+
+**Category:** [Category]
+
+**Description:**
+[2-4 sentence business description]
+
+**Usage Guidance:**
+- When to use: [When should this measure be used?]
+- Mandatory filters: [List required filters]
+- Common use cases: [List 2-3 examples]
+- Limitations: [Any limitations or assumptions]
+
+**Dependencies:**
+- [List of dependencies]
+
+**Technical Details:**
+- Calculation Type: [Type]
+- Sensitivity: [Level]
+
+## Example Output
+
+**Business Name:** Net Revenue
+
+**Category:** Financial
+
+**Description:**
+Net Revenue represents the total sales amount after deducting discounts, returns, and allowances. This is the primary revenue metric used for all financial reporting and period-over-period comparisons.
+
+**Usage Guidance:**
+- When to use: For all revenue analysis and financial reporting
+- Mandatory filters: Always filter by Date to ensure accurate period comparisons
+- Common use cases: YoY Revenue Growth, Revenue by Product Category, Revenue by Region
+- Limitations: Excludes sales tax and shipping revenue
+
+**Dependencies:**
+- Base table: Sales[NetAmount]
+- Related measures: Gross Margin %, Revenue per Customer
+
+**Technical Details:**
+- Calculation Type: Simple Aggregation
+- Sensitivity: Internal
+
+---
+
+Now generate the description for the following measure:
+
+**Measure Name:** {{measure_name}}
+**DAX Expression:**
+
+{{dax_expression}}
+
+**Table:** {{table_name}}
+**Additional Context:** {{additional_context}}
+
+Generated Description:
 

@@ -1,0 +1,53 @@
+You are an expert in Power BI semantic model validation.
+
+Your task is to validate a DAX measure definition and identify potential issues.
+
+## Input
+
+**Measure Name:** {{measure_name}}
+
+**DAX Expression:**
+
+
+**Table:** {{table_name}}
+
+## Validation Checks
+
+1. **Syntax Validation**
+   - Check for correct DAX syntax
+   - Verify all functions are valid
+   - Check for proper parentheses and brackets
+
+2. **Performance Analysis**
+   - Identify potential performance bottlenecks
+   - Check for expensive calculations
+   - Suggest optimizations
+
+3. **Business Logic Validation**
+   - Verify business logic is correct
+   - Check for edge cases
+   - Validate dependencies
+
+4. **Governance Compliance**
+   - Check against governance rules
+   - Verify naming conventions
+   - Validate mandatory filters
+
+## Output Format
+
+**Validation Status:** [PASS / FAIL / WARNING]
+
+**Issues Found:**
+- [Issue 1]
+- [Issue 2]
+
+**Recommendations:**
+- [Recommendation 1]
+- [Recommendation 2]
+
+**Performance Score:** [1-10]
+
+**Complexity Score:** [1-10]
+
+**Optimized DAX:**
+[If applicable, provide optimized version]
