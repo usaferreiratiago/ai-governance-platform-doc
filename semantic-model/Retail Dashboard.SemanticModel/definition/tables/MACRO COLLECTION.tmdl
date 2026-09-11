@@ -1,0 +1,92 @@
+table 'MACRO COLLECTION'
+	lineageTag: 96becc69-6ef8-4139-a699-c5fec959cb44
+
+	column MacroCollectionDescription
+		dataType: string
+		lineageTag: a8483996-10ed-42ce-9889-d00db9574ce7
+		summarizeBy: none
+		sourceColumn: Macro Collection
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Business-friendly name of the macro collection (e.g., 'Spring/Summer 2024', 'Fall/Winter 2024'). Use this field for labels and reporting. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Collection Name, Collection Description, Macro Collection Name, Collection Theme"
+
+		annotation DisplayFolder = "Collection Details"
+
+		annotation 'Example Values' = "Spring/Summer 2024, Fall/Winter 2024, Resort 2024, Pre-Fall 2024"
+
+		annotation 'Common Questions' = "What is the macro collection for SS24? How do different collections perform? What are the collection names?"
+
+		annotation 'Related Objects' = "ARTICOLI_COLORE"
+
+	column MacroCollectionCode
+		dataType: string
+		lineageTag: c2aa0021-689e-4394-938f-f8ce3c7d177d
+		summarizeBy: none
+		sourceColumn: Macro Collection Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Unique code identifying the macro collection (e.g., 'SS24', 'FW24', 'RES24'). Used to link product-color variants to their collection. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Collection Code, Collection ID, Collection Reference, Macro Collection ID"
+
+		annotation DisplayFolder = "Collection Details"
+
+		annotation 'Example Values' = "SS24, FW24, RES24, PF24"
+
+		annotation 'Common Questions' = "What is the collection code for Spring/Summer 2024? How many products are in each collection? Which collection has the highest sales?"
+
+		annotation 'Related Objects' = "ARTICOLI_COLORE"
+
+	column MacroCollectionSortOrder
+		dataType: int64
+		isHidden
+		lineageTag: 567a5a07-66bc-4553-a36e-d6cae2b69438
+		summarizeBy: none
+		sourceColumn: Macro Collection Ord
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Technical sort order for macro collection display. Controls the chronological or logical ordering of collections in visuals and filters. Not for analytical use."
+
+	partition 'MACRO COLLECTION' = m
+		mode: import
+		source =
+				let
+				        Source = PowerPlatform.Dataflows(null),
+				        Workspaces = Source{[Id="Workspaces"]}[Data],
+				        WS = Workspaces{[workspaceId="63075e43-ec19-4090-b204-854337b4b0d5"]}[Data],
+				        DF = WS{[dataflowId="9839110f-89f4-42a8-86a3-0da4749f930e"]}[Data],
+				        MACRO_COLLECTION_ = DF{[entity="MACRO_COLLECTION",version=""]}[Data],
+				        #"Removed Other Columns" = Table.SelectColumns(MACRO_COLLECTION_,{"Macro Collection", "Macro Collection Code", "Macro Collection Ord"})
+				in
+				        #"Removed Other Columns"
+
+		annotation Description = "Import partition for macro collection master data. Loads all macro collections without date filtering."
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation Description = "Macro collection dimension for the luxury retail assortment. Defines high-level collection groupings used to organize products into major collection themes (e.g., 'Spring/Summer', 'Fall/Winter', 'Resort', 'Pre-Fall'). Links to product-color variants for collection-based analysis and assortment planning. Grain: one row per macro collection. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "Macro Collection, Collection Group, Collection Theme, Seasonal Collection, Assortment Collection"
+
+	annotation DisplayFolder = "Product Master"
+
+	annotation RefreshPolicy = "Weekly on Sundays at 00:00 UTC; data latency ≤ 48 hours. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana Product Management Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "SS24: Spring/Summer 2024, FW24: Fall/Winter 2024, RES24: Resort 2024, PF24: Pre-Fall 2024"
+
+	annotation 'Common Questions' = "What are the macro collections? How do collections compare by sales? Which macro collection has the highest sell-through? What is the performance of Spring/Summer vs Fall/Winter?"
+
+	annotation 'Related Objects' = "ARTICOLI_COLORE, ARTICOLI, CLASSE_PRODOTTO, BUSINESS, SCONTRINI"

@@ -1,0 +1,313 @@
+table ARTICOLI_COLORE
+	lineageTag: bd12eb61-7b5f-4056-8f25-a616d8c73fd3
+
+	column 'Buying Logic Code'
+		dataType: string
+		lineageTag: c1b04e8d-8a92-493e-b81e-927163f45a08
+		summarizeBy: none
+		sourceColumn: Buying Logic Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Buying logic classification used for inventory planning and sourcing strategies. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Buying Logic, Purchasing Logic"
+
+		annotation DisplayFolder = "Commercial Attributes"
+
+	column 'Selling Logic Code'
+		dataType: string
+		lineageTag: a71f8329-813c-411a-8e2b-1029c490a1bc
+		summarizeBy: none
+		sourceColumn: Selling Logic Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Selling logic classification used for sales strategy and commercial operations. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Selling Logic, Sales Logic"
+
+		annotation DisplayFolder = "Commercial Attributes"
+
+	column 'Marketing Type Code'
+		dataType: string
+		lineageTag: f49d71c2-3e81-43a9-b108-958b417df88a
+		summarizeBy: none
+		sourceColumn: Marketing Type Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Marketing classification code for product grouping and promotional strategy. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Marketing Type, Marketing Category"
+
+		annotation DisplayFolder = "Commercial Attributes"
+
+	column 'Sponsor Event Code'
+		dataType: string
+		lineageTag: e87f9104-5182-491b-a521-931182cf91d3
+		summarizeBy: none
+		sourceColumn: Sponsor Event Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Sponsor event classification code for product marketing and event associations. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Sponsor Event, Event Code"
+
+		annotation DisplayFolder = "Commercial Attributes"
+
+	column KEY_ART_COL
+		dataType: string
+		lineageTag: b91823ab-41c2-480f-90e1-74812f9b1012
+		summarizeBy: none
+		sourceColumn: KEY_ART_COL
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Surrogate key for Article/Color dimension. Primary relationship key to fact tables. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Article Color Key, Product Color Key, SKU Key"
+
+		annotation DisplayFolder = "Keys"
+
+	column 'Delivery Date From'
+		dataType: dateTime
+		lineageTag: e4819a28-9842-4f31-89d4-8390b14f828a
+		summarizeBy: none
+		sourceColumn: Delivery Date From
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Delivery start date for the product article. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Delivery Date From, Delivery Start Date"
+
+		annotation DisplayFolder = "Commercial Attributes"
+
+	column 'Delivery Date To'
+		dataType: dateTime
+		lineageTag: f29d8172-1204-4b82-a913-74b81092a0e2
+		summarizeBy: none
+		sourceColumn: Delivery Date To
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Delivery end date for the product article. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Delivery Date To, Delivery End Date"
+
+		annotation DisplayFolder = "Commercial Attributes"
+
+	column 'Sub Seasonality Code'
+		dataType: string
+		lineageTag: 71b83a21-992a-43d1-a881-228793bdf218
+		summarizeBy: none
+		sourceColumn: Sub Seasonality Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Sub-seasonality classification code for product planning and seasonal collections. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Sub Seasonality, Sub Season, Collection Sub-Season"
+
+		annotation DisplayFolder = "Product Classification"
+
+	column ItemCode
+		dataType: string
+		lineageTag: d739b2eb-1550-41f9-852d-61be42f6d751
+		summarizeBy: none
+		sourceColumn: Item Code
+
+		annotation Description = "Primary product identifier. Unique SKU or article number. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Product Code, Article Number, SKU, Style Code"
+
+		annotation DisplayFolder = "Product Identification"
+
+		annotation SummarizationSetBy = Automatic
+
+	column BusinessCode
+		dataType: string
+		lineageTag: 5246a7be-f520-4435-ba8f-b25d6224bf4f
+		summarizeBy: none
+		sourceColumn: Business Code
+
+		annotation Description = "Business-facing product code used in commercial systems. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Commercial Code, Trading Code"
+
+		annotation DisplayFolder = "Product Identification"
+
+		annotation SummarizationSetBy = Automatic
+
+	column CategoryCode
+		dataType: string
+		lineageTag: 38a85d2a-9c01-4a5f-bd82-921c4a78b84e
+		summarizeBy: none
+		sourceColumn: Category Code
+
+		annotation Description = "Product category code at the highest classification level (e.g., 'RTW' for Ready-to-Wear, 'ACC' for Accessories). Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Category, Product Category, Merchandise Category"
+
+		annotation DisplayFolder = "Product Classification"
+
+		annotation SummarizationSetBy = Automatic
+
+	column SubCategoryCode
+		dataType: string
+		lineageTag: f0e761ad-a564-4511-a307-5861f64b17ae
+		summarizeBy: none
+		sourceColumn: Sub Category Code
+
+		annotation Description = "Product sub-category code providing finer classification within the category (e.g., 'DRS' for Dresses, 'SHP' for Shoes). Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Sub-Category, Product Sub-Category"
+
+		annotation DisplayFolder = "Product Classification"
+
+		annotation SummarizationSetBy = Automatic
+
+	column ItemDescription
+		dataType: string
+		lineageTag: 4452aba8-bb9d-444a-8f43-8eeec7fdbc77
+		summarizeBy: none
+		sourceColumn: Item Description
+
+		annotation Description = "Full product description including name, style, and key attributes. Used for reporting and dashboard labels. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Product Name, Description, Item Name"
+
+		annotation DisplayFolder = "Product Identification"
+
+		annotation SummarizationSetBy = Automatic
+
+	column FamilyCode
+		dataType: string
+		lineageTag: 5a696f9b-0bed-4090-8902-d7f604bebeb4
+		summarizeBy: none
+		sourceColumn: Family Code
+
+		annotation Description = "Product family code grouping products within a category (e.g., 'KNIT' for Knitwear, 'WOVEN' for Woven items). Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Family, Product Family"
+
+		annotation DisplayFolder = "Product Classification"
+
+		annotation SummarizationSetBy = Automatic
+
+	column GenderCode
+		dataType: string
+		lineageTag: fca23489-c549-409e-b483-6a23d14b9093
+		summarizeBy: none
+		sourceColumn: Gender Code
+
+		annotation Description = "Product gender classification. Allowed values likely: 'M' (Men), 'W' (Women), 'U' (Unisex). Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Gender, Product Gender"
+
+		annotation DisplayFolder = "Product Classification"
+
+		annotation SummarizationSetBy = Automatic
+
+	column CitesCode
+		dataType: string
+		lineageTag: 90505c89-34ae-40d4-8b73-ff18c23cdcaa
+		summarizeBy: none
+		sourceColumn: Cites Code
+
+		annotation Description = "CITES (Convention on International Trade in Endangered Species) product classification. Indicates if product uses protected materials requiring documentation. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "CITES, Endangered Species Classification"
+
+		annotation DisplayFolder = "Product Classification"
+
+		annotation SummarizationSetBy = Automatic
+
+	column CommercialModelCode
+		dataType: string
+		lineageTag: ec2c1fcf-e2c6-4a87-9ab7-67c3d75caf61
+		summarizeBy: none
+		sourceColumn: Commercial Model Code
+
+		annotation Description = "Commercial model classification for product pricing and distribution strategy (e.g., 'B2C', 'B2B', 'WHL' for Wholesale). Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Commercial Model, Sales Model, Distribution Model"
+
+		annotation DisplayFolder = "Commercial Attributes"
+
+		annotation SummarizationSetBy = Automatic
+
+	column SalesCategoryCode
+		dataType: string
+		lineageTag: 566297d9-9661-4314-b6e3-f0dbb3424495
+		summarizeBy: none
+		sourceColumn: Sales Category Code
+
+		annotation Description = "Sales-focused product categorization used for revenue reporting and performance analysis. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Sales Category, Revenue Category"
+
+		annotation DisplayFolder = "Commercial Attributes"
+
+		annotation SummarizationSetBy = Automatic
+
+	column CommercialFamilyCode
+		dataType: string
+		lineageTag: 87a0e2ea-09de-488e-bb1f-d74891a65239
+		summarizeBy: none
+		sourceColumn: Commercial Family Code
+
+		annotation Description = "Commercial family grouping products by market positioning and pricing strategy. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Commercial Family, Market Family"
+
+		annotation DisplayFolder = "Commercial Attributes"
+
+		annotation SummarizationSetBy = Automatic
+
+	column StageOfLifeCode
+		dataType: string
+		lineageTag: ab7badf0-4214-4667-a6be-d6dc38797d34
+		summarizeBy: none
+		sourceColumn: Stage of Life Code
+
+		annotation Description = "Product lifecycle stage code (e.g., 'NEW' for current season, 'OLD' for prior season, 'DIS' for discontinued). Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Lifecycle Stage, Product Stage"
+
+		annotation DisplayFolder = "Product Classification"
+
+		annotation SummarizationSetBy = Automatic
+
+	partition ARTICOLI = m
+		mode: import
+		source =
+				let
+				        Source = PowerPlatform.Dataflows(null),
+				        Workspaces = Source{[Id="Workspaces"]}[Data],
+				        WS = Workspaces{[workspaceId="63075e43-ec19-4090-b204-854337b4b0d5"]}[Data],
+				        DF = WS{[dataflowId="dcbf1499-ee35-4598-9b58-2d0142058031"]}[Data],
+				        ARTICOLI1 = DF{[entity="ARTICOLI"]}[Data],
+				        #"Rimosse altre colonne" = Table.SelectColumns(ARTICOLI1,{"KEY_ART_COL", "Item Code", "Business Code", "Category Code", "Sub Category Code", "Item Description","Family Code", "Gender Code", "Cites Code", "Commercial Model Code", "Sales Category Code","Commercial Family Code", "Stage of Life Code", "Buying Logic Code", "Marketing Type Code", "Selling Logic Code", "Sponsor Event Code", "Delivery Date From", "Delivery Date To", "Sub Seasonality Code"})
+				in
+				        #"Rimosse altre colonne"
+
+		annotation Description = "Import partition for product master data. Loads all products without date filtering."
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation Description = "Product master data dimension. Contains all product attributes including codes, descriptions, and classification hierarchies (category, sub-category, family, etc.). Grain: one row per product. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "Products, Items, Merchandise, Article, SKU"
+
+	annotation DisplayFolder = "Product Master"
+
+	annotation RefreshPolicy = "Weekly on Sundays at 00:00 UTC; data latency ≤ 48 hours. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana Product Management Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-06 (pending business sign-off)."

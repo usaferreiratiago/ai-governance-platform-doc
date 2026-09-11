@@ -1,0 +1,60 @@
+table AREA_MANAGER
+	lineageTag: dc66fb87-33d4-42ce-9bf2-ce84c6e250c7
+
+	column Code
+		dataType: int64
+		formatString: 0
+		lineageTag: baa14eb8-4540-49ad-a748-d0061bcb6530
+		summarizeBy: none
+		sourceColumn: Area Manager Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Unique identifier for the area manager. Used as a key to link store and sales data. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Area Manager ID, Manager Code, Region Manager ID"
+
+		annotation DisplayFolder = "Area Manager"
+
+	column Name
+		dataType: string
+		lineageTag: 7ed2ebb3-f1ad-4d83-a692-d2e20ed6450c
+		summarizeBy: none
+		sourceColumn: Area Manager Description
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Full name of the area manager. Used for reporting and dashboard labels. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Area Manager Name, Manager Name, Sales Manager Name"
+
+		annotation DisplayFolder = "Area Manager"
+
+	partition AREA_MANAGER = m
+		mode: import
+		source =
+				let
+				        Origine = PowerPlatform.Dataflows(null),
+				        Workspaces = Origine{[Id="Workspaces"]}[Data],
+				        WS = Workspaces{[workspaceId="63075e43-ec19-4090-b204-854337b4b0d5"]}[Data],
+				        DF = WS{[dataflowId="9e62577e-6b91-4666-b6c3-868d086245db"]}[Data],
+				        AREA_MANAGER1 = DF{[entity="AREA_MANAGER"]}[Data],
+				        #"Rimosse altre colonne" = Table.SelectColumns(AREA_MANAGER1,{"Area Manager Code", "Area Manager Description"})
+				in
+				        #"Rimosse altre colonne"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation Description = "Dimension table listing area managers responsible for store regions. Grain: one row per area manager. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "Area Managers, Regional Managers, Sales Managers, Store Managers"
+
+	annotation DisplayFolder = "Sales Organization"
+
+	annotation RefreshPolicy = "Weekly on Sundays at 00:00 UTC; data latency ≤ 48 hours. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana Sales Operations Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-06 (pending business sign-off)."

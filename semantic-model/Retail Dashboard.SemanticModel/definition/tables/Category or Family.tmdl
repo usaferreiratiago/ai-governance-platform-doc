@@ -1,0 +1,87 @@
+table 'Category or Family'
+	lineageTag: 29a47df5-2c85-4863-91d5-f075f06eef43
+
+	column CategoryOrFamily
+		lineageTag: 698d855d-cb88-4f81-a00d-15b83a0682a8
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: CategoryOrFamilySortOrder
+
+		relatedColumnDetails
+			groupByColumn: CategoryOrFamilyGroup
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Unified display field combining product Category (from sales transactions) and Commercial Family (from product hierarchy). Use this field for filtering and grouping in visuals. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Category or Commercial Family, Product Group, Filter Category, Unified Category, Selection Field"
+
+		annotation DisplayFolder = "Category or Family"
+
+		annotation 'Example Values' = "Bags, Shoes, Ready-to-Wear, Accessories, Leather Goods, Knitwear, Dresses"
+
+		annotation 'Common Questions' = "Which products belong to the Bags category? How do I filter by Commercial Family? What is the difference between Category and Commercial Family?"
+
+		annotation 'Related Objects' = "SCONTRINI.'Category', FAMIGLIA_COMMERCIALE.'Commercial Family Description'"
+
+	column CategoryOrFamilyGroup
+		isHidden
+		lineageTag: 73f13dbb-004b-4a0d-8311-11df6f97a02b
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: CategoryOrFamilySortOrder
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Technical grouping field indicating the source of the value: 'Category' (from SCONTRINI) or 'Commercial Family' (from FAMIGLIA_COMMERCIALE). Used for internal logic and source tracking."
+
+		annotation Synonyms = "Source Type, Value Origin, Category Type"
+
+		annotation DisplayFolder = "Metadata"
+
+	column CategoryOrFamilySortOrder
+		isHidden
+		formatString: 0
+		lineageTag: 77773497-9e02-45e8-b56e-1f66f5260aa8
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Technical sort order for the unified dimension. Controls display ordering in visuals and filters."
+
+	partition 'Category or Family' = calculated
+		mode: import
+		source =
+				{
+				    ("Category", NAMEOF('SCONTRINI'[Category]), 0),
+				    ("Commercial Family", NAMEOF('FAMIGLIA_COMMERCIALE'[Commercial Family Description]), 1)
+				}
+
+		annotation Description = "Calculated partition that unions Category values from SCONTRINI and Commercial Family descriptions from FAMIGLIA_COMMERCIALE into a single selection dimension. The 'Category' source provides values from transaction-level categories; 'Commercial Family' provides commercial grouping values from the product hierarchy."
+
+	annotation PBI_Id = d40c037462e740a8939aa8425d8daef0
+
+	annotation Description = "Calculated dimension that unions product Category and Commercial Family into a single selection list for multi-select visuals and dynamic filtering. Enables users to filter by either Category (from sales transactions) or Commercial Family (from product hierarchy) using one unified field. Grain: one row per Category or Commercial Family combination. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "Category or Commercial Family, Product Group Selection, Unified Category/Family, Filter Dimension"
+
+	annotation DisplayFolder = "Product Master"
+
+	annotation RefreshPolicy = "Weekly on Sundays at 00:00 UTC; data latency ≤ 48 hours. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana Commercial Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "Bags (from Category), Shoes (from Category), Ready-to-Wear (from Commercial Family), Accessories (from Commercial Family)"
+
+	annotation 'Common Questions' = "What is the difference between Category and Commercial Family? How do I filter by both Category and Commercial Family? Which products are in the Bags Category versus the Ready-to-Wear Commercial Family?"
+
+	annotation 'Related Objects' = "SCONTRINI.'Category', FAMIGLIA_COMMERCIALE.'Commercial Family Description', CLASSE_PRODOTTO, ARTICOLI"

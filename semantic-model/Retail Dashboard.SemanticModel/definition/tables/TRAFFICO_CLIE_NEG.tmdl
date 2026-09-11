@@ -1,0 +1,102 @@
+table TRAFFICO_CLIE_NEG
+	lineageTag: c874f298-24db-4fef-b2be-ffdd7925e5bf
+
+	column StoreTechnicalKey
+		dataType: string
+		lineageTag: fff3c545-b5f1-4042-a86b-b8aa6a9de8f8
+		summarizeBy: none
+		sourceColumn: Store Code DWH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Technical data warehouse key identifying the store. Links to Stores dimension for store-level traffic analysis. Proposed – pending Loro Piana validation on whether this is the correct store identifier."
+
+		annotation Synonyms = "Store ID, Store Key, DWH Store Key, Technical Store Code"
+
+		annotation DisplayFolder = "Store Details"
+
+		annotation 'Example Values' = "LP001, LP002, LP003"
+
+		annotation 'Common Questions' = "Which store does the traffic data belong to? How do traffic numbers compare across stores?"
+
+		annotation 'Related Objects' = "STORES.'Store Code DWH'"
+
+	column CustomerVisitCount
+		dataType: double
+		lineageTag: 1d8df052-7474-449c-8766-a17df8dd6af0
+		summarizeBy: sum
+		sourceColumn: Customer Count
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Number of customers who visited the store on a given day. Used for traffic analysis, footfall tracking, and conversion rate calculations (sales ÷ traffic). Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Customer Count, Traffic Count, Footfall, Visits, Customers, Store Visitors"
+
+		annotation DisplayFolder = "Metrics"
+
+		annotation 'Example Values' = "150, 200, 100, 250"
+
+		annotation 'Common Questions' = "How many customers visited store LP001 today? What is the average daily traffic? Which stores have the highest footfall?"
+
+		annotation 'Related Objects' = "SCONTRINI"
+
+	column TrafficDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 7b0dca19-e2f0-48fa-aba1-3acbfd5d0bdf
+		summarizeBy: none
+		sourceColumn: Traffic Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Date of the traffic measurement. Used for time-based traffic analysis, daily trends, and seasonality analysis. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Date, Traffic Date, Visit Date, Measurement Date"
+
+		annotation DisplayFolder = "Time"
+
+		annotation 'Example Values' = "2026-08-07, 2026-08-06"
+
+		annotation 'Common Questions' = "What is the traffic date? How does traffic vary by day of week? What are the daily traffic trends?"
+
+		annotation 'Related Objects' = "CALENDARIO"
+
+	partition TRAFFICO_CLIE_NEG = m
+		mode: import
+		source =
+				let
+				        Source = PowerPlatform.Dataflows(null),
+				        Workspaces = Source{[Id="Workspaces"]}[Data],
+				        WS = Workspaces{[workspaceId="3cb5ae18-3ac2-45e3-937b-8f934a66d860"]}[Data],
+				        DF = WS{[dataflowId="9dbf369d-cb0a-441a-ac2d-f35fd758f905"]}[Data],
+				        TRAFFICO_CLIE_NEG1 = DF{[entity="TRAFFICO_CLIE_NEG"]}[Data],
+				        #"Removed Other Columns" = Table.SelectColumns(TRAFFICO_CLIE_NEG1,{"Store Code DWH", "Customer Count", "Traffic Date"})
+				in
+				        #"Removed Other Columns"
+
+		annotation Description = "Import partition for store traffic master data. Loads all store traffic records without date filtering."
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation Description = "Store traffic dimension tracking customer visits to stores. Contains daily customer count data at the store level. Used for traffic analysis, conversion rate calculations, footfall trends, and store performance evaluation. Links to stores and sales data to enable traffic-to-sales conversion analysis. Grain: one row per store per day. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "Store Traffic, Customer Traffic, Footfall, Customer Visits, Store Visits, Traffic Count"
+
+	annotation DisplayFolder = "Store Master"
+
+	annotation RefreshPolicy = "Daily or as data is collected. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana Retail Operations Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "Store: LP001, Date: 2026-08-07, Customers: 150"
+
+	annotation 'Common Questions' = "What is the daily footfall for each store? How does traffic vary by day of week? What is the conversion rate by store? How does traffic correlate with sales? Which stores have the highest traffic?"
+
+	annotation 'Related Objects' = "STORES, SCONTRINI, OPERATORI_NEGOZI, TARGET"

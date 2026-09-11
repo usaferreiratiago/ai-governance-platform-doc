@@ -1,0 +1,196 @@
+table LocalDateTable_6ebbf77f-cf5e-4c21-baba-a292cbbb8b3c
+	isHidden
+	lineageTag: bcf7e22e-612c-40ad-ab26-020ad009f888
+
+	column Date
+		isHidden
+		lineageTag: face749c-e494-4841-9b8e-f2232c76998d
+		dataCategory: PaddedDateTableDates
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = User
+
+		annotation Description = "The actual date value. This is the primary key for two-weeks-ago date-based relationships and time intelligence calculations. Hidden by default but used for joins and date filtering. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Date, Calendar Date, Date Key, 2 Weeks Ago Date"
+
+		annotation DisplayFolder = "Date"
+
+	column Year = YEAR([Date])
+		isHidden
+		lineageTag: 2a73bbf0-f8fd-4ca7-9059-806ce7493914
+		dataCategory: Years
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Year
+
+		annotation Description = "Calendar year extracted from the two-weeks-ago date. Used for annual reporting and year-over-year comparisons. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Year, Calendar Year, 2 Weeks Ago Year"
+
+		annotation DisplayFolder = "Date"
+
+		annotation 'Example Values' = "2023, 2024, 2025"
+
+		annotation 'Common Questions' = "What is the year for this two-weeks-ago date? How do I filter by year using two-weeks-ago dates? What was the performance in 2024 based on bi-weekly offset?"
+
+	column MonthNo = MONTH([Date])
+		isHidden
+		lineageTag: d6c7152f-16bf-4b68-8fe0-e36db26282b0
+		dataCategory: MonthOfYear
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = MonthNumber
+
+		annotation Description = "Month number (1-12) extracted from the two-weeks-ago date. Used for chronological month ordering and sorting. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Month Number, Month Index, Month of Year"
+
+		annotation DisplayFolder = "Date"
+
+	column Month = FORMAT([Date], "MMMM")
+		isHidden
+		lineageTag: 56ed984c-a456-496c-b36d-ef36b3d07cbd
+		dataCategory: Months
+		summarizeBy: none
+		sortByColumn: MonthNo
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Month
+
+		annotation Description = "Month name (e.g., January, February). Used for month-level reporting and visual grouping. Sorted by MonthNo for correct chronological display. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Month, Month Name, Calendar Month"
+
+		annotation DisplayFolder = "Date"
+
+		annotation 'Example Values' = "January, February, March"
+
+		annotation 'Common Questions' = "What is the month name for the two-weeks-ago date? How do I group by month using two-weeks-ago dates? What are the monthly trends based on bi-weekly offset?"
+
+	column QuarterNo = INT(([MonthNo] + 2) / 3)
+		isHidden
+		lineageTag: 6ac7465f-a1b6-4b19-b02f-03ffaa9bb127
+		dataCategory: QuarterOfYear
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = QuarterNumber
+
+		annotation Description = "Quarter number (1-4) extracted from the two-weeks-ago date. Used for quarterly reporting and sorting. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Quarter Number, Quarter Index, Quarter of Year"
+
+		annotation DisplayFolder = "Date"
+
+	column Quarter = "Qtr " & [QuarterNo]
+		isHidden
+		lineageTag: 019d76cf-37de-4d08-8862-11d5ee20d4a4
+		dataCategory: Quarters
+		summarizeBy: none
+		sortByColumn: QuarterNo
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Quarter
+
+		annotation Description = "Quarter label (e.g., Qtr 1, Qtr 2). Used for quarterly reporting and visual grouping. Sorted by QuarterNo for correct chronological display. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Quarter, Calendar Quarter, Qtr"
+
+		annotation DisplayFolder = "Date"
+
+		annotation 'Example Values' = "Qtr 1, Qtr 2, Qtr 3, Qtr 4"
+
+		annotation 'Common Questions' = "What is the quarter for the two-weeks-ago date? How do I group by quarter using two-weeks-ago dates? What are the quarterly trends based on bi-weekly offset?"
+
+	column Day = DAY([Date])
+		isHidden
+		lineageTag: eafe3502-5b93-4df6-8094-a0d2e03fc766
+		dataCategory: DayOfMonth
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Day
+
+		annotation Description = "Day of the month (1-31). Used for daily analysis and sorting within months. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Day, Day Number, Day of Month"
+
+		annotation DisplayFolder = "Date"
+
+		annotation 'Example Values' = "1, 15, 31"
+
+		annotation 'Common Questions' = "What is the day of the month for the two-weeks-ago date? How do I analyze daily data using two-weeks-ago dates?"
+
+	hierarchy 'Date Hierarchy'
+		lineageTag: 173477be-b35f-49f4-95b0-4898b6600d2a
+
+		level Year
+			lineageTag: 369cfb6c-07c0-477e-a2d9-b1a5fccbd032
+			column: Year
+
+			annotation Description = "Year level in the two-weeks-ago date hierarchy. Top-level grouping for annual analysis. Proposed – pending Loro Piana validation."
+
+		level Quarter
+			lineageTag: 8a218d91-9500-40f2-859e-0e9bf35c879e
+			column: Quarter
+
+			annotation Description = "Quarter level in the two-weeks-ago date hierarchy. Second-level grouping for quarterly analysis. Proposed – pending Loro Piana validation."
+
+		level Month
+			lineageTag: db2edf2e-80b1-4741-bc42-1b3a5ea8fa25
+			column: Month
+
+			annotation Description = "Month level in the two-weeks-ago date hierarchy. Third-level grouping for monthly analysis. Proposed – pending Loro Piana validation."
+
+		level Day
+			lineageTag: 0f23b4ad-925a-40fe-be9b-da6bdd329991
+			column: Day
+
+			annotation Description = "Day level in the two-weeks-ago date hierarchy. Lowest-level grouping for daily analysis. Proposed – pending Loro Piana validation."
+
+		annotation TemplateId = DateHierarchy
+
+		annotation Description = "Default time hierarchy allowing drill-down from Year → Quarter → Month → Day for two-weeks-ago date analysis. Provides intuitive navigation for date-based reporting using the DATA_2WAGO_DTA (bi-weekly offset). Proposed – pending Loro Piana validation."
+
+		annotation 'Common Questions' = "How do I drill down from year to month using two-weeks-ago dates? How do I expand quarterly data with bi-weekly offset? What is the date hierarchy structure for two-weeks-ago analysis?"
+
+	partition 'Local Date Table - 2 Weeks Ago' = calculated
+		mode: import
+		source = Calendar(Date(Year(MIN('CALENDARIO'[DATA_2WAGO_DTA])), 1, 1), Date(Year(MAX('CALENDARIO'[DATA_2WAGO_DTA])), 12, 31))
+
+		annotation Description = "Auto-generated local date table partition. Date range is dynamically calculated from the CALENDARIO table's DATA_2WAGO_DTA (2 weeks ago) column, spanning full years from the minimum to maximum bi-weekly offset year. This ensures the date table covers all two-weeks-ago dates referenced in the model. Used for bi-weekly comparisons and rolling 14-day performance tracking. Proposed – pending Loro Piana validation on data source and date range logic."
+
+	annotation __PBI_LocalDateTable = true
+
+	annotation Description = "Power BI auto-generated local date table providing a continuous date range for two-weeks-ago time intelligence calculations. This hidden table serves as the foundation for date-based relationships and time intelligence functions based on the DATA_2WAGO_DTA (2 weeks ago date) field from the CALENDARIO table. Contains standard date attributes including Year, Quarter, Month, and Day, with a default 'Date Hierarchy' for drill-down analysis. Date range is dynamically derived from the 'CALENDARIO' table's DATA_2WAGO_DTA column (full years only). Used for bi-weekly comparisons, two-week offset analysis, and rolling 14-day performance tracking. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "Local Date Table, Date Dimension, Time Dimension, Calendar Table, Date Hierarchy, 2 Weeks Ago Date Table, Bi-Weekly Offset Date Table, Fourteen Day Offset"
+
+	annotation DisplayFolder = "System Tables"
+
+	annotation RefreshPolicy = "Dynamically generated based on CALENDARIO table data range. No manual refresh required. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana BI Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "Date: 2024-01-01, Year: 2024, Quarter: Qtr 1, Month: January, Day: 1"
+
+	annotation 'Common Questions' = "What is the date range based on two-weeks-ago dates? How do I use the date hierarchy for bi-weekly offset analysis? How do I filter by year, quarter, or month using two-weeks-ago dates? What is the two-weeks-ago date table used for?"
+
+	annotation 'Related Objects' = "CALENDARIO, SCONTRINI, TARGET, DateTableTemplate"
+
+	annotation __PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table

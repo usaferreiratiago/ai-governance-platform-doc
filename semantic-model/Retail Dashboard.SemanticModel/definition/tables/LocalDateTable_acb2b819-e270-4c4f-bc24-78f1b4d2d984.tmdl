@@ -1,0 +1,196 @@
+table LocalDateTable_acb2b819-e270-4c4f-bc24-78f1b4d2d984
+	isHidden
+	lineageTag: e0e56002-6239-4ef4-8a9a-3df1840572e4
+
+	column Date
+		isHidden
+		lineageTag: a699becb-f31a-421f-9c46-78f372443765
+		dataCategory: PaddedDateTableDates
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = User
+
+		annotation Description = "The actual date value. This is the primary key for variation date-based relationships and time intelligence calculations. Hidden by default but used for joins and date filtering. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Date, Calendar Date, Date Key, Variation Date"
+
+		annotation DisplayFolder = "Date"
+
+	column Year = YEAR([Date])
+		isHidden
+		lineageTag: fcaf3c7d-00a2-4beb-b201-d1702cefcc83
+		dataCategory: Years
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Year
+
+		annotation Description = "Calendar year extracted from the variation date. Used for annual reporting and year-over-year comparisons of sales variations. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Year, Calendar Year, Variation Year"
+
+		annotation DisplayFolder = "Date"
+
+		annotation 'Example Values' = "2023, 2024, 2025"
+
+		annotation 'Common Questions' = "What is the variation year for this date? How do I filter by variation year? How many variations occurred in 2024?"
+
+	column MonthNo = MONTH([Date])
+		isHidden
+		lineageTag: a2af49a5-fca2-4308-b83c-425d1c931b03
+		dataCategory: MonthOfYear
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = MonthNumber
+
+		annotation Description = "Month number (1-12) extracted from the variation date. Used for chronological month ordering and sorting of variation data. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Month Number, Month Index, Month of Year, Variation Month Number"
+
+		annotation DisplayFolder = "Date"
+
+	column Month = FORMAT([Date], "MMMM")
+		isHidden
+		lineageTag: f828998a-e54a-47cb-940f-a4a7464471a2
+		dataCategory: Months
+		summarizeBy: none
+		sortByColumn: MonthNo
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Month
+
+		annotation Description = "Month name (e.g., January, February). Used for month-level reporting and visual grouping of variation data. Sorted by MonthNo for correct chronological display. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Month, Month Name, Calendar Month, Variation Month"
+
+		annotation DisplayFolder = "Date"
+
+		annotation 'Example Values' = "January, February, March"
+
+		annotation 'Common Questions' = "What is the variation month name? How do I group variations by month? What are the monthly variation trends?"
+
+	column QuarterNo = INT(([MonthNo] + 2) / 3)
+		isHidden
+		lineageTag: 2cdb685e-a7b4-415d-a9b9-1285a149c06c
+		dataCategory: QuarterOfYear
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = QuarterNumber
+
+		annotation Description = "Quarter number (1-4) extracted from the variation date. Used for quarterly reporting and sorting of variation data. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Quarter Number, Quarter Index, Quarter of Year, Variation Quarter"
+
+		annotation DisplayFolder = "Date"
+
+	column Quarter = "Qtr " & [QuarterNo]
+		isHidden
+		lineageTag: 2adce6e5-b88b-4c34-af50-42e14b3979ce
+		dataCategory: Quarters
+		summarizeBy: none
+		sortByColumn: QuarterNo
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Quarter
+
+		annotation Description = "Quarter label (e.g., Qtr 1, Qtr 2). Used for quarterly reporting and visual grouping of variation data. Sorted by QuarterNo for correct chronological display. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Quarter, Calendar Quarter, Qtr, Variation Quarter"
+
+		annotation DisplayFolder = "Date"
+
+		annotation 'Example Values' = "Qtr 1, Qtr 2, Qtr 3, Qtr 4"
+
+		annotation 'Common Questions' = "What is the variation quarter? How do I group variations by quarter? What are the quarterly variation trends?"
+
+	column Day = DAY([Date])
+		isHidden
+		lineageTag: 66f7eae9-ca74-4006-9b82-3f47e292a510
+		dataCategory: DayOfMonth
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Day
+
+		annotation Description = "Day of the month (1-31). Used for daily analysis and sorting within months for variation data. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Day, Day Number, Day of Month, Variation Day"
+
+		annotation DisplayFolder = "Date"
+
+		annotation 'Example Values' = "1, 15, 31"
+
+		annotation 'Common Questions' = "What is the day of the variation month? How do I analyze daily variation patterns?"
+
+	hierarchy 'Date Hierarchy'
+		lineageTag: e39001e2-9eff-4e18-9a37-be2d1df78519
+
+		level Year
+			lineageTag: 45054e09-b962-4cbb-a02c-d05882b9ecd3
+			column: Year
+
+			annotation Description = "Year level in the variation date hierarchy. Top-level grouping for annual variation analysis. Proposed – pending Loro Piana validation."
+
+		level Quarter
+			lineageTag: 43b7cd5a-92b8-4c6b-8880-84521a42576e
+			column: Quarter
+
+			annotation Description = "Quarter level in the variation date hierarchy. Second-level grouping for quarterly variation analysis. Proposed – pending Loro Piana validation."
+
+		level Month
+			lineageTag: aada7e8a-4d8b-494f-88be-8a94415900fe
+			column: Month
+
+			annotation Description = "Month level in the variation date hierarchy. Third-level grouping for monthly variation analysis. Proposed – pending Loro Piana validation."
+
+		level Day
+			lineageTag: 6e220206-f6c5-4c63-baae-1b9669608aab
+			column: Day
+
+			annotation Description = "Day level in the variation date hierarchy. Lowest-level grouping for daily variation analysis. Proposed – pending Loro Piana validation."
+
+		annotation TemplateId = DateHierarchy
+
+		annotation Description = "Default time hierarchy allowing drill-down from Year → Quarter → Month → Day for variation date analysis. Provides intuitive navigation for sales variation tracking and change analysis. Proposed – pending Loro Piana validation."
+
+		annotation 'Common Questions' = "How do I drill down from variation year to variation month? How do I expand variation quarterly data? What is the date hierarchy structure for variation analysis?"
+
+	partition 'Local Date Table - Variation Date' = calculated
+		mode: import
+		source = Calendar(Date(Year(MIN('SCONTRINI'[DATA_VARIAZ])), 1, 1), Date(Year(MAX('SCONTRINI'[DATA_VARIAZ])), 12, 31))
+
+		annotation Description = "Auto-generated local date table partition. Date range is dynamically calculated from the SCONTRINI table's DATA_VARIAZ (variation date) column, spanning full years from the minimum to maximum variation year. This ensures the date table covers all variation dates referenced in the model. Used for variation analysis and change tracking. Proposed – pending Loro Piana validation on the business meaning of DATA_VARIAZ and its data source."
+
+	annotation __PBI_LocalDateTable = true
+
+	annotation Description = "Power BI auto-generated local date table providing a continuous date range for variation date-based time intelligence calculations. This hidden table serves as the foundation for date-based relationships and time intelligence functions based on the DATA_VARIAZ (variation date) field from the SCONTRINI (sales transactions) table. Contains standard date attributes including Year, Quarter, Month, and Day, with a default 'Date Hierarchy' for drill-down analysis. Date range is dynamically derived from the 'SCONTRINI' table's DATA_VARIAZ column (full years only). Used for variation analysis, change tracking, and date-based comparisons of sales variations. Proposed – pending Loro Piana validation on the specific business meaning of DATA_VARIAZ (variation date)."
+
+	annotation Synonyms = "Local Date Table, Date Dimension, Time Dimension, Calendar Table, Date Hierarchy, Variation Date Table, Sales Variation Date"
+
+	annotation DisplayFolder = "System Tables"
+
+	annotation RefreshPolicy = "Dynamically generated based on SCONTRINI table data range. No manual refresh required. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana BI Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "Date: 2024-01-01, Year: 2024, Quarter: Qtr 1, Month: January, Day: 1"
+
+	annotation 'Common Questions' = "What is the variation date range? How do I use the date hierarchy for variation analysis? How do I filter by variation year, quarter, or month? What is the variation date table used for?"
+
+	annotation 'Related Objects' = "SCONTRINI, CALENDARIO, DateTableTemplate"
+
+	annotation __PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table

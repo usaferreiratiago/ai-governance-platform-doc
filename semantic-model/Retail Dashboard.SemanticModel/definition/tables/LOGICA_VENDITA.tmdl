@@ -1,0 +1,79 @@
+table LOGICA_VENDITA
+	lineageTag: ea546b3c-e973-46e3-97fc-098ae28fac1f
+
+	column SellingLogicCode
+		dataType: string
+		lineageTag: 9e657308-873a-42fa-9fb1-bdfab7466a12
+		summarizeBy: none
+		sourceColumn: Selling Logic Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Unique code identifying a selling logic classification (e.g., 'S01', 'S02', 'S03'). Used to link product-color variants to their selling logic category for sales strategy and merchandising. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Selling Code, Sales Logic Code, Merchandising Code, Sales Category Code"
+
+		annotation DisplayFolder = "Selling Logic Details"
+
+		annotation 'Example Values' = "S01, S02, S03, S04, S05"
+
+		annotation 'Common Questions' = "What is the selling logic code for Core Selling? How many products are in each selling logic? Which selling logic has the highest sales?"
+
+		annotation 'Related Objects' = "ARTICOLI_COLORE.'Selling Logic Code'"
+
+	column SellingLogicDescription
+		dataType: string
+		lineageTag: 71303055-4947-4438-a526-5dac865e06f3
+		summarizeBy: none
+		sourceColumn: Selling Logic Description
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Business-friendly description of the selling logic classification (e.g., 'Core Selling', 'Seasonal', 'Promotional'). Use this field for labels and reporting. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Selling Name, Sales Logic Name, Merchandising Category, Sales Category Name"
+
+		annotation DisplayFolder = "Selling Logic Details"
+
+		annotation 'Example Values' = "Core Selling, Seasonal, Promotional, Exclusive, Capsule"
+
+		annotation 'Common Questions' = "What is the selling logic description for code S01? How do I filter by selling logic? What are the selling logic categories?"
+
+		annotation 'Related Objects' = "ARTICOLI_COLORE.'Selling Logic Code'"
+
+	partition LOGICA_VENDITA = m
+		mode: import
+		source =
+				let
+				        Source = PowerPlatform.Dataflows(null),
+				        Workspaces = Source{[Id="Workspaces"]}[Data],
+				        WS = Workspaces{[workspaceId="63075e43-ec19-4090-b204-854337b4b0d5"]}[Data],
+				        DF = WS{[dataflowId="9839110f-89f4-42a8-86a3-0da4749f930e"]}[Data],
+				        LOGICA_VENDITA1 = DF{[entity="LOGICA_VENDITA"]}[Data],
+				        #"Removed Other Columns" = Table.SelectColumns(LOGICA_VENDITA1,{"Selling Logic Code", "Selling Logic Description"})
+				in
+				        #"Removed Other Columns"
+
+		annotation Description = "Import partition for selling logic master data. Loads all selling logic classifications without date filtering."
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation Description = "Selling logic dimension for the luxury retail assortment. Defines product classification logic used for sales strategy, merchandising decisions, and retail execution. Helps categorize products for sales planning, store allocation, and promotional strategies. Links to product-color variants to identify selling logic classifications. Grain: one row per selling logic code. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "Selling Logic, Sales Logic, Merchandising Classification, Sales Strategy, Retail Category"
+
+	annotation DisplayFolder = "Product Master"
+
+	annotation RefreshPolicy = "Weekly on Sundays at 00:00 UTC; data latency ≤ 48 hours. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana Commercial Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "S01: Core Selling, S02: Seasonal, S03: Promotional, S04: Exclusive, S05: Capsule"
+
+	annotation 'Common Questions' = "What are the selling logic classifications? How do selling logic categories differ? Which products follow each selling logic? How does selling logic influence sales and merchandising?"
+
+	annotation 'Related Objects' = "ARTICOLI_COLORE.'Selling Logic Code', ARTICOLI, CLASSE_PRODOTTO, SCONTRINI, TARGET"

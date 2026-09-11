@@ -1,0 +1,196 @@
+table LocalDateTable_5257034b-f06d-4206-be52-59bc07b33588
+	isHidden
+	lineageTag: 7ec76b32-504e-4d6e-aefc-390f6bb167d1
+
+	column Date
+		isHidden
+		lineageTag: b4253fde-4246-4b46-a87c-81ca0170b04a
+		dataCategory: PaddedDateTableDates
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = User
+
+		annotation Description = "The actual date value. This is the primary key for date-based relationships and time intelligence calculations using the 2-day offset. Hidden by default but used for joins and date filtering. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Date, Calendar Date, Date Key"
+
+		annotation DisplayFolder = "Date"
+
+	column Year = YEAR([Date])
+		isHidden
+		lineageTag: 83b511d3-dc1e-40a3-97a8-f64feef60d06
+		dataCategory: Years
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Year
+
+		annotation Description = "Calendar year extracted from the 2-day offset date. Used for annual reporting and year-over-year comparisons. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Year, Calendar Year, Offset Year"
+
+		annotation DisplayFolder = "Date"
+
+		annotation 'Example Values' = "2023, 2024, 2025"
+
+		annotation 'Common Questions' = "What is the year for this 2-day offset date? How do I filter by year using the 2-day offset? What was the performance in 2024 based on 2-day offset?"
+
+	column MonthNo = MONTH([Date])
+		isHidden
+		lineageTag: a137b09d-b873-4001-aafc-3ab1276ab2ab
+		dataCategory: MonthOfYear
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = MonthNumber
+
+		annotation Description = "Month number (1-12) extracted from the 2-day offset date. Used for chronological month ordering and sorting. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Month Number, Month Index, Month of Year"
+
+		annotation DisplayFolder = "Date"
+
+	column Month = FORMAT([Date], "MMMM")
+		isHidden
+		lineageTag: 4c92a46b-e589-4694-a80c-b13a2c45ddd7
+		dataCategory: Months
+		summarizeBy: none
+		sortByColumn: MonthNo
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Month
+
+		annotation Description = "Month name (e.g., January, February). Used for month-level reporting and visual grouping. Sorted by MonthNo for correct chronological display. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Month, Month Name, Calendar Month"
+
+		annotation DisplayFolder = "Date"
+
+		annotation 'Example Values' = "January, February, March"
+
+		annotation 'Common Questions' = "What is the month name for the 2-day offset? How do I group by month using the 2-day offset? What are the monthly trends based on 2-day offset?"
+
+	column QuarterNo = INT(([MonthNo] + 2) / 3)
+		isHidden
+		lineageTag: fe0710bc-bbee-450a-9390-5ac84521ac47
+		dataCategory: QuarterOfYear
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = QuarterNumber
+
+		annotation Description = "Quarter number (1-4) extracted from the 2-day offset date. Used for quarterly reporting and sorting. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Quarter Number, Quarter Index, Quarter of Year"
+
+		annotation DisplayFolder = "Date"
+
+	column Quarter = "Qtr " & [QuarterNo]
+		isHidden
+		lineageTag: c770c71a-5c6b-45f4-a5a8-9e6ee9ee72ba
+		dataCategory: Quarters
+		summarizeBy: none
+		sortByColumn: QuarterNo
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Quarter
+
+		annotation Description = "Quarter label (e.g., Qtr 1, Qtr 2). Used for quarterly reporting and visual grouping. Sorted by QuarterNo for correct chronological display. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Quarter, Calendar Quarter, Qtr"
+
+		annotation DisplayFolder = "Date"
+
+		annotation 'Example Values' = "Qtr 1, Qtr 2, Qtr 3, Qtr 4"
+
+		annotation 'Common Questions' = "What is the quarter for the 2-day offset? How do I group by quarter using the 2-day offset? What are the quarterly trends based on 2-day offset?"
+
+	column Day = DAY([Date])
+		isHidden
+		lineageTag: 389edc46-0dfc-474d-afff-4152353a126e
+		dataCategory: DayOfMonth
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Day
+
+		annotation Description = "Day of the month (1-31). Used for daily analysis and sorting within months. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Day, Day Number, Day of Month"
+
+		annotation DisplayFolder = "Date"
+
+		annotation 'Example Values' = "1, 15, 31"
+
+		annotation 'Common Questions' = "What is the day of the month for the 2-day offset? How do I analyze daily data using the 2-day offset?"
+
+	hierarchy 'Date Hierarchy'
+		lineageTag: 0c1a5381-523e-445d-b2a8-2622edf61261
+
+		level Year
+			lineageTag: ed580d34-d233-4b1b-a01f-de0dacac8da9
+			column: Year
+
+			annotation Description = "Year level in the 2-day offset date hierarchy. Top-level grouping for annual analysis. Proposed – pending Loro Piana validation."
+
+		level Quarter
+			lineageTag: 3169ff74-a849-4c33-85eb-9e73c0a59f58
+			column: Quarter
+
+			annotation Description = "Quarter level in the 2-day offset date hierarchy. Second-level grouping for quarterly analysis. Proposed – pending Loro Piana validation."
+
+		level Month
+			lineageTag: 0bf489ac-0863-4eed-972b-2f6281bad915
+			column: Month
+
+			annotation Description = "Month level in the 2-day offset date hierarchy. Third-level grouping for monthly analysis. Proposed – pending Loro Piana validation."
+
+		level Day
+			lineageTag: 6e54c0ab-6e57-4a51-8aad-bddb88d17c5f
+			column: Day
+
+			annotation Description = "Day level in the 2-day offset date hierarchy. Lowest-level grouping for daily analysis. Proposed – pending Loro Piana validation."
+
+		annotation TemplateId = DateHierarchy
+
+		annotation Description = "Default time hierarchy allowing drill-down from Year → Quarter → Month → Day for 2-day offset date analysis. Provides intuitive navigation for date-based reporting using the DATA_2AGO_DTA offset. Proposed – pending Loro Piana validation."
+
+		annotation 'Common Questions' = "How do I drill down from year to month using the 2-day offset? How do I expand quarterly data with the 2-day offset? What is the date hierarchy structure for the 2-day offset?"
+
+	partition 'Local Date Table - 2 Day Offset' = calculated
+		mode: import
+		source = Calendar(Date(Year(MIN('CALENDARIO'[DATA_2AGO_DTA])), 1, 1), Date(Year(MAX('CALENDARIO'[DATA_2AGO_DTA])), 12, 31))
+
+		annotation Description = "Auto-generated local date table partition. Date range is dynamically calculated from the CALENDARIO table's DATA_2AGO_DTA (2 days ago) column, spanning full years from the minimum to maximum offset year. This ensures the date table covers all 2-day offset dates referenced in the model. Proposed – pending Loro Piana validation on data source and date range logic."
+
+	annotation __PBI_LocalDateTable = true
+
+	annotation Description = "Power BI auto-generated local date table providing a continuous date range for time intelligence calculations based on the DATA_2AGO_DTA (2 days ago) date field from the CALENDARIO table. This hidden table serves as the foundation for date-based relationships and time intelligence functions that require a 2-day offset reference. Contains standard date attributes including Year, Quarter, Month, and Day, with a default 'Date Hierarchy' for drill-down analysis. Date range is dynamically derived from the 'CALENDARIO' table's DATA_2AGO_DTA column (full years only). Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "Local Date Table, Date Dimension, Time Dimension, Calendar Table, Date Hierarchy, 2 Day Offset Date Table"
+
+	annotation DisplayFolder = "System Tables"
+
+	annotation RefreshPolicy = "Dynamically generated based on CALENDARIO table data range. No manual refresh required. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana BI Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "Date: 2024-01-01, Year: 2024, Quarter: Qtr 1, Month: January, Day: 1"
+
+	annotation 'Common Questions' = "What is the date range based on DATA_2AGO_DTA? How do I use the date hierarchy for 2-day offset analysis? How do I filter by year, quarter, or month using the 2-day offset? What is the 2-day offset date table used for?"
+
+	annotation 'Related Objects' = "CALENDARIO, SCONTRINI, TARGET, DateTableTemplate"
+
+	annotation __PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table

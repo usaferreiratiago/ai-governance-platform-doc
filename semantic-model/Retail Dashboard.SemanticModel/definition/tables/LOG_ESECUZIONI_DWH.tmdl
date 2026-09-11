@@ -1,0 +1,100 @@
+table LOG_ESECUZIONI_DWH
+	isHidden
+	lineageTag: 93fb28df-2cd3-437d-9360-4f75ac22f7bc
+
+	measure LastRefreshLabel = "Last data refresh: " & MAX('Data Load Log'[LastLoadDateTime])
+		formatString: 0
+		lineageTag: ebec0518-966b-4c90-bf63-dbdb8c0e4633
+
+		annotation Description = "Text label displaying the last data refresh timestamp in a human-readable format. Use this measure for dashboard headers and data freshness indicators. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Refresh Label, Data Freshness, Last Load Label"
+
+		annotation DisplayFolder = "System Metrics"
+
+		annotation 'Example Values' = "Last data refresh: 2026-08-07 02:30:00"
+
+		annotation 'Common Questions' = "When was the data last refreshed? What is the freshness of the data?"
+
+		annotation 'Related Objects' = "MAX_END_DATE"
+
+	column SourceTableName
+		dataType: string
+		lineageTag: 840a28da-84b4-4769-880c-63441c0cce9a
+		summarizeBy: none
+		sourceColumn: TABELLA
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Name of the source table in the data warehouse (e.g., 'SCONTRINI', 'ARTICOLI', 'CLASSE_PRODOTTO'). Identifies which table the load log entry refers to. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Table Name, Source Table, DWH Table, Table Identifier"
+
+		annotation DisplayFolder = "Load Details"
+
+		annotation 'Example Values' = "SCONTRINI, ARTICOLI, CLASSE_PRODOTTO, ARTICOLI_COLORE, BUSINESS, TARGET"
+
+		annotation 'Common Questions' = "Which tables have been loaded? What source tables are available?"
+
+		annotation 'Related Objects' = "MAX_END_DATE"
+
+	column LastLoadDateTime
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 5dbbeb6b-cfa3-4bb1-a5d2-69901bed26a3
+		summarizeBy: none
+		sourceColumn: MAX_END_DATE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Timestamp of the most recent successful load for the source table. Used to determine data freshness and load timestamps. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Last Refresh, Max Load Date, Load End Date, Refresh Timestamp"
+
+		annotation DisplayFolder = "Load Details"
+
+		annotation 'Example Values' = "2026-08-07 02:30:00"
+
+		annotation 'Common Questions' = "When was the last successful load? What is the load timestamp for SCONTRINI?"
+
+		annotation 'Related Objects' = "SourceTableName"
+
+	partition 'Data Load Log' = m
+		mode: import
+		source =
+				let
+				        Source = PowerPlatform.Dataflows(null),
+				        Workspaces = Source{[Id="Workspaces"]}[Data],
+				        WS = Workspaces{[workspaceId="24cd3e65-bd8a-49b4-9dec-3b93184909fc"]}[Data],
+				        DF = WS{[dataflowId="d23ea609-34e0-47b8-9a77-93f13c4e0c20"]}[Data],
+				        LOG_CARICAMENTO_DWH1 = DF{[entity="LOG_ESECUZIONI_DWH"]}[Data],
+				        // Filter for SCONTRINI table only - this tracks the main sales table
+				        #"Sorted Rows" = Table.Sort(LOG_CARICAMENTO_DWH1,{{"END_DATE", Order.Descending}}),
+				        #"Filtered Rows" = Table.SelectRows(#"Sorted Rows", each ([TABELLA] = "SCONTRINI")),
+				        #"Grouped Rows" = Table.Group(#"Filtered Rows", {"TABELLA"}, {{"MAX_END_DATE", each List.Max([END_DATE]), type nullable datetime}})
+				in
+				        #"Grouped Rows"
+
+		annotation Description = "Import partition for data load execution log. Currently filtered to only include the SCONTRINI table for the last refresh date. This tracks the primary sales table load timestamp. Proposed – pending Loro Piana validation on which tables should be tracked."
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation Description = "Data load execution log tracking the last successful refresh of source tables in the data warehouse. Provides audit information about data freshness and load history. Used to display data refresh timestamps and validate data currency. Grain: one row per source table with the maximum load end date. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "Load Log, Execution Log, Refresh Log, Data Audit, Load History"
+
+	annotation DisplayFolder = "System Tables"
+
+	annotation RefreshPolicy = "Refreshed with every data load. Data reflects the latest ETL execution. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana BI Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "SCONTRINI: 2026-08-07 02:30:00, ARTICOLI: 2026-08-07 02:35:00"
+
+	annotation 'Common Questions' = "When was the data last refreshed? Which tables have been loaded? What is the data freshness of the model? When was the last successful load?"
+
+	annotation 'Related Objects' = "SCONTRINI, ARTICOLI, CLASSE_PRODOTTO, ARTICOLI_COLORE, BUSINESS, TARGET"

@@ -1,0 +1,48 @@
+table Xaxis
+	lineageTag: 857c7d0f-ef4e-4396-95f3-64c5f196b745
+
+	column Xaxis
+		lineageTag: 2f06c175-6474-45d2-b9c2-09687cbb58ae
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Ordine di Xaxis'
+
+		relatedColumnDetails
+			groupByColumn: 'Campi di Xaxis'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Campi di Xaxis'
+		isHidden
+		lineageTag: b0b4f0ed-79c4-4c8f-af99-086e60884530
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Ordine di Xaxis'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ordine di Xaxis'
+		isHidden
+		formatString: 0
+		lineageTag: 951fadf3-382a-47ce-a5ac-4cf5101a22aa
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Xaxis-deb7e1ba-b9de-4b03-b1e2-0a147e708005 = calculated
+		mode: import
+		source =
+				{
+					("Month", NAMEOF('CALENDARIO'[ANNO_MESE_DESC]), 0),
+					("Week", NAMEOF('CALENDARIO'[Year_Month_Week_Fiscal]), 1),
+					("Day", NAMEOF('CALENDARIO'[Year_Month_Day]), 2)
+				}
+
+	annotation PBI_Id = 6c470a034757493683e6a0736a4673d7

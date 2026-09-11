@@ -1,0 +1,224 @@
+table 'TARGET EXCHANGE'
+	lineageTag: 8f75f183-fb56-4880-b6d9-53d68855fefc
+
+	column PlanningYear
+		dataType: string
+		lineageTag: d5903396-015f-4e02-ba80-6bf494f61e3e
+		summarizeBy: none
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Planning year for which the exchange rates apply (e.g., '2024', '2025'). Used to filter target exchange rates by planning period. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Year, Fiscal Year, Planning Year, Budget Year"
+
+		annotation DisplayFolder = "Time"
+
+		annotation 'Example Values' = "2024, 2025, 2026"
+
+		annotation 'Common Questions' = "What year are the exchange rates for? How do exchange rates vary by year?"
+
+		annotation 'Related Objects' = "TARGET[Year]"
+
+	column TargetCurrency
+		dataType: string
+		lineageTag: 5da2ab8e-75c9-4d1a-b358-1a2051d02961
+		summarizeBy: none
+		sourceColumn: Currency Target
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Target currency code (e.g., 'EUR', 'USD', 'GBP') for which exchange rates are defined. Used to convert local currency targets to reporting currency. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Currency, Target Currency, Reporting Currency, FX Currency"
+
+		annotation DisplayFolder = "Currency"
+
+		annotation 'Example Values' = "EUR, USD, GBP, CHF, JPY"
+
+		annotation 'Common Questions' = "What currencies are available for target conversion? How do I convert targets to EUR?"
+
+		annotation 'Related Objects' = "TARGET[Currency]"
+
+	column OriginalExchangeRate
+		dataType: double
+		lineageTag: b0e17cf8-a8bd-4052-86b6-551eacecf6c2
+		summarizeBy: sum
+		sourceColumn: Exchange Original
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Original exchange rate used for target conversion at the time of planning. Represents the initial rate applied in the target setting process. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Original Rate, Initial Exchange Rate, Budgeted Rate"
+
+		annotation DisplayFolder = "Exchange Rates"
+
+		annotation 'Example Values' = "1.00, 1.10, 0.85"
+
+		annotation 'Common Questions' = "What is the original exchange rate for EUR? How do original and revised rates compare?"
+
+		annotation 'Related Objects' = "TARGET"
+
+	column RevisedExchangeRate
+		dataType: double
+		lineageTag: 228aeb5e-2598-4f40-a264-6219ba50e9c6
+		summarizeBy: sum
+		sourceColumn: Exchange Revised
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Revised exchange rate updated after original planning. Reflects updated rate assumptions for target calculations. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Revised Rate, Updated Rate, Revised Exchange"
+
+		annotation DisplayFolder = "Exchange Rates"
+
+		annotation 'Example Values' = "1.05, 1.12, 0.88"
+
+		annotation 'Common Questions' = "What is the revised exchange rate for EUR? How do revised rates compare to original?"
+
+		annotation 'Related Objects' = "TARGET"
+
+	column YearCurrencyCompositeKey
+		dataType: string
+		isHidden
+		lineageTag: 542e5846-b58d-4182-8375-5755e2190065
+		summarizeBy: none
+		sourceColumn: KEY_ANNO_CURR
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Technical composite key combining year and currency. Used for internal relationships. Not for analytical use."
+
+		annotation Synonyms = "Composite Key, Year-Currency Key"
+
+	column ScenarioRate_R1
+		dataType: double
+		lineageTag: c0efd130-7359-46d8-ab59-04f4db3496d8
+		summarizeBy: sum
+		sourceColumn: Rate_R1
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Scenario rate R1 for target calculations. Used in specific planning scenarios. Proposed – pending Loro Piana validation on business meaning."
+
+		annotation Synonyms = "Rate R1, Scenario 1 Rate"
+
+		annotation DisplayFolder = "Scenario Rates"
+
+		annotation 'Example Values' = "1.02, 1.08, 0.90"
+
+		annotation 'Common Questions' = "What is the R1 exchange rate? What scenario uses Rate_R1?"
+
+		annotation 'Related Objects' = "TARGET"
+
+	column ScenarioRate_R2
+		dataType: double
+		lineageTag: 93425773-f11b-470a-b8e1-f24b8f3f2840
+		summarizeBy: sum
+		sourceColumn: Rate_R2
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Scenario rate R2 for target calculations. Used in specific planning scenarios. Proposed – pending Loro Piana validation on business meaning."
+
+		annotation Synonyms = "Rate R2, Scenario 2 Rate"
+
+		annotation DisplayFolder = "Scenario Rates"
+
+		annotation 'Example Values' = "1.03, 1.09, 0.92"
+
+		annotation 'Common Questions' = "What is the R2 exchange rate? What scenario uses Rate_R2?"
+
+		annotation 'Related Objects' = "TARGET"
+
+	column ScenarioRate_B2
+		dataType: double
+		lineageTag: 8152440f-19df-489f-8124-00c5af15a5aa
+		summarizeBy: sum
+		sourceColumn: Rate_B2
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Scenario rate B2 for target calculations. Used in specific planning scenarios. Proposed – pending Loro Piana validation on business meaning."
+
+		annotation Synonyms = "Rate B2, Scenario B2 Rate"
+
+		annotation DisplayFolder = "Scenario Rates"
+
+		annotation 'Example Values' = "1.04, 1.10, 0.95"
+
+		annotation 'Common Questions' = "What is the B2 exchange rate? What scenario uses Rate_B2?"
+
+		annotation 'Related Objects' = "TARGET"
+
+	column ScenarioRate_PCL
+		dataType: double
+		lineageTag: 1eca8b91-ee4b-49a5-bb12-7b37b8ce355e
+		summarizeBy: sum
+		sourceColumn: Rate_PCL
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Scenario rate PCL for target calculations. Used in specific planning scenarios (likely related to PCL - Performance, Cost, and Logistics planning). Proposed – pending Loro Piana validation on business meaning."
+
+		annotation Synonyms = "Rate PCL, Scenario PCL Rate"
+
+		annotation DisplayFolder = "Scenario Rates"
+
+		annotation 'Example Values' = "1.01, 1.07, 0.93"
+
+		annotation 'Common Questions' = "What is the PCL exchange rate? What scenario uses Rate_PCL?"
+
+		annotation 'Related Objects' = "TARGET"
+
+	partition 'TARGET EXCHANGE' = m
+		mode: import
+		source =
+				let
+				        Source = PowerPlatform.Dataflows(null),
+				        Workspaces = Source{[Id="Workspaces"]}[Data],
+				        WS = Workspaces{[workspaceId="3cb5ae18-3ac2-45e3-937b-8f934a66d860"]}[Data],
+				        DF = WS{[dataflowId="443da8fa-2e20-444b-a3a1-1345a5b54ee1"]}[Data],
+				        CAMBI_TARGET1 = DF{[entity="CAMBI_TARGET"]}[Data],
+				        #"Removed Other Columns" = Table.SelectColumns(CAMBI_TARGET1,{"Year", "Currency Target", "Exchange Original", "Exchange Revised", "KEY_ANNO_CURR", "Rate_R1", "Rate_R2", "Rate_B2", "Rate_PCL"})
+				in
+				        #"Removed Other Columns"
+
+		annotation Description = "Import partition for target exchange rate master data. Loads all exchange rates by year and currency. Contains multiple rate types: Original Exchange, Revised Exchange, and scenario rates (R1, R2, B2, PCL)."
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation Description = "Target exchange rate dimension for currency conversion in target and budget planning. Contains exchange rates used to convert target figures from local currencies to reporting currencies. Includes multiple rate types: Original exchange rates, Revised exchange rates, and scenario-specific rates (R1, R2, B2, PCL). Used for financial planning, budgeting, and target setting across different currencies. Grain: one row per year and target currency. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "Target Exchange, Exchange Rates, Currency Conversion, FX Rates, Target Currency Rates, Planning Exchange"
+
+	annotation DisplayFolder = "Financial Master"
+
+	annotation RefreshPolicy = "Annually or as needed for planning cycles. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana Finance Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "Year: 2024, Currency: EUR, Exchange: 1.00"
+
+	annotation 'Common Questions' = "What exchange rates are used for target planning? How do I convert targets to reporting currency? What is the difference between Original and Revised exchange rates? What are the different rate scenarios (R1, R2, B2, PCL)?"
+
+	annotation 'Related Objects' = "TARGET, BUDGET, SCONTRINI, EXCHANGE_RATES"

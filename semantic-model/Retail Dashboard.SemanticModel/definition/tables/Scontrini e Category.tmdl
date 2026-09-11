@@ -1,0 +1,86 @@
+table 'Scontrini e Category'
+	lineageTag: 21a23930-2640-49b9-a8b7-67c5b7828e8e
+
+	column 'Ticket ID'
+		lineageTag: 7cabe05f-7423-4a50-9ea2-1f61188cd875
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: SCONTRINI[Ticket ID]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Unique ticket identifier for sales transactions. Used to link to the original sales ticket and perform basket analysis for RTW products. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Ticket ID, Transaction ID, Receipt Number, Basket ID"
+
+		annotation DisplayFolder = "Ticket Details"
+
+		annotation 'Example Values' = "T12345, T67890"
+
+		annotation 'Common Questions' = "What is the ticket ID? How many RTW categories are in ticket T12345?"
+
+		annotation 'Related Objects' = "SCONTRINI[Ticket ID]"
+
+	column Category
+		formatString: 0
+		lineageTag: 9e349b8e-fe8c-42dc-b965-f3a96d7aec6e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Category]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Number of distinct product categories sold within the ticket for Ready-to-Wear (RTW) products only. Calculated as distinct count of Category Code from line items on the ticket where Macro Category = 'RTW'. Used to measure RTW basket diversity and cross-category purchasing. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "RTW Category Count, RTW Basket Diversity, Distinct Categories RTW, Category Count per RTW Ticket"
+
+		annotation DisplayFolder = "Metrics"
+
+		annotation 'Example Values' = "1, 2, 3, 4, 5"
+
+		annotation 'Common Questions' = "How many RTW categories are in each ticket? What is the average RTW basket diversity? Which tickets have the most RTW categories?"
+
+		annotation 'Related Objects' = "SCONTRINI[Category], SCONTRINI[Macro Category]"
+
+	partition 'RTW Ticket Category Count' = calculated
+		mode: import
+		source =
+				SUMMARIZE(
+				        SCONTRINI,
+				        SCONTRINI[Ticket ID],
+				        "Category",
+				        CALCULATE(
+				                DISTINCTCOUNT(SCONTRINI[Category]),
+				                AND(
+				                        OR(SCONTRINI[Ticket Type] = "SBMST", SCONTRINI[Ticket Type] = "SBVEN"),
+				                        SCONTRINI[Ticket Row Type] = "VEN"
+				                ),
+				                SCONTRINI[Macro Category] = "RTW"
+				        )
+				)
+
+		annotation Description = "Calculated partition that summarizes tickets to count distinct product categories per ticket for RTW products only. Filters: Ticket Type IN ('SBMST','SBVEN'), Ticket Row Type = 'VEN', and Macro Category = 'RTW'. Produces a per-ticket count of distinct categories within the Ready-to-Wear macro category."
+
+	annotation PBI_Id = e648b4900bce47188ca40ef96daa4b26
+
+	annotation Description = "Ticket-level category count for Ready-to-Wear (RTW) products. Calculates the number of distinct product categories per sales ticket for RTW items. Used to analyze RTW basket diversity, cross-category purchasing, and product assortment performance within the Ready-to-Wear macro category. Grain: one row per ticket ID. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "RTW Category Count, RTW Basket Diversity, RTW Ticket Categories, Ready-to-Wear Category Per Ticket"
+
+	annotation DisplayFolder = "Sales Analysis"
+
+	annotation RefreshPolicy = "Refreshed with sales data. Data reflects latest transactions. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana Commercial Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "Ticket: T12345, Categories: 3"
+
+	annotation 'Common Questions' = "How many categories are in each RTW ticket? What is the average basket diversity for RTW? Which tickets have the highest category count? How does RTW basket diversity compare to other macro categories?"
+
+	annotation 'Related Objects' = "SCONTRINI, CLASSE_PRODOTTO, TARGET"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation

@@ -1,0 +1,203 @@
+table LocalDateTable_9b4fbd9f-06c9-4a8d-ac24-1436fb2bfa89
+	isHidden
+	lineageTag: 70485e49-a1ff-458c-8bc3-9c4eb5267fa8
+
+	column Date
+		dataType: dateTime
+		isHidden
+		lineageTag: bf855581-8ee5-42e5-a81e-37607e6ea58b
+		dataCategory: PaddedDateTableDates
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = User
+
+		annotation Description = "The actual date value. This is the primary key for ticket summary date-based relationships and time intelligence calculations. Hidden by default but used for joins and date filtering. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Date, Calendar Date, Date Key, Ticket Summary Date"
+
+		annotation DisplayFolder = "Date"
+
+	column Year = YEAR([Date])
+		dataType: int64
+		isHidden
+		lineageTag: 3a4c6e9a-0991-4837-abd2-870f22d477d8
+		dataCategory: Years
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Year
+
+		annotation Description = "Calendar year extracted from the ticket summary date. Used for annual reporting and year-over-year comparisons of basket diversity metrics. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Year, Calendar Year, Ticket Year, Basket Analysis Year"
+
+		annotation DisplayFolder = "Date"
+
+		annotation 'Example Values' = "2023, 2024, 2025"
+
+		annotation 'Common Questions' = "What is the year for this ticket summary date? How do I filter by ticket year? How many tickets had multiple categories in 2024?"
+
+	column MonthNo = MONTH([Date])
+		dataType: int64
+		isHidden
+		lineageTag: 8c57fc5a-02cb-4a5b-9460-3031678d822c
+		dataCategory: MonthOfYear
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = MonthNumber
+
+		annotation Description = "Month number (1-12) extracted from the ticket summary date. Used for chronological month ordering and sorting of basket data. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Month Number, Month Index, Month of Year, Ticket Month"
+
+		annotation DisplayFolder = "Date"
+
+	column Month = FORMAT([Date], "MMMM")
+		dataType: string
+		isHidden
+		lineageTag: a81e1ce1-159e-46e2-b4b5-07032039955c
+		dataCategory: Months
+		summarizeBy: none
+		sortByColumn: MonthNo
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Month
+
+		annotation Description = "Month name (e.g., January, February). Used for month-level reporting and visual grouping of ticket summary data. Sorted by MonthNo for correct chronological display. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Month, Month Name, Calendar Month, Ticket Month"
+
+		annotation DisplayFolder = "Date"
+
+		annotation 'Example Values' = "January, February, March"
+
+		annotation 'Common Questions' = "What is the ticket summary month name? How do I group basket diversity by month? What are the monthly basket diversity trends?"
+
+	column QuarterNo = INT(([MonthNo] + 2) / 3)
+		dataType: int64
+		isHidden
+		lineageTag: 32a55c44-2b6f-4a39-a7ef-8b404c0c61e4
+		dataCategory: QuarterOfYear
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = QuarterNumber
+
+		annotation Description = "Quarter number (1-4) extracted from the ticket summary date. Used for quarterly reporting and sorting of basket analysis. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Quarter Number, Quarter Index, Quarter of Year, Ticket Quarter"
+
+		annotation DisplayFolder = "Date"
+
+	column Quarter = "Qtr " & [QuarterNo]
+		dataType: string
+		isHidden
+		lineageTag: 283f2348-2cc3-4e63-8cd9-008118138ff7
+		dataCategory: Quarters
+		summarizeBy: none
+		sortByColumn: QuarterNo
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Quarter
+
+		annotation Description = "Quarter label (e.g., Qtr 1, Qtr 2). Used for quarterly reporting and visual grouping of ticket summary data. Sorted by QuarterNo for correct chronological display. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Quarter, Calendar Quarter, Qtr, Ticket Quarter"
+
+		annotation DisplayFolder = "Date"
+
+		annotation 'Example Values' = "Qtr 1, Qtr 2, Qtr 3, Qtr 4"
+
+		annotation 'Common Questions' = "What is the ticket summary quarter? How do I group basket diversity by quarter? What are the quarterly basket diversity trends?"
+
+	column Day = DAY([Date])
+		dataType: int64
+		isHidden
+		lineageTag: 313b26bb-aa23-4f9a-91ed-ce70219f3a01
+		dataCategory: DayOfMonth
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Day
+
+		annotation Description = "Day of the month (1-31). Used for daily analysis and sorting within months for ticket summary data. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Day, Day Number, Day of Month, Ticket Day"
+
+		annotation DisplayFolder = "Date"
+
+		annotation 'Example Values' = "1, 15, 31"
+
+		annotation 'Common Questions' = "What is the day of the ticket summary month? How do I analyze daily basket diversity patterns?"
+
+	hierarchy 'Date Hierarchy'
+		lineageTag: e09297e5-13c5-4e0d-b02f-07a1f97dd46e
+
+		level Year
+			lineageTag: 5e6a5b76-d44d-496d-b046-7f6d706f131e
+			column: Year
+
+			annotation Description = "Year level in the ticket summary date hierarchy. Top-level grouping for annual basket diversity analysis. Proposed – pending Loro Piana validation."
+
+		level Quarter
+			lineageTag: 4e2171a6-ce25-4ff3-993b-59a559e9a346
+			column: Quarter
+
+			annotation Description = "Quarter level in the ticket summary date hierarchy. Second-level grouping for quarterly basket diversity analysis. Proposed – pending Loro Piana validation."
+
+		level Month
+			lineageTag: 820168f3-5481-4c0a-a5c0-1173a5b116df
+			column: Month
+
+			annotation Description = "Month level in the ticket summary date hierarchy. Third-level grouping for monthly basket diversity analysis. Proposed – pending Loro Piana validation."
+
+		level Day
+			lineageTag: 85fb2562-14a9-4fa9-8f0a-5ccba713b8ec
+			column: Day
+
+			annotation Description = "Day level in the ticket summary date hierarchy. Lowest-level grouping for daily basket diversity analysis. Proposed – pending Loro Piana validation."
+
+		annotation TemplateId = DateHierarchy
+
+		annotation Description = "Default time hierarchy allowing drill-down from Year → Quarter → Month → Day for ticket summary date analysis. Provides intuitive navigation for basket diversity tracking and transaction-level reporting. Proposed – pending Loro Piana validation."
+
+		annotation 'Common Questions' = "How do I drill down from ticket year to ticket month? How do I expand ticket quarterly data? What is the date hierarchy structure for ticket summary analysis?"
+
+	partition 'Local Date Table - Ticket Summary' = calculated
+		mode: import
+		source = Calendar(Date(Year(MIN('SCONTRINI_TEMP'[Date])), 1, 1), Date(Year(MAX('SCONTRINI_TEMP'[Date])), 12, 31))
+
+		annotation Description = "Auto-generated local date table partition. Date range is dynamically calculated from the SCONTRINI_TEMP table's Date column, spanning full years from the minimum to maximum ticket summary year. This ensures the date table covers all ticket summary dates referenced in the model. Used for ticket-level category analysis, basket diversity tracking, per-ticket category count metrics, and transaction-level reporting. Proposed – pending Loro Piana validation on data source and date range logic."
+
+	annotation __PBI_LocalDateTable = true
+
+	annotation Description = "Power BI auto-generated local date table providing a continuous date range for ticket summary time intelligence calculations. This hidden table serves as the foundation for date-based relationships and time intelligence functions based on the Date field from the SCONTRINI_TEMP (Ticket Summary) table. Contains standard date attributes including Year, Quarter, Month, and Day, with a default 'Date Hierarchy' for drill-down analysis. Date range is dynamically derived from the 'SCONTRINI_TEMP' table's Date column (full years only). Used for ticket-level category analysis, basket diversity tracking, per-ticket category count metrics, and transaction-level reporting. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "Local Date Table, Date Dimension, Time Dimension, Calendar Table, Date Hierarchy, Ticket Summary Date Table, Basket Analysis Date Table"
+
+	annotation DisplayFolder = "System Tables"
+
+	annotation RefreshPolicy = "Dynamically generated based on SCONTRINI_TEMP table data range. No manual refresh required. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana BI Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "Date: 2024-01-01, Year: 2024, Quarter: Qtr 1, Month: January, Day: 1"
+
+	annotation 'Common Questions' = "What is the ticket summary date range? How do I use the date hierarchy for basket analysis? How do I filter by ticket date year, quarter, or month? What is the ticket summary date table used for?"
+
+	annotation 'Related Objects' = "SCONTRINI_TEMP, SCONTRINI, CLASSE_PRODOTTO, DateTableTemplate"
+
+	annotation __PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table

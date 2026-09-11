@@ -1,0 +1,210 @@
+table 'SALES EXCHANGE CURR SAME DATE'
+	lineageTag: 845f5f2b-e9dc-4a9d-9981-99de6039d672
+
+	column CurrencyCode
+		dataType: string
+		lineageTag: a692a67f-c40b-4889-95e9-8608eaa6580c
+		summarizeBy: none
+		sourceColumn: Currency Sales
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "ISO currency code for the exchange rate (e.g., 'EUR', 'USD', 'GBP'). The base currency for the exchange rate. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Currency, ISO Code, Currency Code, FX Currency"
+
+		annotation DisplayFolder = "Currency Details"
+
+		annotation 'Example Values' = "EUR, USD, GBP, CHF, JPY"
+
+		annotation 'Common Questions' = "What currencies have exchange rates? What is the exchange rate for USD?"
+
+		annotation 'Related Objects' = "'Currency Selection'.[CurrencyCode]"
+
+	column CalendarYear
+		dataType: string
+		lineageTag: f02f4e67-c7b8-4a05-b4ec-70f95261985f
+		summarizeBy: none
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Calendar year for the exchange rate period (e.g., '2024', '2025'). Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Year, Calendar Year, Fiscal Year"
+
+		annotation DisplayFolder = "Time Details"
+
+		annotation 'Example Values' = "2024, 2025, 2026"
+
+		annotation 'Common Questions' = "What year is the exchange rate for? How do exchange rates vary by year?"
+
+		annotation 'Related Objects' = "DateTableTemplate"
+
+	column CalendarMonth
+		dataType: string
+		lineageTag: 2340a8ae-c6ed-4b4c-b303-0c2de2c59575
+		summarizeBy: none
+		sourceColumn: Month
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Calendar month for the exchange rate period (e.g., '01' for January, '12' for December). Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Month, Month Number, Calendar Month"
+
+		annotation DisplayFolder = "Time Details"
+
+		annotation 'Example Values' = "01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12"
+
+		annotation 'Common Questions' = "What month is the exchange rate for? How do exchange rates vary by month?"
+
+		annotation 'Related Objects' = "DateTableTemplate"
+
+	column YearMonthKey
+		dataType: string
+		lineageTag: 4981f954-3875-4638-9318-078c7d20cd8b
+		summarizeBy: none
+		sourceColumn: YearMonth
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Composite key combining year and month (e.g., '202401' for January 2024). Used for period-based joins and filtering. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "YearMonth Key, Period Key, YYYYMM Key"
+
+		annotation DisplayFolder = "Time Details"
+
+		annotation 'Example Values' = "202401, 202402, 202403, 202412"
+
+		annotation 'Common Questions' = "What is the year-month key for January 2024?"
+
+		annotation 'Related Objects' = "DateTableTemplate"
+
+	column AverageExchangeRate
+		dataType: double
+		lineageTag: fe9dd51d-130a-484b-93f0-91c6b0f07528
+		summarizeBy: none
+		sourceColumn: Exchange
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Average exchange rate for the month. Used for converting sales and revenue from local currency to reporting currency using period average rates. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Avg Rate, Average FX, Period Average Rate"
+
+		annotation DisplayFolder = "Exchange Rates"
+
+		annotation 'Example Values' = "1.0000, 0.9200, 1.1500"
+
+		annotation 'Common Questions' = "What is the average exchange rate for USD in January? How do I convert using average rates?"
+
+		annotation 'Related Objects' = "SCONTRINI"
+
+	column ClosingExchangeRate
+		dataType: double
+		lineageTag: 9896cf40-799e-4447-a16e-840b45a150e6
+		summarizeBy: none
+		sourceColumn: Closing Exchange
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Closing exchange rate for the month (end-of-period rate). Used for balance sheet translation and financial reporting. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Closing Rate, End-of-Period Rate, Year-End Rate"
+
+		annotation DisplayFolder = "Exchange Rates"
+
+		annotation 'Example Values' = "1.0012, 0.9215, 1.1510"
+
+		annotation 'Common Questions' = "What is the closing exchange rate for USD in January? How do I use closing rates for balance sheet translation?"
+
+		annotation 'Related Objects' = "TARGET, BUDGET"
+
+	column ExchangeYearKey
+		dataType: string
+		isHidden
+		lineageTag: 22f9ec14-f232-4762-81e0-fbfc7ce4ba01
+		sourceColumn: KEY_ANNO_CURR
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Technical composite key combining currency code and year. Not for analytical use."
+
+		annotation Synonyms = "Currency-Year Key"
+
+	column ExchangeYearMonthKey1
+		dataType: string
+		isHidden
+		lineageTag: da6bd72e-6f9a-4c2e-87ad-2f9a5c451c49
+		sourceColumn: KEY_ANNO1_CURR
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Technical composite key combining currency code and year-month. Not for analytical use."
+
+		annotation Synonyms = "Currency-YearMonth Key"
+
+	column ExchangeYearMonthKey2
+		dataType: string
+		isHidden
+		lineageTag: 4fa12c70-4f21-416d-8e3e-0008acf48ff3
+		sourceColumn: KEY_ANNO2_CURR
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Technical composite key combining currency code and year-month. Not for analytical use."
+
+		annotation Synonyms = "Currency-YearMonth Key"
+
+	column ExchangeYearMonthKey3
+		dataType: string
+		isHidden
+		lineageTag: cdb045d9-4dce-4721-a1d5-b70e034d82dd
+		sourceColumn: KEY_ANNO3_CURR
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Technical composite key combining currency code and year-month. Not for analytical use."
+
+		annotation Synonyms = "Currency-YearMonth Key"
+
+	partition 'Currency Exchange Rates' = m
+		mode: import
+		source =
+				let
+				        Source = PowerPlatform.Dataflows(null),
+				        Workspaces = Source{[Id="Workspaces"]}[Data],
+				        WS = Workspaces{[workspaceId="63075e43-ec19-4090-b204-854337b4b0d5"]}[Data],
+				        DF = WS{[dataflowId="6804c67d-0461-48e3-ab6d-b7fbc7a14fc5"]}[Data],
+				        CAMBI_MENSILI_CURR_SAME_DATE_ = DF{[entity="CAMBI_MENSILI_CURR_SAME_DATE",version=""]}[Data]
+				in
+				        CAMBI_MENSILI_CURR_SAME_DATE_
+
+		annotation Description = "Import partition for monthly currency exchange rates. Loads all exchange rate records without date filtering."
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation Description = "Currency exchange rate dimension for the luxury retail model. Contains monthly exchange rates for different currencies used in sales reporting. Includes both average and closing exchange rates for currency conversion and financial reporting. Links to time dimensions (Year, Month, YearMonth) for period-based analysis. Grain: one row per currency per year-month combination. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "Exchange Rates, Currency Rates, FX Rates, Currency Conversion, Forex Rates"
+
+	annotation DisplayFolder = "Financial"
+
+	annotation RefreshPolicy = "Weekly on Sundays at 00:00 UTC; data latency ≤ 48 hours. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana Finance Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "Currency: EUR, Year: 2024, Month: 01, Exchange: 1.0000, Closing: 1.0012; Currency: USD, Year: 2024, Month: 01, Exchange: 0.9200, Closing: 0.9215"
+
+	annotation 'Common Questions' = "What exchange rates are available? How do I convert sales to local currency? What is the exchange rate for USD in January 2024? What is the closing rate vs average rate?"
+
+	annotation 'Related Objects' = "SCONTRINI, TARGET, BUDGET, 'Currency Selection'"

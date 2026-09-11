@@ -1,0 +1,196 @@
+table BUSINESS
+	lineageTag: 1d5c556c-ee98-4ffc-979f-fbd0e4915225
+
+	column BusinessCode
+		dataType: string
+		lineageTag: d3869114-d473-401f-b234-35c1582000cb
+		summarizeBy: none
+		sourceColumn: Business Code
+		sortByColumn: BusinessSortOrder
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Code identifying the specific business category at the most granular level. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Business ID, Sub-Category Code, Business Type"
+
+		annotation DisplayFolder = "Business Hierarchy"
+
+	column BusinessDescription
+		dataType: string
+		lineageTag: 5708176b-377b-4b53-9105-9ebfd45aec47
+		summarizeBy: none
+		sourceColumn: Business Description
+		sortByColumn: BusinessSortOrder
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Business-friendly name for the business category. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Business Name, Sub-Category Name"
+
+		annotation DisplayFolder = "Business Hierarchy"
+
+	column MacrobusinessCode
+		dataType: string
+		lineageTag: 35e713a1-b9b4-430d-a8ab-5b0e18ff3781
+		summarizeBy: none
+		sourceColumn: Macrobusiness Code
+		sortByColumn: MacrobusinessSortOrder
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Code identifying the macrobusiness category. One level above Business in the hierarchy. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Macro-Business ID, Business Group"
+
+		annotation DisplayFolder = "Business Hierarchy"
+
+	column MacrobusinessDescription
+		dataType: string
+		lineageTag: 893cc81c-9cf8-4b25-b8c1-26ec4bb3d173
+		summarizeBy: none
+		sourceColumn: Macrobusiness Description
+		sortByColumn: MacrobusinessSortOrder
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Business-friendly name for the macrobusiness category. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Macro-Business Name, Business Group Name"
+
+		annotation DisplayFolder = "Business Hierarchy"
+
+	column BusinessSortOrder
+		dataType: double
+		isHidden
+		lineageTag: 50407add-2b5f-4769-90e5-ca7974a98d97
+		summarizeBy: none
+		sourceColumn: Ordinamento Business
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Technical sorting order for Business hierarchy levels. Not for analytical use."
+
+	column MacrobusinessSortOrder
+		dataType: double
+		isHidden
+		lineageTag: 1069a6c4-b890-46e9-aa9a-547ca04a5a70
+		summarizeBy: none
+		sourceColumn: Ordinamento Macrobusiness
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Technical sorting order for Macrobusiness hierarchy levels. Not for analytical use."
+
+	column MacroBusinessGroupCode
+		dataType: string
+		lineageTag: b844b88d-bad0-4e25-b4df-281d73338055
+		summarizeBy: none
+		sourceColumn: Macro Business Grp
+		sortByColumn: MacroBusinessGroupSortOrder
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Code identifying the Macro Business Group. One level above Macrobusiness in the hierarchy. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Business Group ID, Macro Group"
+
+		annotation DisplayFolder = "Business Hierarchy"
+
+	column MacroBusinessGroupSortOrder
+		dataType: double
+		isHidden
+		lineageTag: afbf3706-0267-40cf-930f-7e9eb6a0bd33
+		summarizeBy: none
+		sourceColumn: Ordinamento Macro Business Grp
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Technical sorting order for Macro Business Group hierarchy levels. Not for analytical use."
+
+	column MacroCategoryCode
+		dataType: string
+		lineageTag: 103092f0-7458-4f10-b2eb-59a735acab4a
+		summarizeBy: none
+		sourceColumn: Macro Category
+		sortByColumn: MacroCategorySortOrder
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Code identifying the Macro Category. Highest level of the business hierarchy. Note: 'NOT DEFINED' values are replaced with 'OTHERS'; 'ACCESSORIES' is replaced with 'ACX'. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Category, Top-Level Category"
+
+		annotation DisplayFolder = "Business Hierarchy"
+
+	column MacroCategorySortOrder
+		dataType: double
+		isHidden
+		lineageTag: 9af17c06-c837-4515-82b9-939dbb7f74af
+		summarizeBy: none
+		sourceColumn: Macro Category Ord
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Technical sorting order for Macro Category hierarchy levels. Not for analytical use."
+
+	column MacroBusinessGroupLabel
+		dataType: string
+		lineageTag: cc4f58c7-4c3d-4c0d-bc8f-70efb945b01a
+		summarizeBy: none
+		sortByColumn: MacroBusinessGroupSortOrder
+
+		annotation Description = "Display label combining Macro Business Group code with year-over-year variance indicator (Δ vs LY). For visual display only. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Business Group Display, Group Label with Variance"
+
+		annotation DisplayFolder = "Business Hierarchy"
+
+		annotation SummarizationSetBy = Automatic
+
+	partition BUSINESS = m
+		mode: import
+		source =
+				let
+				        Source = PowerPlatform.Dataflows(null),
+				        Workspaces = Source{[Id="Workspaces"]}[Data],
+				        WS = Workspaces{[workspaceId="63075e43-ec19-4090-b204-854337b4b0d5"]}[Data],
+				        DF = WS{[dataflowId="dcbf1499-ee35-4598-9b58-2d0142058031"]}[Data],
+				        BUSINESS1 = DF{[entity="BUSINESS"]}[Data],
+				        // Note: The following transformations apply business logic replacements.
+				        // 'NOT DEFINED' → 'OTHERS'
+				        // 'ACCESSORIES' → 'ACX'
+				        // These should be validated with business stakeholders.
+				        #"Added Custom" = Table.AddColumn(BUSINESS1, "Business A Gender Desc Label", each [Business A Gender Description] & Character.FromNumber(10) & "Δ vs LY"),
+				        #"Removed Other Columns" = Table.SelectColumns(#"Added Custom",{"Business Code", "Business Description", "Macrobusiness Code", "Macrobusiness Description", "Ordinamento Business", "Ordinamento Macrobusiness", "Macro Business Grp", "Ordinamento Macro Business Grp", "Macro Category","Macro Category Ord"}),
+				        #"Replaced Value" = Table.ReplaceValue(#"Removed Other Columns","NOT DEFINED","OTHERS",Replacer.ReplaceText,{"Macro Category"}),
+				        #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value","ACCESSORIES","ACX",Replacer.ReplaceText,{"Macro Category"})
+				in
+				        #"Replaced Value1"
+
+		annotation Description = "Import partition for business hierarchy master data. Contains hardcoded replacements: 'NOT DEFINED' → 'OTHERS', 'ACCESSORIES' → 'ACX'. Proposed – pending Loro Piana validation on replacement logic."
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation Description = "Business classification hierarchy dimension. Contains hierarchical product business categories from Macro Category → Macro Business Group → Macrobusiness → Business. Used for sales analysis and reporting. Grain: one row per business classification. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "Business Classification, Product Hierarchy, Business Groups, Category Hierarchy"
+
+	annotation DisplayFolder = "Product Master"
+
+	annotation RefreshPolicy = "Weekly on Sundays at 00:00 UTC; data latency ≤ 48 hours. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana Product Management Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-06 (pending business sign-off)."

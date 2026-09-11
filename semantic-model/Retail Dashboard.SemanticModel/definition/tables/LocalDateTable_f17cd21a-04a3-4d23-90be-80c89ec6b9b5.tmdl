@@ -1,0 +1,196 @@
+table LocalDateTable_f17cd21a-04a3-4d23-90be-80c89ec6b9b5
+	isHidden
+	lineageTag: 276291a6-8953-4576-b0fd-10caba02ea3c
+
+	column Date
+		isHidden
+		lineageTag: 28905cbf-529c-4766-bf3d-5838b9a6eb2a
+		dataCategory: PaddedDateTableDates
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = User
+
+		annotation Description = "The actual date value. This is the primary key for fiscal week order date-based relationships and time intelligence calculations. Hidden by default but used for joins and date filtering. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Date, Calendar Date, Date Key, Fiscal Week Order Date"
+
+		annotation DisplayFolder = "Date"
+
+	column Year = YEAR([Date])
+		isHidden
+		lineageTag: 4b7358a0-c2bd-4634-92fc-87b872a70f32
+		dataCategory: Years
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Year
+
+		annotation Description = "Calendar year extracted from the fiscal week order date. Used for annual reporting and year-over-year comparisons. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Year, Calendar Year, Fiscal Year, Fiscal Week Year"
+
+		annotation DisplayFolder = "Date"
+
+		annotation 'Example Values' = "2023, 2024, 2025"
+
+		annotation 'Common Questions' = "What is the fiscal year for this date? How do I filter by fiscal year using the week order? What was the performance in fiscal year 2024?"
+
+	column MonthNo = MONTH([Date])
+		isHidden
+		lineageTag: 51ba500c-2741-41e4-814e-f3c0eb97a806
+		dataCategory: MonthOfYear
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = MonthNumber
+
+		annotation Description = "Month number (1-12) extracted from the fiscal week order date. Used for chronological month ordering and sorting. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Month Number, Month Index, Month of Year, Fiscal Month Number"
+
+		annotation DisplayFolder = "Date"
+
+	column Month = FORMAT([Date], "MMMM")
+		isHidden
+		lineageTag: 1cc227ce-8015-4bc6-8f21-7cf3f76238e5
+		dataCategory: Months
+		summarizeBy: none
+		sortByColumn: MonthNo
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Month
+
+		annotation Description = "Month name (e.g., January, February). Used for month-level reporting and visual grouping. Sorted by MonthNo for correct chronological display. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Month, Month Name, Calendar Month, Fiscal Month"
+
+		annotation DisplayFolder = "Date"
+
+		annotation 'Example Values' = "January, February, March"
+
+		annotation 'Common Questions' = "What is the fiscal month name? How do I group by fiscal month? What are the monthly fiscal trends?"
+
+	column QuarterNo = INT(([MonthNo] + 2) / 3)
+		isHidden
+		lineageTag: d8811df5-6ff0-493d-814f-6907a9866705
+		dataCategory: QuarterOfYear
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = QuarterNumber
+
+		annotation Description = "Quarter number (1-4) extracted from the fiscal week order date. Used for quarterly reporting and sorting. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Quarter Number, Quarter Index, Quarter of Year, Fiscal Quarter"
+
+		annotation DisplayFolder = "Date"
+
+	column Quarter = "Qtr " & [QuarterNo]
+		isHidden
+		lineageTag: 8d662e8e-2f55-438f-8acd-d471a3fe0b77
+		dataCategory: Quarters
+		summarizeBy: none
+		sortByColumn: QuarterNo
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Quarter
+
+		annotation Description = "Quarter label (e.g., Qtr 1, Qtr 2). Used for quarterly reporting and visual grouping. Sorted by QuarterNo for correct chronological display. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Quarter, Calendar Quarter, Qtr, Fiscal Quarter"
+
+		annotation DisplayFolder = "Date"
+
+		annotation 'Example Values' = "Qtr 1, Qtr 2, Qtr 3, Qtr 4"
+
+		annotation 'Common Questions' = "What is the fiscal quarter? How do I group by fiscal quarter? What are the quarterly fiscal trends?"
+
+	column Day = DAY([Date])
+		isHidden
+		lineageTag: 8a555492-e3a0-4c6f-a5db-0964989c0804
+		dataCategory: DayOfMonth
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Day
+
+		annotation Description = "Day of the month (1-31). Used for daily analysis and sorting within months. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Day, Day Number, Day of Month, Fiscal Day"
+
+		annotation DisplayFolder = "Date"
+
+		annotation 'Example Values' = "1, 15, 31"
+
+		annotation 'Common Questions' = "What is the day of the fiscal month? How do I analyze daily fiscal data?"
+
+	hierarchy 'Date Hierarchy'
+		lineageTag: 970a365a-426b-41fe-9131-963d5057cc45
+
+		level Year
+			lineageTag: b8de37a6-25c0-4ade-be7d-a6bda6e62a0d
+			column: Year
+
+			annotation Description = "Year level in the fiscal week order date hierarchy. Top-level grouping for annual fiscal analysis. Proposed – pending Loro Piana validation."
+
+		level Quarter
+			lineageTag: 5385b63a-9a6c-4666-a861-e445ec2bf9e8
+			column: Quarter
+
+			annotation Description = "Quarter level in the fiscal week order date hierarchy. Second-level grouping for quarterly fiscal analysis. Proposed – pending Loro Piana validation."
+
+		level Month
+			lineageTag: 221367e2-323f-4499-a6cb-90a29625d5a9
+			column: Month
+
+			annotation Description = "Month level in the fiscal week order date hierarchy. Third-level grouping for monthly fiscal analysis. Proposed – pending Loro Piana validation."
+
+		level Day
+			lineageTag: 88ed8567-b710-4394-9774-c6b7e7f0c4a4
+			column: Day
+
+			annotation Description = "Day level in the fiscal week order date hierarchy. Lowest-level grouping for daily fiscal analysis. Proposed – pending Loro Piana validation."
+
+		annotation TemplateId = DateHierarchy
+
+		annotation Description = "Default time hierarchy allowing drill-down from Year → Quarter → Month → Day for fiscal week order date analysis. Provides intuitive navigation for fiscal calendar reporting and week sequencing. Proposed – pending Loro Piana validation."
+
+		annotation 'Common Questions' = "How do I drill down from fiscal year to fiscal month? How do I expand fiscal quarterly data? What is the date hierarchy structure for fiscal week order analysis?"
+
+	partition 'Local Date Table - Fiscal Week Order' = calculated
+		mode: import
+		source = Calendar(Date(Year(MIN('CALENDARIO'[year_month_week_fiscal_ord])), 1, 1), Date(Year(MAX('CALENDARIO'[year_month_week_fiscal_ord])), 12, 31))
+
+		annotation Description = "Auto-generated local date table partition. Date range is dynamically calculated from the CALENDARIO table's year_month_week_fiscal_ord (fiscal week order) column, spanning full years from the minimum to maximum fiscal week order year. This ensures the date table covers all fiscal week order dates referenced in the model. Used for fiscal week sequencing, week-of-year ordering, and fiscal calendar reporting. Proposed – pending Loro Piana validation on data source and date range logic."
+
+	annotation __PBI_LocalDateTable = true
+
+	annotation Description = "Power BI auto-generated local date table providing a continuous date range for fiscal week ordering time intelligence calculations. This hidden table serves as the foundation for date-based relationships and time intelligence functions based on the year_month_week_fiscal_ord (fiscal week order) field from the CALENDARIO table. Contains standard date attributes including Year, Quarter, Month, and Day, with a default 'Date Hierarchy' for drill-down analysis. Date range is dynamically derived from the 'CALENDARIO' table's year_month_week_fiscal_ord column (full years only). Used for fiscal week sequencing, week-of-year ordering, and fiscal calendar reporting. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "Local Date Table, Date Dimension, Time Dimension, Calendar Table, Date Hierarchy, Fiscal Week Order Date Table, Fiscal Calendar Date Table"
+
+	annotation DisplayFolder = "System Tables"
+
+	annotation RefreshPolicy = "Dynamically generated based on CALENDARIO table data range. No manual refresh required. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana BI Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "Date: 2024-01-01, Year: 2024, Quarter: Qtr 1, Month: January, Day: 1"
+
+	annotation 'Common Questions' = "What is the fiscal week order date range? How do I use the date hierarchy for fiscal week sequencing? How do I filter by fiscal year, quarter, or month? What is the fiscal week order date table used for?"
+
+	annotation 'Related Objects' = "CALENDARIO, SCONTRINI, TARGET, DateTableTemplate"
+
+	annotation __PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table

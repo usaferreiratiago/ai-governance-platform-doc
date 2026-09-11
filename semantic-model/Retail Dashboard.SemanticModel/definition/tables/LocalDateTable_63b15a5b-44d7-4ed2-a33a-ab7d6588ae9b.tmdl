@@ -1,0 +1,196 @@
+table LocalDateTable_63b15a5b-44d7-4ed2-a33a-ab7d6588ae9b
+	isHidden
+	lineageTag: 328b1e01-f3b3-4f65-a4cc-a39088a931f1
+
+	column Date
+		isHidden
+		lineageTag: f2b0b5cc-f160-4dd4-b0df-34b40a676eda
+		dataCategory: PaddedDateTableDates
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = User
+
+		annotation Description = "The actual date value. This is the primary key for end-of-month date-based relationships and time intelligence calculations. Hidden by default but used for joins and date filtering. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Date, Calendar Date, Date Key"
+
+		annotation DisplayFolder = "Date"
+
+	column Year = YEAR([Date])
+		isHidden
+		lineageTag: d6fed8f2-eb42-4c05-adef-8a95aa306810
+		dataCategory: Years
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Year
+
+		annotation Description = "Calendar year extracted from the end-of-month date. Used for annual reporting and year-over-year comparisons. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Year, Calendar Year, End of Month Year"
+
+		annotation DisplayFolder = "Date"
+
+		annotation 'Example Values' = "2023, 2024, 2025"
+
+		annotation 'Common Questions' = "What is the year for this end-of-month date? How do I filter by year using end-of-month dates? What was the performance in 2024 based on month-end?"
+
+	column MonthNo = MONTH([Date])
+		isHidden
+		lineageTag: 5f489862-8ceb-4957-85d3-65f04e15fd16
+		dataCategory: MonthOfYear
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = MonthNumber
+
+		annotation Description = "Month number (1-12) extracted from the end-of-month date. Used for chronological month ordering and sorting. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Month Number, Month Index, Month of Year"
+
+		annotation DisplayFolder = "Date"
+
+	column Month = FORMAT([Date], "MMMM")
+		isHidden
+		lineageTag: 2a16ff54-4ce7-4ee6-be81-5e0f9f0af4c0
+		dataCategory: Months
+		summarizeBy: none
+		sortByColumn: MonthNo
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Month
+
+		annotation Description = "Month name (e.g., January, February). Used for month-level reporting and visual grouping. Sorted by MonthNo for correct chronological display. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Month, Month Name, Calendar Month"
+
+		annotation DisplayFolder = "Date"
+
+		annotation 'Example Values' = "January, February, March"
+
+		annotation 'Common Questions' = "What is the month name for the end-of-month date? How do I group by month using month-end dates? What are the monthly trends based on month-end?"
+
+	column QuarterNo = INT(([MonthNo] + 2) / 3)
+		isHidden
+		lineageTag: 59fa32b9-1ee6-47c7-863d-20e47ee875c6
+		dataCategory: QuarterOfYear
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = QuarterNumber
+
+		annotation Description = "Quarter number (1-4) extracted from the end-of-month date. Used for quarterly reporting and sorting. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Quarter Number, Quarter Index, Quarter of Year"
+
+		annotation DisplayFolder = "Date"
+
+	column Quarter = "Qtr " & [QuarterNo]
+		isHidden
+		lineageTag: f1d004df-c0b1-4e4d-b2f2-a78b2928bc78
+		dataCategory: Quarters
+		summarizeBy: none
+		sortByColumn: QuarterNo
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Quarter
+
+		annotation Description = "Quarter label (e.g., Qtr 1, Qtr 2). Used for quarterly reporting and visual grouping. Sorted by QuarterNo for correct chronological display. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Quarter, Calendar Quarter, Qtr"
+
+		annotation DisplayFolder = "Date"
+
+		annotation 'Example Values' = "Qtr 1, Qtr 2, Qtr 3, Qtr 4"
+
+		annotation 'Common Questions' = "What is the quarter for the end-of-month date? How do I group by quarter using month-end dates? What are the quarterly trends based on month-end?"
+
+	column Day = DAY([Date])
+		isHidden
+		lineageTag: 789f8227-6b9c-4d1f-b190-c5e7d4cd3754
+		dataCategory: DayOfMonth
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Day
+
+		annotation Description = "Day of the month (1-31). Used for daily analysis and sorting within months. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Day, Day Number, Day of Month"
+
+		annotation DisplayFolder = "Date"
+
+		annotation 'Example Values' = "1, 15, 31"
+
+		annotation 'Common Questions' = "What is the day of the month for the end-of-month date? How do I analyze daily data using month-end dates?"
+
+	hierarchy 'Date Hierarchy'
+		lineageTag: a92a19ea-cdeb-47f5-a0b6-e4ea1caccd7f
+
+		level Year
+			lineageTag: b3db4a66-2290-403a-a34c-1f5e826700df
+			column: Year
+
+			annotation Description = "Year level in the end-of-month date hierarchy. Top-level grouping for annual analysis. Proposed – pending Loro Piana validation."
+
+		level Quarter
+			lineageTag: 97735af8-cfc7-4b2e-b086-072bd2e2b153
+			column: Quarter
+
+			annotation Description = "Quarter level in the end-of-month date hierarchy. Second-level grouping for quarterly analysis. Proposed – pending Loro Piana validation."
+
+		level Month
+			lineageTag: 3ccf3d0e-c269-4d93-b15d-b557011e3554
+			column: Month
+
+			annotation Description = "Month level in the end-of-month date hierarchy. Third-level grouping for monthly analysis. Proposed – pending Loro Piana validation."
+
+		level Day
+			lineageTag: c6a9a573-aa2f-4465-a8c1-4723c87d2a8f
+			column: Day
+
+			annotation Description = "Day level in the end-of-month date hierarchy. Lowest-level grouping for daily analysis. Proposed – pending Loro Piana validation."
+
+		annotation TemplateId = DateHierarchy
+
+		annotation Description = "Default time hierarchy allowing drill-down from Year → Quarter → Month → Day for end-of-month date analysis. Provides intuitive navigation for date-based reporting using the END_MONTH_DTA (month-end) offset. Proposed – pending Loro Piana validation."
+
+		annotation 'Common Questions' = "How do I drill down from year to month using end-of-month dates? How do I expand quarterly data with month-end dates? What is the date hierarchy structure for end-of-month analysis?"
+
+	partition 'Local Date Table - End of Month' = calculated
+		mode: import
+		source = Calendar(Date(Year(MIN('CALENDARIO'[END_MONTH_DTA])), 1, 1), Date(Year(MAX('CALENDARIO'[END_MONTH_DTA])), 12, 31))
+
+		annotation Description = "Auto-generated local date table partition. Date range is dynamically calculated from the CALENDARIO table's END_MONTH_DTA (end of month date) column, spanning full years from the minimum to maximum month-end year. This ensures the date table covers all end-of-month dates referenced in the model. Proposed – pending Loro Piana validation on data source and date range logic."
+
+	annotation __PBI_LocalDateTable = true
+
+	annotation Description = "Power BI auto-generated local date table providing a continuous date range for end-of-month time intelligence calculations. This hidden table serves as the foundation for date-based relationships and time intelligence functions based on the END_MONTH_DTA (end of month date) field from the CALENDARIO table. Contains standard date attributes including Year, Quarter, Month, and Day, with a default 'Date Hierarchy' for drill-down analysis. Date range is dynamically derived from the 'CALENDARIO' table's END_MONTH_DTA column (full years only). Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "Local Date Table, Date Dimension, Time Dimension, Calendar Table, Date Hierarchy, End of Month Date Table, Month-End Date Table"
+
+	annotation DisplayFolder = "System Tables"
+
+	annotation RefreshPolicy = "Dynamically generated based on CALENDARIO table data range. No manual refresh required. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana BI Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "Date: 2024-01-31, Year: 2024, Quarter: Qtr 1, Month: January, Day: 31"
+
+	annotation 'Common Questions' = "What is the date range based on end-of-month dates? How do I use the date hierarchy for month-end analysis? How do I filter by year, quarter, or month using end-of-month dates? What is the end-of-month date table used for?"
+
+	annotation 'Related Objects' = "CALENDARIO, SCONTRINI, TARGET, DateTableTemplate"
+
+	annotation __PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table

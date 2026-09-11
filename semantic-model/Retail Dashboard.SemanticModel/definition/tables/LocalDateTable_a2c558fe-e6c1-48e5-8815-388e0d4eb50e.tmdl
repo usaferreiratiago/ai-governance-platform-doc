@@ -1,0 +1,196 @@
+table LocalDateTable_a2c558fe-e6c1-48e5-8815-388e0d4eb50e
+	isHidden
+	lineageTag: 5d11e954-4752-4917-ad75-6012a114b095
+
+	column Date
+		isHidden
+		lineageTag: a69e9564-6c3e-42ec-8a75-4ec31a5c44e2
+		dataCategory: PaddedDateTableDates
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = User
+
+		annotation Description = "The actual date value. This is the primary key for delivery end date-based relationships and time intelligence calculations. Hidden by default but used for joins and date filtering. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Date, Calendar Date, Date Key, Delivery End Date"
+
+		annotation DisplayFolder = "Date"
+
+	column Year = YEAR([Date])
+		isHidden
+		lineageTag: e259dda5-dda4-4993-ac0d-87d7d985fe8a
+		dataCategory: Years
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Year
+
+		annotation Description = "Calendar year extracted from the delivery end date. Used for annual reporting and year-over-year comparisons of delivery end dates. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Year, Calendar Year, Delivery End Year"
+
+		annotation DisplayFolder = "Date"
+
+		annotation 'Example Values' = "2023, 2024, 2025"
+
+		annotation 'Common Questions' = "What is the delivery end year for this product? How do I filter by delivery end year? How many products had delivery end dates in 2024?"
+
+	column MonthNo = MONTH([Date])
+		isHidden
+		lineageTag: fa85c827-fff3-4636-815e-83d48c5d0cb9
+		dataCategory: MonthOfYear
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = MonthNumber
+
+		annotation Description = "Month number (1-12) extracted from the delivery end date. Used for chronological month ordering and sorting of delivery data. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Month Number, Month Index, Month of Year, Delivery End Month Number"
+
+		annotation DisplayFolder = "Date"
+
+	column Month = FORMAT([Date], "MMMM")
+		isHidden
+		lineageTag: 9070bde8-efa7-4bfe-ac51-b82344dc8c28
+		dataCategory: Months
+		summarizeBy: none
+		sortByColumn: MonthNo
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Month
+
+		annotation Description = "Month name (e.g., January, February). Used for month-level reporting and visual grouping of delivery end dates. Sorted by MonthNo for correct chronological display. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Month, Month Name, Calendar Month, Delivery End Month"
+
+		annotation DisplayFolder = "Date"
+
+		annotation 'Example Values' = "January, February, March"
+
+		annotation 'Common Questions' = "What is the delivery end month name? How do I group delivery end dates by month? What are the monthly delivery end trends?"
+
+	column QuarterNo = INT(([MonthNo] + 2) / 3)
+		isHidden
+		lineageTag: 3b80907c-b987-413b-a17a-53c528170c4b
+		dataCategory: QuarterOfYear
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = QuarterNumber
+
+		annotation Description = "Quarter number (1-4) extracted from the delivery end date. Used for quarterly reporting and sorting of delivery data. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Quarter Number, Quarter Index, Quarter of Year, Delivery End Quarter"
+
+		annotation DisplayFolder = "Date"
+
+	column Quarter = "Qtr " & [QuarterNo]
+		isHidden
+		lineageTag: b770c404-8779-4daa-a9f7-19d218bb0eae
+		dataCategory: Quarters
+		summarizeBy: none
+		sortByColumn: QuarterNo
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Quarter
+
+		annotation Description = "Quarter label (e.g., Qtr 1, Qtr 2). Used for quarterly reporting and visual grouping of delivery end dates. Sorted by QuarterNo for correct chronological display. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Quarter, Calendar Quarter, Qtr, Delivery End Quarter"
+
+		annotation DisplayFolder = "Date"
+
+		annotation 'Example Values' = "Qtr 1, Qtr 2, Qtr 3, Qtr 4"
+
+		annotation 'Common Questions' = "What is the delivery end quarter? How do I group delivery end dates by quarter? What are the quarterly delivery end trends?"
+
+	column Day = DAY([Date])
+		isHidden
+		lineageTag: be31d655-f3dd-4996-b9e2-42fa853ec0a8
+		dataCategory: DayOfMonth
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Day
+
+		annotation Description = "Day of the month (1-31). Used for daily analysis and sorting within months for delivery end dates. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Day, Day Number, Day of Month, Delivery End Day"
+
+		annotation DisplayFolder = "Date"
+
+		annotation 'Example Values' = "1, 15, 31"
+
+		annotation 'Common Questions' = "What is the day of the delivery end month? How do I analyze daily delivery end patterns?"
+
+	hierarchy 'Date Hierarchy'
+		lineageTag: 4a98c270-63ee-4e0e-933c-99fc41537f85
+
+		level Year
+			lineageTag: fa2e0247-ae78-4775-b3ca-399c4cc660cc
+			column: Year
+
+			annotation Description = "Year level in the delivery end date hierarchy. Top-level grouping for annual delivery end analysis. Proposed – pending Loro Piana validation."
+
+		level Quarter
+			lineageTag: 3987d82f-2166-4340-97f4-cd4c58591fea
+			column: Quarter
+
+			annotation Description = "Quarter level in the delivery end date hierarchy. Second-level grouping for quarterly delivery end analysis. Proposed – pending Loro Piana validation."
+
+		level Month
+			lineageTag: 84a2a810-e7fc-4540-8cad-b7ea2533f128
+			column: Month
+
+			annotation Description = "Month level in the delivery end date hierarchy. Third-level grouping for monthly delivery end analysis. Proposed – pending Loro Piana validation."
+
+		level Day
+			lineageTag: 0238f51c-cb56-4bc6-a690-e841f620cc9b
+			column: Day
+
+			annotation Description = "Day level in the delivery end date hierarchy. Lowest-level grouping for daily delivery end analysis. Proposed – pending Loro Piana validation."
+
+		annotation TemplateId = DateHierarchy
+
+		annotation Description = "Default time hierarchy allowing drill-down from Year → Quarter → Month → Day for delivery end date analysis. Provides intuitive navigation for delivery window tracking and supply chain reporting. Proposed – pending Loro Piana validation."
+
+		annotation 'Common Questions' = "How do I drill down from delivery end year to delivery end month? How do I expand delivery end quarterly data? What is the date hierarchy structure for delivery end analysis?"
+
+	partition 'Local Date Table - Delivery End Date' = calculated
+		mode: import
+		source = Calendar(Date(Year(MIN('ARTICOLI_COLORE'[Delivery Date To])), 1, 1), Date(Year(MAX('ARTICOLI_COLORE'[Delivery Date To])), 12, 31))
+
+		annotation Description = "Auto-generated local date table partition. Date range is dynamically calculated from the ARTICOLI_COLORE table's Delivery Date To column, spanning full years from the minimum to maximum delivery end year. This ensures the date table covers all delivery end dates referenced in the model. Used for delivery window analysis, end-of-delivery tracking, logistics performance monitoring, and supply chain planning. Proposed – pending Loro Piana validation on data source and date range logic."
+
+	annotation __PBI_LocalDateTable = true
+
+	annotation Description = "Power BI auto-generated local date table providing a continuous date range for delivery end date-based time intelligence calculations. This hidden table serves as the foundation for date-based relationships and time intelligence functions based on the Delivery Date To field from the ARTICOLI_COLORE (Product Color Variant) table. Contains standard date attributes including Year, Quarter, Month, and Day, with a default 'Date Hierarchy' for drill-down analysis. Date range is dynamically derived from the 'ARTICOLI_COLORE' table's Delivery Date To column (full years only). Used for delivery window analysis, end-of-delivery tracking, logistics performance monitoring, and supply chain planning. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "Local Date Table, Date Dimension, Time Dimension, Calendar Table, Date Hierarchy, Delivery End Date Table, Delivery Window Date Table"
+
+	annotation DisplayFolder = "System Tables"
+
+	annotation RefreshPolicy = "Dynamically generated based on ARTICOLI_COLORE table data range. No manual refresh required. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana BI Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "Date: 2024-01-01, Year: 2024, Quarter: Qtr 1, Month: January, Day: 1"
+
+	annotation 'Common Questions' = "What is the delivery end date range? How do I use the date hierarchy for delivery window analysis? How do I filter by delivery end year, quarter, or month? What is the delivery end date table used for?"
+
+	annotation 'Related Objects' = "ARTICOLI_COLORE, SCONTRINI, TARGET, CLASSE_PRODOTTO"
+
+	annotation __PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table

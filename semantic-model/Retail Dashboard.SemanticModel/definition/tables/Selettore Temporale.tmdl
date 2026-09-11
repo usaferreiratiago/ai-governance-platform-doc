@@ -1,0 +1,91 @@
+table 'Selettore Temporale'
+	lineageTag: 482339ea-65dd-4afa-9367-1d104e57a22d
+
+	column TimeGranularityName
+		lineageTag: 0b03e848-6532-4e21-ab4a-7db042e1fba3
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: TimeGranularitySortOrder
+
+		relatedColumnDetails
+			groupByColumn: TimeGranularityGroup
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Business-friendly name of the time granularity option (e.g., 'Day', 'Week'). Use this field for selection controls and visual labels. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Time Granularity, Time Period, Granularity Level, Date Level, Time View"
+
+		annotation DisplayFolder = "Time Selection"
+
+		annotation 'Example Values' = "Day, Week"
+
+		annotation 'Common Questions' = "What time granularities are available? How do I select Day granularity? How do I switch to weekly view?"
+
+		annotation 'Related Objects' = "CALENDARIO[Date], CALENDARIO[WEEK_COD]"
+
+	column TimeGranularityGroup
+		isHidden
+		lineageTag: 14a3b143-8290-4dfa-9ad5-83c1b5964779
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: TimeGranularitySortOrder
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Technical grouping field for internal logic. Not for analytical use."
+
+		annotation Synonyms = "Group, Internal Group"
+
+		annotation DisplayFolder = "Metadata"
+
+	column TimeGranularitySortOrder
+		isHidden
+		formatString: 0
+		lineageTag: 84628262-bd9b-4cd5-974a-1df64644d241
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Technical sort order for time granularity display in selection controls. Lower numbers appear first. Not for analytical use."
+
+	partition 'Time Period Selection' = calculated
+		mode: import
+		source =
+				{
+				    ("WEEK_COD", NAMEOF('CALENDARIO'[WEEK_COD]), 0),
+				    ("Day", NAMEOF('CALENDARIO'[Date]), 1)
+				}
+
+		annotation Description = "Calculated partition that unions two time granularity options from the CALENDARIO table: WEEK_COD (weekly granularity) and Date (daily granularity). This creates a unified selection dimension for switching between day and week levels in reports. Sort order: WEEK_COD (0) then Day (1)."
+
+	annotation PBI_Id = 5fcb19b336b548ac9cc3f627eb97c43f
+
+	annotation Description = "Time period selection dimension for dynamic time granularity switching in reports. Provides a user-selectable list of time granularities (e.g., Day, Week) for toggling between different levels of temporal detail. Enables users to switch between daily and weekly views in visuals without rebuilding reports. Grain: one row per time granularity option. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "Time Selector, Time Granularity Selector, Time Period Picker, Temporal Granularity, Date Level Selector"
+
+	annotation DisplayFolder = "Parameters"
+
+	annotation RefreshPolicy = "Static hardcoded list. No refresh required. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana BI Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "Day (Daily granularity), Week (Weekly granularity)"
+
+	annotation 'Common Questions' = "How do I switch between day and week views? What time granularities are available for selection? How do I change from daily to weekly reporting? What is the difference between Day and Week views?"
+
+	annotation 'Related Objects' = "CALENDARIO, SCONTRINI, TARGET, DateTableTemplate"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation

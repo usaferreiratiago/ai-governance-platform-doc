@@ -1,0 +1,125 @@
+table RLS_STORE_MAN_TABLE
+	isHidden
+	lineageTag: d28c6b34-5267-4741-a18d-24a88c986a21
+
+	column ManagerEmail
+		dataType: string
+		isHidden
+		lineageTag: 4789d50c-fb63-4ca8-8e15-8ecb779f2194
+		summarizeBy: none
+		sourceColumn: Email
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Email address of the store manager. Used as the identifier for RLS filtering based on the logged-in user's email address. Proposed – pending Loro Piana validation on email format and domain requirements."
+
+		annotation Synonyms = "Email, User Email, Manager Email, Login Email"
+
+		annotation DisplayFolder = "User Details"
+
+		annotation 'Example Values' = "manager@loropiana.com, maria.bianchi@loropiana.com"
+
+		annotation 'Common Questions' = "What email addresses have store access? How do I add a new manager? What stores does manager@loropiana.com have access to?"
+
+		annotation 'Related Objects' = "RLS roles"
+
+	column ManagerArea
+		dataType: string
+		isHidden
+		lineageTag: 60478b47-c0c4-48b7-9db5-4b0f809e6fae
+		summarizeBy: none
+		sourceColumn: Area of reference
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Geographic area of responsibility for the store manager (e.g., 'EMEA', 'Americas', 'APAC'). Used for area-level security grouping. Proposed – pending Loro Piana validation on area values and definitions."
+
+		annotation Synonyms = "Area, Geographic Area, Region, Responsibility Area"
+
+		annotation DisplayFolder = "User Details"
+
+		annotation 'Example Values' = "EMEA, Americas, APAC, LATAM"
+
+		annotation 'Common Questions' = "What areas do managers oversee? Which managers are responsible for EMEA?"
+
+		annotation 'Related Objects' = "GERARCHIA_AREA, NAZIONI"
+
+	column StoreName
+		dataType: string
+		isHidden
+		lineageTag: 04e78cb9-5360-4542-9fcf-323fd9586946
+		summarizeBy: none
+		sourceColumn: Store
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Business-friendly name of the store (e.g., 'Milano Via Montenapoleone'). Used for display and identification. Proposed – pending Loro Piana validation on naming conventions."
+
+		annotation Synonyms = "Store Name, Location Name, Boutique Name, Store Description"
+
+		annotation DisplayFolder = "Store Details"
+
+		annotation 'Example Values' = "Milano Via Montenapoleone, Roma Via Condotti, Paris Avenue Montaigne"
+
+		annotation 'Common Questions' = "What is the store name associated with this access? Which stores are in the manager's portfolio?"
+
+		annotation 'Related Objects' = "STORES.'Store Description'"
+
+	column StoreCode
+		dataType: string
+		isHidden
+		lineageTag: 13c473dc-b941-42a2-ab7c-025389e49175
+		summarizeBy: none
+		sourceColumn: Store Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Store code that the manager has permission to access (e.g., 'LP001', 'LP002'). This value is used by RLS filters to restrict data visibility at the store level. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Store ID, Store Code, Accessible Store, Permitted Store"
+
+		annotation DisplayFolder = "Store Details"
+
+		annotation 'Example Values' = "LP001, LP002, LP003"
+
+		annotation 'Common Questions' = "What stores can a manager access? How do I add a new store to a manager's access? Which stores are visible in this role?"
+
+		annotation 'Related Objects' = "STORES.'Store Code'"
+
+	partition RLS_STORE_MAN_TABLE = m
+		mode: import
+		source =
+				let
+				        Source = PowerPlatform.Dataflows(null),
+				        Workspaces = Source{[Id="Workspaces"]}[Data],
+				        WS = Workspaces{[workspaceId="24cd3e65-bd8a-49b4-9dec-3b93184909fc"]}[Data],
+				        DF = WS{[dataflowId="b3abe630-e70d-4473-a64b-a7634a8d2891"]}[Data],
+				        STORE_MAN_RLS_ = DF{[entity="STORE_MAN_RLS",version=""]}[Data],
+				        // Select all relevant columns from the source
+				        #"Removed Other Columns" = Table.SelectColumns(STORE_MAN_RLS_,{"Email", "Area of reference", "Store", "Store Code"})
+				in
+				        #"Removed Other Columns"
+
+		annotation Description = "Import partition for store manager RLS access control data. Loads email-to-store mappings from the STORE_MAN_RLS dataflow. This table powers Row-Level Security by matching the logged-in user's email to their accessible stores."
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation Description = "Row-Level Security (RLS) mapping table defining store access permissions for individual store managers. Contains email-to-store mappings that determine which stores each manager can access. Used with RLS roles to filter data at the store level based on the logged-in user's email address. Ensures managers only see data for their assigned stores and areas of responsibility. Grain: one row per email, area, and store assignment. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "RLS Store Manager Mapping, Store Manager Security, Access Control List, User-Store Assignment, RLS Permissions"
+
+	annotation DisplayFolder = "Security"
+
+	annotation RefreshPolicy = "Refreshed with user access changes. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana Security Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "Email: manager@loropiana.com, Store: LP001, Area: EMEA"
+
+	annotation 'Common Questions' = "Which stores can a manager access? How is store manager security implemented? What stores are visible to each manager? How do I add a new store to a manager's access?"
+
+	annotation 'Related Objects' = "STORES, NEGOZI, SCONTRINI, RLS roles, RLS_STORE_MAN_TABLE (Temp)"

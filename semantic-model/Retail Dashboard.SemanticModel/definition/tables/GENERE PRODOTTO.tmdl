@@ -1,0 +1,78 @@
+table 'GENERE PRODOTTO'
+	lineageTag: 8fb8ba32-d046-4a99-8ad1-b51b89f91704
+
+	column GenderCode
+		dataType: string
+		lineageTag: 9182a9d0-dd7c-4d88-8bb7-3596710b616a
+		summarizeBy: none
+		sourceColumn: Gender Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Unique code identifying a gender classification (e.g., 'M' for Men, 'W' for Women, 'U' for Unisex). Used to link products to their gender category. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Gender, Gender ID, Gender Category Code, Product Gender Code"
+
+		annotation DisplayFolder = "Gender Details"
+
+		annotation 'Example Values' = "M, W, U, K"
+
+		annotation 'Common Questions' = "What is the gender code for Men? How many products are in each gender category? Which gender has the highest sales?"
+
+		annotation 'Related Objects' = "ARTICOLI.'Gender Code'"
+
+	column GenderDescription
+		dataType: string
+		lineageTag: bcb22ee2-9933-41af-8077-6ec77721b69d
+		summarizeBy: none
+		sourceColumn: Gender Description
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Business-friendly description of the gender classification (e.g., 'Men', 'Women', 'Unisex'). Use this field for labels and reporting. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Gender Name, Gender Label, Product Gender, Category Name"
+
+		annotation DisplayFolder = "Gender Details"
+
+		annotation 'Example Values' = "Men, Women, Unisex, Kids"
+
+		annotation 'Common Questions' = "What is the gender description for code M? How do I filter by gender? What are the gender categories?"
+
+		annotation 'Related Objects' = "ARTICOLI.'Gender Code'"
+
+	partition 'GENERE PRODOTTO' = m
+		mode: import
+		source =
+				let
+				        Source = PowerPlatform.Dataflows(null),
+				        Workspaces = Source{[Id="Workspaces"]}[Data],
+				        WS = Workspaces{[workspaceId="63075e43-ec19-4090-b204-854337b4b0d5"]}[Data],
+				        DF = WS{[dataflowId="dcbf1499-ee35-4598-9b58-2d0142058031"]}[Data],
+				        GENERE_PRODOTTO = DF{[entity="GENERE_PRODOTTO"]}[Data]
+				in
+				        GENERE_PRODOTTO
+
+		annotation Description = "Import partition for product gender master data. Loads all gender classifications without date filtering."
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation Description = "Product gender classification dimension for the luxury retail assortment. Defines gender categories (e.g., Men, Women, Unisex) for product classification and reporting. Links to products to enable gender-based sales analysis and assortment planning. Grain: one row per gender code. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "Product Gender, Gender, Gender Dimension, Gender Classification, Product Category Gender"
+
+	annotation DisplayFolder = "Product Master"
+
+	annotation RefreshPolicy = "Weekly on Sundays at 00:00 UTC; data latency ≤ 48 hours. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana Product Management Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "M: Men / Uomo, W: Women / Donna, U: Unisex, K: Kids / Bambini"
+
+	annotation 'Common Questions' = "What are the gender classifications? Which products are for men vs women? How do sales compare by gender? What is the mix of men's vs women's products?"
+
+	annotation 'Related Objects' = "ARTICOLI.'Gender Code', CLASSE_PRODOTTO, BUSINESS, SCONTRINI"

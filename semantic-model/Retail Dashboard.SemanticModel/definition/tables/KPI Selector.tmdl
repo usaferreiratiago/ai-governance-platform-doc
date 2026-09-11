@@ -1,0 +1,93 @@
+table 'KPI Selector'
+	lineageTag: 08f96551-1efa-4b52-8786-9f44bfc12a8f
+
+	column KPIName
+		dataType: string
+		lineageTag: d58af205-b4e3-4b2e-a7c5-b8e6b496ab16
+		summarizeBy: none
+		sourceColumn: KPI
+		sortByColumn: KPISortOrder
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Business-friendly name of the Key Performance Indicator (e.g., 'Revenue', 'Units Sold'). Use this field for selection controls and visual labels. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "KPI Name, Metric Name, Performance Indicator, KPI Label"
+
+		annotation DisplayFolder = "KPI Selection"
+
+		annotation 'Example Values' = "Revenue, Units Sold, Average Price, Gross Margin, Sell-Through Rate"
+
+		annotation 'Common Questions' = "What are the available KPIs? How do I select Revenue? What KPIs can I display?"
+
+		annotation 'Related Objects' = "_measure"
+
+	column KPISortOrder
+		dataType: int64
+		formatString: 0
+		lineageTag: 0be0f77f-3798-4ea6-bb76-8214cfa028fe
+		summarizeBy: sum
+		sourceColumn: order
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Numeric sort order for KPI display in selection controls. Lower numbers appear first. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Sort Order, Display Order, Order"
+
+		annotation DisplayFolder = "KPI Selection"
+
+		annotation 'Example Values' = "1, 2, 3, 4, 5"
+
+		annotation 'Common Questions' = "How are KPIs ordered? Can I change the sort order of KPIs?"
+
+	column KPIFormattedLabel
+		dataType: string
+		lineageTag: 8b51ce53-0d64-4704-bcad-cd82d655c521
+		summarizeBy: none
+		sourceColumn: KPI (Format)
+		sortByColumn: KPISortOrder
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Formatted display label for the KPI, possibly including units, currency symbols, or formatting hints (e.g., 'Revenue (EUR)', 'Units (#)'). Use for visual labels when format needs to be shown. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Formatted KPI, Display Label, KPI with Format"
+
+		annotation DisplayFolder = "KPI Selection"
+
+		annotation 'Example Values' = "Revenue (EUR), Units (#), Avg Price (EUR)"
+
+		annotation 'Common Questions' = "How do I show formatted KPI labels? What is the formatted display for Revenue?"
+
+	partition 'KPI Selection' = m
+		mode: import
+		source =
+				let
+				        Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("ZZA9D4IwEIb/yqUskDAofo/GxUWDgHEgDA0p0EhKUpDEf+9dQQQc3oR73qdH0zhmV9FAyEtRM5ctMcMM9qVUDkvcmEWaZ5lMsfUw34ma24urRjZvxCvMMJpTMn3iMsRrOtVP1Jwq1Qpdy0pBwBuB7QYzp2Te/QibLYa+iBzbHLpdCHeYEeh6oXkuwNcypc17o4yZuYGu6hpCUZZS5Wgc6P8T9mdBED3ojRZz1RSkn2Ve9FcBi1R6zymca2HBtQDbckj3ZvqvTJIP", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [KPI = _t, order = _t, #"KPI (Test)" = _t]),
+				        #"Changed Type" = Table.TransformColumnTypes(Source,{{"KPI", type text}, {"order", Int64.Type}}),
+				        #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"KPI (Test)", "KPI (Format)"}})
+				in
+				        #"Renamed Columns"
+
+		annotation Description = "Static import partition containing a hardcoded list of selectable KPIs. Each row includes: KPI name, display order, and formatted label. This is a static selection table used for dynamic KPI switching in reports."
+
+	annotation PBI_ResultType = Table
+
+	annotation Description = "KPI selection dimension for dynamic metric switching in reports. Provides a user-selectable list of Key Performance Indicators (KPIs) with display labels and sorting. Enables users to switch between different metrics (e.g., Revenue, Units, Average Price) in visuals without rebuilding reports. Grain: one row per KPI. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "KPI Selector, Metric Selector, KPI Picker, Dynamic Metrics, Performance Indicators"
+
+	annotation DisplayFolder = "Parameters"
+
+	annotation RefreshPolicy = "Static hardcoded list. No refresh required. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana BI Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "Revenue, Units Sold, Average Price, Gross Margin, Sell-Through Rate, Conversion Rate"
+
+	annotation 'Common Questions' = "How do I switch KPIs in a report? What KPIs are available for selection? How do I change the displayed metric? Which KPI shows revenue vs units?"
+
+	annotation 'Related Objects' = "SCONTRINI, TARGET, BUDGET, _measure"

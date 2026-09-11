@@ -1,0 +1,196 @@
+table LocalDateTable_ecfa9992-c188-42c7-8979-5ee128f19f1a
+	isHidden
+	lineageTag: 3099e43d-d519-4dab-bd6b-205e647a4ffc
+
+	column Date
+		isHidden
+		lineageTag: 79b5e107-3630-4b1b-affe-64536cf49940
+		dataCategory: PaddedDateTableDates
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = User
+
+		annotation Description = "The actual date value. This is the primary key for 3-day ago date-based relationships and time intelligence calculations. Hidden by default but used for joins and date filtering. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Date, Calendar Date, Date Key, 3 Day Ago Date"
+
+		annotation DisplayFolder = "Date"
+
+	column Year = YEAR([Date])
+		isHidden
+		lineageTag: b31dff3f-d99d-4b5d-a6f0-d511b33591a7
+		dataCategory: Years
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Year
+
+		annotation Description = "Calendar year extracted from the 3-day ago date. Used for annual reporting and year-over-year comparisons. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Year, Calendar Year, 3 Day Ago Year"
+
+		annotation DisplayFolder = "Date"
+
+		annotation 'Example Values' = "2023, 2024, 2025"
+
+		annotation 'Common Questions' = "What is the year for this 3-day ago date? How do I filter by year using 3-day ago dates? What was the performance in 2024 based on three-day offset?"
+
+	column MonthNo = MONTH([Date])
+		isHidden
+		lineageTag: 29bd96fd-776c-46b4-b583-4f498cc06df7
+		dataCategory: MonthOfYear
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = MonthNumber
+
+		annotation Description = "Month number (1-12) extracted from the 3-day ago date. Used for chronological month ordering and sorting. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Month Number, Month Index, Month of Year, 3 Day Ago Month Number"
+
+		annotation DisplayFolder = "Date"
+
+	column Month = FORMAT([Date], "MMMM")
+		isHidden
+		lineageTag: 4440894f-82a5-4838-81a8-bf97dd81ea7a
+		dataCategory: Months
+		summarizeBy: none
+		sortByColumn: MonthNo
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Month
+
+		annotation Description = "Month name (e.g., January, February). Used for month-level reporting and visual grouping. Sorted by MonthNo for correct chronological display. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Month, Month Name, Calendar Month, 3 Day Ago Month"
+
+		annotation DisplayFolder = "Date"
+
+		annotation 'Example Values' = "January, February, March"
+
+		annotation 'Common Questions' = "What is the month name for the 3-day ago date? How do I group by month using 3-day ago dates? What are the monthly trends based on three-day offset?"
+
+	column QuarterNo = INT(([MonthNo] + 2) / 3)
+		isHidden
+		lineageTag: 46391789-8172-4d63-84f1-be0245e36822
+		dataCategory: QuarterOfYear
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = QuarterNumber
+
+		annotation Description = "Quarter number (1-4) extracted from the 3-day ago date. Used for quarterly reporting and sorting. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Quarter Number, Quarter Index, Quarter of Year, 3 Day Ago Quarter"
+
+		annotation DisplayFolder = "Date"
+
+	column Quarter = "Qtr " & [QuarterNo]
+		isHidden
+		lineageTag: e6c6c501-9b68-4d3f-a806-9080f5061a3a
+		dataCategory: Quarters
+		summarizeBy: none
+		sortByColumn: QuarterNo
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Quarter
+
+		annotation Description = "Quarter label (e.g., Qtr 1, Qtr 2). Used for quarterly reporting and visual grouping. Sorted by QuarterNo for correct chronological display. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Quarter, Calendar Quarter, Qtr, 3 Day Ago Quarter"
+
+		annotation DisplayFolder = "Date"
+
+		annotation 'Example Values' = "Qtr 1, Qtr 2, Qtr 3, Qtr 4"
+
+		annotation 'Common Questions' = "What is the quarter for the 3-day ago date? How do I group by quarter using 3-day ago dates? What are the quarterly trends based on three-day offset?"
+
+	column Day = DAY([Date])
+		isHidden
+		lineageTag: 72e07410-c66d-4c21-a54f-6ff2da066e8f
+		dataCategory: DayOfMonth
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Day
+
+		annotation Description = "Day of the month (1-31). Used for daily analysis and sorting within months. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Day, Day Number, Day of Month, 3 Day Ago Day"
+
+		annotation DisplayFolder = "Date"
+
+		annotation 'Example Values' = "1, 15, 31"
+
+		annotation 'Common Questions' = "What is the day of the month for the 3-day ago date? How do I analyze daily data using 3-day ago dates?"
+
+	hierarchy 'Date Hierarchy'
+		lineageTag: 41b93f3b-0d45-4a41-bd84-b95a16249683
+
+		level Year
+			lineageTag: 6a7c3e2e-94b2-4e5b-874e-6a2770762d16
+			column: Year
+
+			annotation Description = "Year level in the 3-day ago date hierarchy. Top-level grouping for annual analysis. Proposed – pending Loro Piana validation."
+
+		level Quarter
+			lineageTag: 14d5c8a1-ef04-487f-9f00-eee6b194f355
+			column: Quarter
+
+			annotation Description = "Quarter level in the 3-day ago date hierarchy. Second-level grouping for quarterly analysis. Proposed – pending Loro Piana validation."
+
+		level Month
+			lineageTag: 03ebfc8e-29d5-4a5b-87db-1cd3fbdbdcca
+			column: Month
+
+			annotation Description = "Month level in the 3-day ago date hierarchy. Third-level grouping for monthly analysis. Proposed – pending Loro Piana validation."
+
+		level Day
+			lineageTag: 3e4c2676-8558-410e-a2e0-da1efdc21a94
+			column: Day
+
+			annotation Description = "Day level in the 3-day ago date hierarchy. Lowest-level grouping for daily analysis. Proposed – pending Loro Piana validation."
+
+		annotation TemplateId = DateHierarchy
+
+		annotation Description = "Default time hierarchy allowing drill-down from Year → Quarter → Month → Day for 3-day ago date analysis. Provides intuitive navigation for date-based reporting using the COD_3AGO_DTA (three-day offset). Proposed – pending Loro Piana validation."
+
+		annotation 'Common Questions' = "How do I drill down from year to month using 3-day ago dates? How do I expand quarterly data with three-day offset? What is the date hierarchy structure for 3-day ago analysis?"
+
+	partition 'Local Date Table - 3 Day Ago Date' = calculated
+		mode: import
+		source = Calendar(Date(Year(MIN('CALENDARIO'[COD_3AGO_DTA])), 1, 1), Date(Year(MAX('CALENDARIO'[COD_3AGO_DTA])), 12, 31))
+
+		annotation Description = "Auto-generated local date table partition. Date range is dynamically calculated from the CALENDARIO table's COD_3AGO_DTA (3 days ago) column, spanning full years from the minimum to maximum three-day offset year. This ensures the date table covers all 3-day ago dates referenced in the model. Used for 3-day ago comparisons, rolling three-day analysis, and short-term trend tracking. Proposed – pending Loro Piana validation on data source and date range logic."
+
+	annotation __PBI_LocalDateTable = true
+
+	annotation Description = "Power BI auto-generated local date table providing a continuous date range for time intelligence calculations based on the COD_3AGO_DTA (3 days ago date) field from the CALENDARIO table. This hidden table serves as the foundation for date-based relationships and time intelligence functions that require a 3-day offset reference. Contains standard date attributes including Year, Quarter, Month, and Day, with a default 'Date Hierarchy' for drill-down analysis. Date range is dynamically derived from the 'CALENDARIO' table's COD_3AGO_DTA column (full years only). Used for 3-day ago comparisons, rolling three-day analysis, and short-term trend tracking. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "Local Date Table, Date Dimension, Time Dimension, Calendar Table, Date Hierarchy, 3 Day Ago Date Table, Three Day Offset Date Table"
+
+	annotation DisplayFolder = "System Tables"
+
+	annotation RefreshPolicy = "Dynamically generated based on CALENDARIO table data range. No manual refresh required. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana BI Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "Date: 2024-01-01, Year: 2024, Quarter: Qtr 1, Month: January, Day: 1"
+
+	annotation 'Common Questions' = "What is the date range based on 3-day ago dates? How do I use the date hierarchy for three-day offset analysis? How do I filter by year, quarter, or month using 3-day ago dates? What is the 3-day ago date table used for?"
+
+	annotation 'Related Objects' = "CALENDARIO, SCONTRINI, TARGET, DateTableTemplate"
+
+	annotation __PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table

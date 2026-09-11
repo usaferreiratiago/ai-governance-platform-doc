@@ -1,0 +1,79 @@
+table EVENTI_SPONSOR
+	lineageTag: 75772438-c1ba-4f7a-a126-0a72d7b35e2c
+
+	column SponsorEventCode
+		dataType: string
+		lineageTag: 068a3ef5-de60-47fa-a486-9006526f55d7
+		summarizeBy: none
+		sourceColumn: Sponsor Event Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Unique code identifying a sponsor event or special collaboration (e.g., 'EVT001', 'EVT002'). Used to link product-color variants to specific events. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Event Code, Sponsor Code, Collaboration Code, Event ID, Special Event Code"
+
+		annotation DisplayFolder = "Event Details"
+
+		annotation 'Example Values' = "EVT001, EVT002, EVT003, EVT004, EVT005"
+
+		annotation 'Common Questions' = "What is the event code for the Milan Fashion Week collaboration? How many products are associated with each event code? Which event code has the highest sales?"
+
+		annotation 'Related Objects' = "ARTICOLI_COLORE.'Sponsor Event Code'"
+
+	column SponsorEventDescription
+		dataType: string
+		lineageTag: f9e95737-8f9e-4798-9ba4-a9e89616e739
+		summarizeBy: none
+		sourceColumn: Sponsor Event Description
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Business-friendly description of the sponsor event or collaboration (e.g., 'Milan Fashion Week 2024', 'Loro Piana Anniversary Collection'). Use this field for labels and reporting. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Event Name, Sponsor Event Name, Event Description, Collaboration Name, Special Event Name"
+
+		annotation DisplayFolder = "Event Details"
+
+		annotation 'Example Values' = "Milan Fashion Week, Loro Piana Anniversary, Winter Collection Launch, Capsule Collaboration, Exclusive Event"
+
+		annotation 'Common Questions' = "What is the description for event EVT001? Which sponsor events are active? What are the event names for current collaborations?"
+
+		annotation 'Related Objects' = "ARTICOLI_COLORE.'Sponsor Event Code'"
+
+	partition EVENTI_SPONSOR = m
+		mode: import
+		source =
+				let
+				        Source = PowerPlatform.Dataflows(null),
+				        Workspaces = Source{[Id="Workspaces"]}[Data],
+				        WS = Workspaces{[workspaceId="63075e43-ec19-4090-b204-854337b4b0d5"]}[Data],
+				        DF = WS{[dataflowId="9839110f-89f4-42a8-86a3-0da4749f930e"]}[Data],
+				        EVENTI_SPONSOR1 = DF{[entity="EVENTI_SPONSOR"]}[Data],
+				        #"Removed Other Columns" = Table.SelectColumns(EVENTI_SPONSOR1,{"Sponsor Event Code", "Sponsor Event Description"})
+				in
+				        #"Removed Other Columns"
+
+		annotation Description = "Import partition for sponsor event master data. Loads all sponsor events without date filtering."
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation Description = "Sponsor events dimension for the luxury retail assortment. Contains sponsor event codes and descriptions used to classify products associated with special events, collaborations, or sponsorships. Links to product-color variants to identify event-specific merchandise. Grain: one row per sponsor event code. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "Sponsor Events, Special Events, Collaborations, Event Codes, Sponsorship Dimension"
+
+	annotation DisplayFolder = "Product Master"
+
+	annotation RefreshPolicy = "Weekly on Sundays at 00:00 UTC; data latency ≤ 48 hours. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana Commercial Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "EVT001: Milan Fashion Week, EVT002: Loro Piana Anniversary, EVT003: Winter Collection Launch"
+
+	annotation 'Common Questions' = "What products are associated with sponsor events? Which sponsor events have the highest sales? How do event products perform versus non-event products? What is the contribution of special collaborations to total revenue?"
+
+	annotation 'Related Objects' = "ARTICOLI_COLORE.'Sponsor Event Code', ARTICOLI, SCONTRINI, CLASSE_PRODOTTO"

@@ -1,0 +1,1319 @@
+table SCONTRINI
+	lineageTag: 88b5d8cc-025d-4a0a-b3d3-59aee1560e3f
+
+	measure 'Total Net Sales EUR' = ```
+			
+			        SUM(SCONTRINI[Net Sales Eur])
+			```
+		lineageTag: 7e0204d1-5bcc-4b61-ab12-0d12b9323aaa
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Net Sales Local Currency' =
+			SUM(SCONTRINI['Net Sales Ccy'])
+			formatString: "#,##0.00"
+			displayFolder: "07. Sales & Revenue"
+			annotation Description = "Total net sales amount in the transaction currency. Use Currency as the currency context. Do not compare values across currencies without applying currency conversion."
+		lineageTag: 72bb8b7e-4d93-4a71-ab0e-68a72286785b
+
+	measure 'Collected Amount EUR' =
+			SUM(SCONTRINI[INCASSATO_EUR])
+			formatString: "#,##0.00"
+			displayFolder: "07. Sales & Revenue"
+			annotation Description = "Total collected amount in EUR based on INCASSATO_EUR."
+		lineageTag: 85ebf09d-61d5-40a2-bfbd-bb9fd0fb7d6b
+
+	measure 'Collected Amount Local Currency' =
+			SUM(SCONTRINI[INCASSATO_VAL])
+			formatString: "#,##0.00"
+			displayFolder: "07. Sales & Revenue"
+			annotation Description = "Total collected amount in the transaction currency."
+		lineageTag: a6d16e00-0219-46db-ae4a-214fcb79e998
+
+	measure 'Quantity Sold' =
+			SUM(SCONTRINI[Quantity])
+			formatString: "#,##0"
+			displayFolder: "07. Sales & Revenue"
+			annotation Description = "Total quantity sold across transaction lines."
+		lineageTag: 29e61b5d-e856-42ae-8338-74a65ee522ae
+
+	measure 'Units Sold' =
+			SUM(SCONTRINI[Unit_DAX])
+			formatString: "#,##0"
+			displayFolder: "07. Sales & Revenue"
+			annotation Description = "Business unit count derived from Unit of Measure and Quantity. When Unit of Measure is not NR, one transaction line is treated as one unit."
+		lineageTag: 116f4684-c2f8-4b28-9d03-1c2ce8de8fcb
+
+	measure 'Ticket Count' =
+			DISTINCTCOUNT(SCONTRINI['Ticket ID'])
+			formatString: "#,##0"
+			displayFolder: "01. Transaction"
+			annotation Description = "Number of distinct sales tickets represented in the filtered transaction context."
+		lineageTag: 9f07b5ea-67c3-4790-8b49-26a66d0d612a
+
+	measure 'Customer Count' =
+			DISTINCTCOUNT(SCONTRINI[Clients])
+			formatString: "#,##0"
+			displayFolder: "02. Customer"
+			annotation Description = "Number of distinct customers represented in the transaction context. Generic or anonymous customers may be represented using the ticket identifier according to the Clients business logic"
+		lineageTag: bd6337a2-c1c9-4496-a373-db959c60ccbc
+
+	measure 'Total Discount EUR' =
+			SUM(SCONTRINI['Discount Eur'])
+			formatString: "#,##0.00"
+			displayFolder: "08. Discounts"
+			annotation Description = "Total discount amount in EUR."
+		lineageTag: 35cbba2c-ae84-4927-b77f-eb9cb1d89983
+
+	measure 'Discount Local Currency' =
+			SUM(SCONTRINI['Discount Ccy'])
+			formatString: "#,##0.00"
+			displayFolder: "08. Discounts"
+			annotation Description = "Total discount amount in the transaction currency."
+		lineageTag: a8318c9f-1140-4f1d-8164-d4da8e0f9d84
+
+	measure 'Total Retail Sales Price EUR' =
+			SUM(SCONTRINI['Retail Sales Price Eur'])
+			formatString: "#,##0.00"
+			displayFolder: "07. Sales & Revenue"
+			annotation Description = "Total retail sales price in EUR before applicable transaction-level adjustments."
+		lineageTag: 4a775ed0-6a52-4be8-9e71-2b321aa40227
+
+	measure 'Total Original Sales Price EUR' =
+			SUM(SCONTRINI['Original Sales Price Eur'])
+			formatString: "#,##0.00"
+			displayFolder: "07. Sales & Revenue"
+			annotation Description = "Total original sales price in EUR before discounts or other adjustments."
+		lineageTag: 4ecf9375-c70c-4d82-ac59-0e0611851c01
+
+	column 'Ticket ID'
+		dataType: string
+		displayFolder: 01. Transaction
+		lineageTag: 1b823608-febf-41f2-af4f-296c0db17fe7
+		summarizeBy: none
+		sourceColumn: Ticket ID
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Unique identifier of the sales ticket. Use DISTINCTCOUNT for ticket counts; do not sum this field."
+
+	column 'Ticket Row ID'
+		dataType: int64
+		formatString: 0
+		displayFolder: 01. Transaction
+		lineageTag: a903f8f1-9306-4ae8-96a1-ee2158d90c13
+		summarizeBy: none
+		sourceColumn: Ticket Row ID
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Identifier of the transaction line within the sales transaction data. This is a technical identifier and should not be summed."
+
+	column 'Customer Code'
+		dataType: double
+		displayFolder: 02. Customer
+		lineageTag: 44120b7a-0a60-4460-8136-4ae188b5aba0
+		summarizeBy: none
+		sourceColumn: Customer Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Customer identifier from the source system. Technical identifier; do not expose unnecessarily in natural-language responses."
+
+	column 'Store Code'
+		dataType: string
+		displayFolder: 03. Store & Sales
+		lineageTag: ea820654-1d27-4d49-9a74-619b25bec114
+		summarizeBy: none
+		sourceColumn: Store Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Identifier of the store or selling location associated with the transaction."
+
+	column 'Sales Associate Code'
+		dataType: string
+		displayFolder: 03. Store & Sales
+		lineageTag: da96b922-d450-4f16-9902-660722ab4ecb
+		summarizeBy: none
+		sourceColumn: Sales Associate Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Identifier of the sales associate associated with the transaction."
+
+	column 'Ticket Type'
+		dataType: string
+		displayFolder: 01. Transaction
+		lineageTag: e7d88e72-8ad5-4b86-8f8c-bf8e8395b09c
+		summarizeBy: none
+		sourceColumn: Ticket Type
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Type or classification of the sales ticket. Business definitions of each value require Loro Piana validation."
+
+	column 'Flag Distant Sales'
+		dataType: int64
+		formatString: 0
+		displayFolder: 01. Transaction
+		lineageTag: f74e7bdf-e94c-4667-abf8-b5aefecc98d6
+		summarizeBy: none
+		sourceColumn: Flag Distant Sales
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Indicator identifying whether the transaction is classified as a distant sale. Business interpretation of flag values requires validation."
+
+	column Date
+		dataType: dateTime
+		formatString: yyyy-MM-dd
+		displayFolder: 05. Retail Calendar
+		lineageTag: 77b93cc1-0591-41e1-87d1-fed843e1dbcb
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Transaction date of the sales line. Use the related calendar dimension for year, fiscal year, week and other time intelligence."
+
+	column 'Ticket Row Type'
+		dataType: string
+		displayFolder: 01. Transaction
+		lineageTag: b7985c8f-b709-4254-9aac-0a4f0246e05a
+		summarizeBy: none
+		sourceColumn: Ticket Row Type
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Classification of the transaction line. The current data preparation retains RES, SPE and VEN transaction row types."
+
+	column 'Ticket Row Description'
+		dataType: string
+		displayFolder: 01. Transaction
+		lineageTag: e1dc548b-db62-42c7-80e8-4e032b3ec92e
+		summarizeBy: none
+		sourceColumn: Ticket Row Description
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Description associated with the transaction line."
+
+	column 'Item Code'
+		dataType: string
+		displayFolder: 04. Product
+		lineageTag: b929d2d5-7b39-4764-9fd8-a2844e119d4f
+		summarizeBy: none
+		sourceColumn: Item Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Identifier of the product or item sold."
+
+	column 'Retail Year'
+		dataType: string
+		displayFolder: 05. Retail Calendar
+		lineageTag: 4cfc4196-fa44-4698-8e8f-80519a34c009
+		summarizeBy: none
+		sourceColumn: Retail Year
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Retail year associated with the product or transaction. Business definition requires validation."
+
+	column 'Retail Season'
+		dataType: string
+		displayFolder: 05. Retail Calendar
+		lineageTag: 098c637c-46ec-4498-8260-7e95a9bfdc13
+		summarizeBy: none
+		sourceColumn: Retail Season
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Retail season associated with the transaction."
+
+	column 'Retail Collection'
+		dataType: string
+		displayFolder: 04. Product
+		lineageTag: 00000000-0000-0000-0000-000000000102
+		summarizeBy: none
+		sourceColumn: Retail Collection
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Retail collection associated with the product."
+
+	column 'Year Fuori Cartella'
+		dataType: string
+		displayFolder: 05. Retail Calendar
+		lineageTag: 00000000-0000-0000-0000-000000000301
+		summarizeBy: none
+		sourceColumn: Year Fuori Cartella
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Off‑calendar year value."
+
+	column 'Season Fuori Cartella'
+		dataType: string
+		displayFolder: 05. Retail Calendar
+		lineageTag: 00000000-0000-0000-0000-000000000302
+		summarizeBy: none
+		sourceColumn: Season Fuori Cartella
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Off‑calendar season value."
+
+	column 'Batch Year'
+		dataType: string
+		displayFolder: 05. Retail Calendar
+		lineageTag: 00000000-0000-0000-0000-000000000303
+		summarizeBy: none
+		sourceColumn: Batch Year
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Batch year value."
+
+	column 'Batch Season'
+		dataType: string
+		displayFolder: 05. Retail Calendar
+		lineageTag: 00000000-0000-0000-0000-000000000304
+		summarizeBy: none
+		sourceColumn: Batch Season
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Batch season value."
+
+	column 'Buying Logic Code'
+		dataType: string
+		displayFolder: 04. Product
+		lineageTag: 00000000-0000-0000-0000-000000000101
+		summarizeBy: none
+		sourceColumn: Buying Logic Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Code indicating the buying logic or purchase category for the product."
+
+	column 'Marketing Type Code'
+		dataType: string
+		displayFolder: 03. Store & Sales
+		lineageTag: 36c33c40-81ce-4cc7-9741-574e5f788789
+		summarizeBy: none
+		sourceColumn: Marketing Type Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Marketing or sales classification code associated with the transaction. Allowed values require business glossary validation."
+
+	column 'Analysis Year'
+		dataType: string
+		displayFolder: 06. Analysis
+		lineageTag: 8766916c-49a4-4dd1-b330-c45cdec45d85
+		summarizeBy: none
+		sourceColumn: Analysis Year
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Year used by the model for analytical season and period comparisons."
+
+	column 'Analysis Season'
+		dataType: string
+		displayFolder: 06. Analysis
+		lineageTag: 39053a1a-e420-48a5-8cb4-6a4a91cb5373
+		summarizeBy: none
+		sourceColumn: Analysis Season
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Source analytical season code. Values I and E are mapped to FW and SS by Analysis Season Group."
+
+	column 'Physical Status Code'
+		dataType: string
+		displayFolder: 04. Product
+		lineageTag: 00000000-0000-0000-0000-000000000103
+		summarizeBy: none
+		sourceColumn: Physical Status Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Physical status code of the product."
+
+	column 'Color Code'
+		dataType: string
+		displayFolder: 04. Product
+		lineageTag: 00000000-0000-0000-0000-000000000104
+		summarizeBy: none
+		sourceColumn: Color Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Color code of the product."
+
+	column Size
+		dataType: string
+		displayFolder: 04. Product
+		lineageTag: b4e5d007-af68-44cb-b92b-80255e02904e
+		summarizeBy: none
+		sourceColumn: Size
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Product size associated with the transaction line."
+
+	column 'Unit of Measure'
+		dataType: string
+		displayFolder: 04. Product
+		lineageTag: adcb0a31-b5be-4e46-b6a3-80e1c7f1a8c2
+		summarizeBy: none
+		sourceColumn: Unit of Measure
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Unit of measure associated with the quantity sold."
+
+	column Quantity
+		dataType: double
+		displayFolder: 07. Sales & Revenue
+		lineageTag: e9f4ae5a-bc34-4454-8e02-57d8ebf378b5
+		summarizeBy: sum
+		sourceColumn: Quantity
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Quantity recorded on the transaction line."
+
+	column Sign
+		dataType: string
+		displayFolder: 07. Sales & Revenue
+		lineageTag: 00000000-0000-0000-0000-000000000408
+		summarizeBy: none
+		sourceColumn: Sign
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Sign indicator for the transaction line."
+
+	column Currency
+		dataType: string
+		displayFolder: 07. Sales & Revenue
+		lineageTag: 8b39d586-6a32-446a-8667-aba60f2f9bee
+		summarizeBy: none
+		sourceColumn: Currency
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Currency code associated with monetary values expressed in local transaction currency."
+
+	column 'Retail Sales Price Eur'
+		dataType: double
+		displayFolder: 07. Sales & Revenue
+		lineageTag: 00000000-0000-0000-0000-000000000401
+		summarizeBy: sum
+		sourceColumn: Retail Sales Price Eur
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Retail sales price in EUR before adjustments."
+
+	column 'Retail Sales Price Ccy'
+		dataType: double
+		displayFolder: 07. Sales & Revenue
+		lineageTag: 00000000-0000-0000-0000-000000000402
+		summarizeBy: sum
+		sourceColumn: Retail Sales Price Ccy
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Retail sales price in transaction currency."
+
+	column 'Original Sales Price Eur'
+		dataType: double
+		displayFolder: 07. Sales & Revenue
+		lineageTag: 00000000-0000-0000-0000-000000000403
+		summarizeBy: sum
+		sourceColumn: Original Sales Price Eur
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Original sales price in EUR before discounts."
+
+	column 'Original Sales Price Ccy'
+		dataType: double
+		displayFolder: 07. Sales & Revenue
+		lineageTag: 00000000-0000-0000-0000-000000000404
+		summarizeBy: sum
+		sourceColumn: Original Sales Price Ccy
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Original sales price in transaction currency."
+
+	column 'Retail Sales NO VAT Ccy'
+		dataType: double
+		displayFolder: 07. Sales & Revenue
+		lineageTag: 00000000-0000-0000-0000-000000000405
+		summarizeBy: sum
+		sourceColumn: Retail Sales NO VAT Ccy
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Retail sales price excluding VAT in transaction currency."
+
+	column 'Original Price NO VAT Ccy'
+		dataType: double
+		displayFolder: 07. Sales & Revenue
+		lineageTag: 00000000-0000-0000-0000-000000000406
+		summarizeBy: sum
+		sourceColumn: Original Price NO VAT Ccy
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Original price excluding VAT in transaction currency."
+
+	column INCASSATO_VAL
+		dataType: double
+		displayFolder: 07. Sales & Revenue
+		lineageTag: aad115f4-b0f1-4c8b-bc02-99fe675f3b46
+		summarizeBy: sum
+		sourceColumn: INCASSATO_VAL
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Collected amount in the local transaction currency."
+
+	column INCASSATO_EUR
+		dataType: double
+		displayFolder: 07. Sales & Revenue
+		lineageTag: 4148dfc7-903f-48ae-8977-a45a40a65539
+		summarizeBy: sum
+		sourceColumn: INCASSATO_EUR
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Collected amount in EUR."
+
+	column 'Discount Reason Code'
+		dataType: string
+		displayFolder: 08. Discounts
+		lineageTag: 00000000-0000-0000-0000-000000000501
+		summarizeBy: none
+		sourceColumn: Discount Reason Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Reason code for the discount applied."
+
+	column 'Flag Sale'
+		dataType: string
+		displayFolder: 07. Sales & Revenue
+		lineageTag: 00000000-0000-0000-0000-000000000411
+		summarizeBy: none
+		sourceColumn: Flag Sale
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Flag indicating whether the transaction is a sale."
+
+	column 'Discount Ccy'
+		dataType: double
+		displayFolder: 08. Discounts
+		lineageTag: 0ec9638d-b8fe-4847-acc1-27aeaeda06b1
+		summarizeBy: sum
+		sourceColumn: Discount Ccy
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Discount amount in transaction currency."
+
+	column 'Discount Eur'
+		dataType: double
+		displayFolder: 08. Discounts
+		lineageTag: bf1b92b7-96a6-45b9-ae2a-791e964a53f4
+		summarizeBy: sum
+		sourceColumn: Discount Eur
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Discount amount converted to EUR."
+
+	column SCONTO1_EUR_VAL
+		dataType: double
+		displayFolder: 08. Discounts
+		lineageTag: 00000000-0000-0000-0000-000000000503
+		summarizeBy: sum
+		sourceColumn: SCONTO1_EUR_VAL
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Discount 1 value in EUR."
+
+	column SCONTO1_LOC_VAL
+		dataType: double
+		displayFolder: 08. Discounts
+		lineageTag: 00000000-0000-0000-0000-000000000504
+		summarizeBy: sum
+		sourceColumn: SCONTO1_LOC_VAL
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Discount 1 value in local currency."
+
+	column SCONTO2_EUR_VAL
+		dataType: double
+		displayFolder: 08. Discounts
+		lineageTag: 00000000-0000-0000-0000-000000000505
+		summarizeBy: sum
+		sourceColumn: SCONTO2_EUR_VAL
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Discount 2 value in EUR."
+
+	column SCONTO2_LOC_VAL
+		dataType: double
+		displayFolder: 08. Discounts
+		lineageTag: 00000000-0000-0000-0000-000000000506
+		summarizeBy: sum
+		sourceColumn: SCONTO2_LOC_VAL
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Discount 2 value in local currency."
+
+	column SCONTO3_EUR_VAL
+		dataType: double
+		displayFolder: 08. Discounts
+		lineageTag: 00000000-0000-0000-0000-000000000507
+		summarizeBy: sum
+		sourceColumn: SCONTO3_EUR_VAL
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Discount 3 value in EUR."
+
+	column SCONTO3_LOC_VAL
+		dataType: double
+		displayFolder: 08. Discounts
+		lineageTag: 00000000-0000-0000-0000-000000000508
+		summarizeBy: sum
+		sourceColumn: SCONTO3_LOC_VAL
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Discount 3 value in local currency."
+
+	column SCONTO_IMP_EUR_VAL
+		dataType: double
+		displayFolder: 08. Discounts
+		lineageTag: 00000000-0000-0000-0000-000000000509
+		summarizeBy: sum
+		sourceColumn: SCONTO_IMP_EUR_VAL
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Total discount impact value in EUR."
+
+	column SCONTO_IMP_LOC_VAL
+		dataType: double
+		displayFolder: 08. Discounts
+		lineageTag: 00000000-0000-0000-0000-000000000510
+		summarizeBy: sum
+		sourceColumn: SCONTO_IMP_LOC_VAL
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Total discount impact value in local currency."
+
+	column COD_CAU1_SCT
+		dataType: string
+		displayFolder: 08. Discounts
+		lineageTag: 00000000-0000-0000-0000-000000000511
+		summarizeBy: none
+		sourceColumn: COD_CAU1_SCT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Cause code for discount 1."
+
+	column SCONTO1_IMP_EUR_VAL
+		dataType: double
+		displayFolder: 08. Discounts
+		lineageTag: 00000000-0000-0000-0000-000000000512
+		summarizeBy: sum
+		sourceColumn: SCONTO1_IMP_EUR_VAL
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Discount 1 impact value in EUR."
+
+	column SCONTO1_IMP_LOC_VAL
+		dataType: double
+		displayFolder: 08. Discounts
+		lineageTag: 00000000-0000-0000-0000-000000000513
+		summarizeBy: sum
+		sourceColumn: SCONTO1_IMP_LOC_VAL
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Discount 1 impact value in local currency."
+
+	column COD_CAU2_SCT
+		dataType: string
+		displayFolder: 08. Discounts
+		lineageTag: 00000000-0000-0000-0000-000000000514
+		summarizeBy: none
+		sourceColumn: COD_CAU2_SCT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Cause code for discount 2."
+
+	column SCONTO2_IMP_EUR_VAL
+		dataType: double
+		displayFolder: 08. Discounts
+		lineageTag: 00000000-0000-0000-0000-000000000515
+		summarizeBy: sum
+		sourceColumn: SCONTO2_IMP_EUR_VAL
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Discount 2 impact value in EUR."
+
+	column SCONTO2_IMP_LOC_VAL
+		dataType: double
+		displayFolder: 08. Discounts
+		lineageTag: 00000000-0000-0000-0000-000000000516
+		summarizeBy: sum
+		sourceColumn: SCONTO2_IMP_LOC_VAL
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Discount 2 impact value in local currency."
+
+	column COD_CAU3_SCT
+		dataType: string
+		displayFolder: 08. Discounts
+		lineageTag: 00000000-0000-0000-0000-000000000517
+		summarizeBy: none
+		sourceColumn: COD_CAU3_SCT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Cause code for discount 3."
+
+	column SCONTO3_IMP_EUR_VAL
+		dataType: double
+		displayFolder: 08. Discounts
+		lineageTag: 00000000-0000-0000-0000-000000000518
+		summarizeBy: sum
+		sourceColumn: SCONTO3_IMP_EUR_VAL
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Discount 3 impact value in EUR."
+
+	column SCONTO3_IMP_LOC_VAL
+		dataType: double
+		displayFolder: 08. Discounts
+		lineageTag: 00000000-0000-0000-0000-000000000519
+		summarizeBy: sum
+		sourceColumn: SCONTO3_IMP_LOC_VAL
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Discount 3 impact value in local currency."
+
+	column 'Net Sales Ccy'
+		dataType: double
+		displayFolder: 07. Sales & Revenue
+		lineageTag: f283652a-536e-4cd0-b423-12c2842a6d81
+		summarizeBy: sum
+		sourceColumn: Net Sales Ccy
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Net sales amount expressed in the transaction currency identified by Currency."
+
+	column 'Net Sales Eur'
+		dataType: double
+		displayFolder: 07. Sales & Revenue
+		lineageTag: cf2c5602-5f7d-4ac8-93c7-e470ddbe466a
+		summarizeBy: sum
+		sourceColumn: Net Sales Eur
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Net sales amount in EUR."
+
+	column 'Standard Civ Cost Eur'
+		dataType: double
+		displayFolder: 09. Costs
+		lineageTag: 00000000-0000-0000-0000-000000000601
+		summarizeBy: sum
+		sourceColumn: Standard Civ Cost Eur
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Standard civil cost in EUR."
+
+	column 'Standard Civ Cost Ccy'
+		dataType: double
+		displayFolder: 09. Costs
+		lineageTag: 00000000-0000-0000-0000-000000000602
+		summarizeBy: sum
+		sourceColumn: Standard Civ Cost Ccy
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Standard civil cost in transaction currency."
+
+	column 'Standard Gest Cost Eur'
+		dataType: double
+		displayFolder: 09. Costs
+		lineageTag: 00000000-0000-0000-0000-000000000603
+		summarizeBy: sum
+		sourceColumn: Standard Gest Cost Eur
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Standard management cost in EUR."
+
+	column 'Standard Gest Cost Ccy'
+		dataType: double
+		displayFolder: 09. Costs
+		lineageTag: 00000000-0000-0000-0000-000000000604
+		summarizeBy: sum
+		sourceColumn: Standard Gest Cost Ccy
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Standard management cost in transaction currency."
+
+	column 'Transaction Type Code'
+		dataType: string
+		displayFolder: 01. Transaction
+		lineageTag: 00000000-0000-0000-0000-000000000201
+		summarizeBy: none
+		sourceColumn: Transaction Type Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Transaction type classification code."
+
+	column 'Transfer Eur'
+		dataType: double
+		displayFolder: 07. Sales & Revenue
+		lineageTag: 00000000-0000-0000-0000-000000000409
+		summarizeBy: sum
+		sourceColumn: Transfer Eur
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Transfer amount in EUR."
+
+	column 'Transfer Ccy'
+		dataType: double
+		displayFolder: 07. Sales & Revenue
+		lineageTag: 00000000-0000-0000-0000-000000000410
+		summarizeBy: sum
+		sourceColumn: Transfer Ccy
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Transfer amount in transaction currency."
+
+	column COD_TIPO_MARK
+		dataType: string
+		displayFolder: 03. Store & Sales
+		lineageTag: 00000000-0000-0000-0000-000000000202
+		summarizeBy: none
+		sourceColumn: COD_TIPO_MARK
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Marketing type code from the source system."
+
+	column COD_QUALITA
+		dataType: string
+		displayFolder: 04. Product
+		lineageTag: 00000000-0000-0000-0000-000000000105
+		summarizeBy: none
+		sourceColumn: COD_QUALITA
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Quality code from the source system."
+
+	column 'Country Ship To Code'
+		dataType: string
+		displayFolder: 03. Store & Sales
+		lineageTag: 02335062-337a-49fe-aa69-50fd41e1dc25
+		summarizeBy: none
+		sourceColumn: Country Ship To Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Country code associated with the shipping destination of the transaction."
+
+	column COD_SALES_MARK_ATTRIBUTE
+		dataType: string
+		displayFolder: 03. Store & Sales
+		lineageTag: 00000000-0000-0000-0000-000000000203
+		summarizeBy: none
+		sourceColumn: COD_SALES_MARK_ATTRIBUTE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Sales and marketing attribute code."
+
+	column 'Retail Sales Price ITA'
+		dataType: double
+		displayFolder: 07. Sales & Revenue
+		lineageTag: 00000000-0000-0000-0000-000000000407
+		summarizeBy: sum
+		sourceColumn: Retail Sales Price ITA
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Retail sales price in Italian currency (ITA)."
+
+	column DATA_VARIAZ
+		dataType: dateTime
+		formatString: yyyy-MM-dd
+		displayFolder: 05. Retail Calendar
+		lineageTag: 00000000-0000-0000-0000-000000000305
+		summarizeBy: none
+		sourceColumn: DATA_VARIAZ
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Variation date associated with the transaction line."
+
+	column KEY_ART_COL
+		dataType: string
+		displayFolder: 04. Product
+		lineageTag: 00000000-0000-0000-0000-000000000106
+		summarizeBy: none
+		sourceColumn: KEY_ART_COL
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Composite key for article and color."
+
+	column Unit_DAX =
+			IF(
+				SCONTRINI['Unit of Measure'] <> "NR",
+				1,
+				SCONTRINI[Quantity]
+			)
+			dataType: int64
+			formatString: "#,##0"
+			lineageTag: a3e09f7b-9ec7-4525-aa53-bba2c34424bd
+			summarizeBy: sum
+			displayFolder: "07. Sales & Revenue"
+			annotation Description = "Normalized unit quantity used for business unit analysis. For non-NR units of measure, each transaction line is counted as one unit."
+			annotation SummarizationSetBy = Automatic
+		lineageTag: 895b4053-938b-4985-82c2-6a0fa486be5d
+
+	column 'Flag Gen' =
+			RELATED(CUSTOMER[FlagGeneric])
+			lineageTag: 12c9d947-2b37-4864-8ad3-7c5f5b8d80f8
+			summarizeBy: none
+			displayFolder: "02. Customer"
+			annotation Description = "Indicator identifying whether the customer is classified as generic or anonymous according to CUSTOMER[FlagGeneric]."
+			annotation SummarizationSetBy = Automatic
+		lineageTag: 617e41ca-09d0-4b63-b769-6e5eee825194
+
+	column Clients =
+			IF(
+				SCONTRINI[Flag Gen] = CONVERT(1, STRING),
+				SCONTRINI['Ticket ID'],
+				CONVERT(SCONTRINI['Customer Code'], STRING)
+			)
+			lineageTag: 72ffd5bd-efdc-4cd1-bb49-45d9eb9fe169
+			summarizeBy: none
+			displayFolder: "02. Customer"
+			annotation Description = "Business customer identifier used for customer-level analysis. For generic customers, the ticket identifier is used instead of the source customer code."
+			annotation SummarizationSetBy = Automatic
+		lineageTag: 6adbc409-65e1-416f-8740-8a6b7096ae7f
+
+	column UNIT
+		dataType: string
+		displayFolder: 04. Product
+		lineageTag: 00000000-0000-0000-0000-000000000107
+		summarizeBy: none
+		sourceColumn: UNIT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Unit code from the source system."
+
+	column Buss+Cat =
+			RELATED(BUSINESS[BusinessCode]) &
+			RELATED(CLASSE_PRODOTTO[CategoryCode])
+			lineageTag: 26ff5ae0-a2da-495c-ab9a-b7439745d2fa
+			summarizeBy: none
+			isHidden
+			annotation Description = "Technical composite key combining business and product category codes. Not intended for business analysis."
+			annotation SummarizationSetBy = Automatic
+		lineageTag: fe55718d-d3bc-4be3-88b0-012bfb355f9d
+
+	column 'Analysis Season Δ vs LY' =
+			[Analysis Season (gruppi)] & UNICHAR(10) & "Δ vs LY"
+			lineageTag: 8b89c360-b3f9-4df5-be31-560f2d2390a2
+			summarizeBy: none
+			isHidden
+			annotation Description = "Presentation-only label used to display season comparison information. Do not use for analytical grouping or filtering."
+			annotation SummarizationSetBy = Automatic
+		lineageTag: f2b895f7-c415-4581-a818-37360ec2f0bb
+
+	column Category =
+			RELATED(CLASSE_PRODOTTO[CategoryDescriptionENG])
+			lineageTag: a35ea13a-c90c-41e9-a365-e9aab8e4c9f7
+			summarizeBy: none
+			displayFolder: "04. Product"
+			annotation Description = "Business product category associated with the transaction line."
+			annotation SummarizationSetBy = Automatic
+		lineageTag: 8ebc52f3-c977-4ccc-aa94-474ca5fe56c0
+
+	column 'Fiscal Week' =
+			RELATED(CALENDARIO[FiscalWeek])
+			lineageTag: 738d9038-0b19-42e3-a231-702ecfb609cb
+			summarizeBy: none
+			displayFolder: "05. Retail Calendar"
+			annotation Description = "Fiscal week associated with the transaction date according to the CALENDARIO table."
+			annotation SummarizationSetBy = Automatic
+		lineageTag: 1b759342-f2da-4964-a254-5162029f49ca
+
+	column test = SCONTRINI[Customer Code]
+		dataType: string
+		isHidden
+		lineageTag: 495f5795-1720-4073-b66e-d470887c08d1
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Technical/test column. Not intended for business analysis or LLM consumption."
+
+	column Colonna = 1
+		isHidden
+		formatString: 0
+		lineageTag: ede73fd7-f6fe-44e4-8b38-df2f9b0bb4ce
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Technical placeholder column. Not intended for business analysis or LLM consumption."
+
+	column Year
+		dataType: int64
+		formatString: 0
+		displayFolder: 05. Retail Calendar
+		lineageTag: 15525ae8-86c2-4fb9-9acc-f3d610743440
+		summarizeBy: none
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Calendar year derived from the transaction Date."
+
+	column 'Key Anno Currency'
+		dataType: string
+		isHidden
+		lineageTag: 1e4e2323-f40f-46e8-9b98-014856acb060
+		summarizeBy: none
+		sourceColumn: Key Anno Currency
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Technical key combining calendar year and currency."
+
+	column 'Fiscal Year' =
+			RELATED(CALENDARIO[FiscalYear])
+			formatString: "0"
+			lineageTag: 9d730ab8-5e4f-4f94-b837-f21e0bc71854
+			summarizeBy: none
+			displayFolder: "05. Retail Calendar"
+			annotation Description = "Fiscal year associated with the transaction date according to the CALENDARIO table."
+			annotation SummarizationSetBy = Automatic
+		lineageTag: 87dcd92c-7b88-498a-bae1-31b89a952df1
+
+	column KEY_ANNOFISC_CURR =
+			[Fiscal Year] & [Currency]
+			lineageTag: a127edb-7fb5-41a0-bd46-dbc2f40c244d
+			summarizeBy: none
+			isHidden
+			annotation Description = "Technical composite key combining fiscal year and currency. Not intended for business analysis."
+			annotation SummarizationSetBy = Automatic
+		lineageTag: 0417e210-0bf8-41ad-963d-a950933deb32
+
+	column 'Offer Code'
+		dataType: string
+		displayFolder: 08. Discounts
+		lineageTag: 00000000-0000-0000-0000-000000000502
+		summarizeBy: none
+		sourceColumn: Offer Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Offer or promotion code associated with the discount."
+
+	column 'Macro Collection Code'
+		dataType: string
+		displayFolder: 04. Product
+		lineageTag: 00000000-0000-0000-0000-000000000108
+		summarizeBy: none
+		sourceColumn: Macro Collection Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Macro collection code associated with the product."
+
+	column 'Macro Category' =
+			RELATED(BUSINESS[MacroCategoryCode])
+			lineageTag: b36a0067-e754-45ef-a1c5-f1bc171af73e
+			summarizeBy: none
+			displayFolder: "04. Product"
+			annotation Description = "Higher-level product or business category associated with the transaction. Exact business hierarchy requires validation."
+			annotation SummarizationSetBy = Automatic
+		lineageTag: afbfab5a-c4bf-4bc7-a6da-4ca6dc17fd1d
+
+	column 'N Category'
+		dataType: string
+		isHidden
+		lineageTag: 27146783-234a-4e03-84fb-1f68aeb323ab
+		summarizeBy: none
+		sourceColumn: N Category
+
+		annotation Description = "Technical category counting/grouping attribute. Not intended for direct business analysis."
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'N Macro Category per Ticket'
+		dataType: string
+		isHidden
+		lineageTag: 82876380-87fc-4cbc-8046-1217946ef4df4
+		summarizeBy: none
+
+		annotation Description = "Technical ticket-level category grouping attribute."
+
+		annotation SummarizationSetBy = Automatic
+
+	partition SCONTRINI-703e07f8-86b0-4c9c-94c4-5eb2c5cad79c = m
+		mode: import
+		source =
+				let
+					Source = PowerPlatform.Dataflows(null),
+					Workspaces = Source{[Id="Workspaces"]}[Data],
+					WS = Workspaces{[workspaceId="3cb5ae18-3ac2-45e3-937b-8f934a66d860"]}[Data],
+					DF = WS{[dataflowId="d9d9454f-83f9-4194-8ec6-71119a47a12e"]}[Data],
+					SCONTRINI1 = DF{[entity="SCONTRINI"]}[Data],
+				
+					#"Filtered Rows" =
+						Table.SelectRows(
+							SCONTRINI1,
+							each [Date] >= #datetime(2021, 1, 1, 0, 0, 0)
+						),
+				
+					#"Rimosse altre colonne" =
+						Table.SelectColumns(
+							#"Filtered Rows",
+							{
+								"Ticket ID",
+								"Ticket Row ID",
+								"Customer Code",
+								"Store Code",
+								"Sales Associate Code",
+								"Ticket Type",
+								"Flag Distant Sales",
+								"Date",
+								"Ticket Row Type",
+								"Ticket Row Description",
+								"Item Code",
+								"Retail Year",
+								"Retail Season",
+								"Retail Collection",
+								"Year Fuori Cartella",
+								"Season Fuori Cartella",
+								"Batch Year",
+								"Batch Season",
+								"Buying Logic Code",
+								"Marketing Type Code",
+								"Analysis Year",
+								"Analysis Season",
+								"Physical Status Code",
+								"Color Code",
+								"Size",
+								"Unit of Measure",
+								"Quantity",
+								"Sign",
+								"Currency",
+								"Retail Sales Price Eur",
+								"Retail Sales Price Ccy",
+								"Original Sales Price Eur",
+								"Original Sales Price Ccy",
+								"Retail Sales NO VAT Ccy",
+								"Original Price NO VAT Ccy",
+								"INCASSATO_VAL",
+								"INCASSATO_EUR",
+								"Discount Reason Code",
+								"Flag Sale",
+								"Discount Ccy",
+								"Discount Eur",
+								"SCONTO1_EUR_VAL",
+								"SCONTO1_LOC_VAL",
+								"SCONTO2_EUR_VAL",
+								"SCONTO2_LOC_VAL",
+								"SCONTO3_EUR_VAL",
+								"SCONTO3_LOC_VAL",
+								"SCONTO_IMP_EUR_VAL",
+								"SCONTO_IMP_LOC_VAL",
+								"COD_CAU1_SCT",
+								"SCONTO1_IMP_EUR_VAL",
+								"SCONTO1_IMP_LOC_VAL",
+								"COD_CAU2_SCT",
+								"SCONTO2_IMP_EUR_VAL",
+								"SCONTO2_IMP_LOC_VAL",
+								"COD_CAU3_SCT",
+								"SCONTO3_IMP_EUR_VAL",
+								"SCONTO3_IMP_LOC_VAL",
+								"Net Sales Ccy",
+								"Net Sales Eur",
+								"Standard Civ Cost Eur",
+								"Standard Civ Cost Ccy",
+								"Standard Gest Cost Eur",
+								"Standard Gest Cost Ccy",
+								"Transaction Type Code",
+								"Transfer Eur",
+								"Transfer Ccy",
+								"COD_TIPO_MARK",
+								"COD_QUALITA",
+								"Country Ship To Code",
+								"COD_SALES_MARK_ATTRIBUTE",
+								"Retail Sales Price ITA",
+								"DATA_VARIAZ",
+								"KEY_ART_COL",
+								"UNIT",
+								"Offer Code",
+								"Macro Collection Code"
+							}
+						),
+				
+					#"Added Year" =
+						Table.AddColumn(
+							#"Rimosse altre colonne",
+							"Year",
+							each Date.Year([Date]),
+							Int64.Type
+						),
+				
+					#"Added Currency Key" =
+						Table.AddColumn(
+							#"Added Year",
+							"Key Anno Currency",
+							each Text.Combine(
+								{
+									Text.From([Year]),
+									[Currency]
+								},
+								""
+							),
+							type text
+						),
+				
+					#"Filtered Ticket Rows" =
+						Table.SelectRows(
+							#"Added Currency Key",
+							each [Ticket Row Type] = "RES"
+								or [Ticket Row Type] = "SPE"
+								or [Ticket Row Type] = "VEN"
+						)
+				
+				in
+					#"Filtered Ticket Rows"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation __LLM_SemanticRole = "Transactional sales fact table"
+
+	annotation __LLM_BusinessDescription = "SCONTRINI contains transactional retail sales data at ticket-line level. Each row represents a transaction line associated with a ticket, customer, store, product, date, quantity, pricing, discounts, currency and sales values."
+
+	annotation __LLM_Grain = "One row per ticket transaction line after filtering Ticket Row Type to RES, SPE or VEN."
+
+	annotation __LLM_Guidance = "Use additive monetary and quantity measures for aggregation. Do not aggregate customer, ticket, product or transaction identifiers. Use distinct counts for tickets and customers where appropriate."

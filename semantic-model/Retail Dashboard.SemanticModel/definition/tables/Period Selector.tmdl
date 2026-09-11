@@ -1,0 +1,73 @@
+table 'Period Selector'
+	lineageTag: 793045db-a949-4eff-b447-ff862d81810a
+
+	column PeriodName
+		dataType: string
+		lineageTag: cd0b38b0-5ded-4d50-93dd-63e19ae09e3d
+		summarizeBy: none
+		sourceColumn: Period
+		sortByColumn: PeriodSortOrder
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Business-friendly name of the time period (e.g., 'Current Year', 'Year to Date'). Use this field for selection controls and visual labels. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Period, Time Period, Period Name, Date Range, Time Filter"
+
+		annotation DisplayFolder = "Period Selection"
+
+		annotation 'Example Values' = "Current Year, Last Year, Year to Date, Last 12 Months, Current Quarter"
+
+		annotation 'Common Questions' = "What periods are available? How do I select Year to Date? What is the current period?"
+
+		annotation 'Related Objects' = "DateTableTemplate"
+
+	column PeriodSortOrder
+		dataType: int64
+		formatString: 0
+		lineageTag: fb551ada-e5bd-4c48-9732-fdd79fec0ac5
+		summarizeBy: sum
+		sourceColumn: Order
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Numeric sort order for period display in selection controls. Lower numbers appear first. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Sort Order, Display Order, Period Order"
+
+		annotation DisplayFolder = "Period Selection"
+
+		annotation 'Example Values' = "1, 2, 3, 4, 5"
+
+		annotation 'Common Questions' = "How are periods ordered? Can I change the sort order of periods?"
+
+	partition 'Period Selection' = m
+		mode: import
+		source =
+				let
+				        Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i9W8hAWX6ClpKZUqxUYqwQK2rLqejpGCkZ6pkqFWrE6uklJpYmJmYmJesmkB", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Period = _t, Order = _t]),
+				        #"Changed Type" = Table.TransformColumnTypes(Source,{{"Period", type text}, {"Order", Int64.Type}})
+				in
+				        #"Changed Type"
+
+		annotation Description = "Static import partition containing a hardcoded list of selectable time periods. Current periods include: Current Year, Last Year, Year to Date, Last 12 Months, Current Quarter, Last Quarter. This is a static selection table used for dynamic time period switching in reports."
+
+	annotation PBI_ResultType = Table
+
+	annotation Description = "Period selection dimension for dynamic time period switching in reports. Provides a user-selectable list of time periods (e.g., 'Current Year', 'Last Year', 'Year to Date', 'Last 12 Months') with sorting. Enables users to switch between different time periods in visuals without rebuilding reports. Grain: one row per period. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "Period Selector, Time Period Selector, Date Range Picker, Time Filter, Period Picker"
+
+	annotation DisplayFolder = "Parameters"
+
+	annotation RefreshPolicy = "Static hardcoded list. No refresh required. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana BI Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "Current Year, Last Year, Year to Date, Last 12 Months, Current Quarter, Last Quarter"
+
+	annotation 'Common Questions' = "How do I switch between time periods in a report? What periods are available for selection? How do I change to Year to Date? What is the difference between Current Year and Last Year?"
+
+	annotation 'Related Objects' = "SCONTRINI, TARGET, DateTableTemplate"

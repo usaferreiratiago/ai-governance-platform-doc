@@ -1,0 +1,91 @@
+table TARGET
+	lineageTag: 5c6b48bd-c30d-4678-a622-3883418f917d
+
+	column 'Scenario Code'
+		dataType: string
+		lineageTag: 91497007-1ae9-4683-9ad0-7379fdb13641
+		summarizeBy: none
+		sourceColumn: Scenario Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Target Date'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: a2189385-e04b-48c7-92d2-4afa06bd7730
+		summarizeBy: none
+		sourceColumn: Target Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Store Code'
+		dataType: string
+		lineageTag: 60ed76df-5a83-43de-abd3-be51248c6f6e
+		summarizeBy: none
+		sourceColumn: Store Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Currency Target'
+		dataType: string
+		lineageTag: 74f7f041-1528-4c3b-94a3-0c854b517dd0
+		summarizeBy: none
+		sourceColumn: Currency Target
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Target Local Value'
+		dataType: double
+		lineageTag: de277a20-25a6-4b17-b24c-6d1b3ccfb160
+		summarizeBy: sum
+		sourceColumn: Target Local Value
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column KEY_ANNO_CURR
+		dataType: string
+		lineageTag: c2d338e4-87d6-4626-9833-b76836db2450
+		summarizeBy: none
+		sourceColumn: KEY_ANNO_CURR
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Fiscal Year'
+		dataType: int64
+		formatString: 0
+		lineageTag: 10a99867-b274-4a2f-b0e7-afe633f0016e
+		summarizeBy: sum
+		sourceColumn: Fiscal Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column KEY_ANNOFISC_CURR
+		dataType: string
+		lineageTag: 67d804b8-bb69-4f65-bb8b-05e2544b432f
+		summarizeBy: none
+		sourceColumn: KEY_ANNOFISC_CURR
+
+		annotation SummarizationSetBy = Automatic
+
+	partition TARGET-945acdab-8352-45e4-b4c5-753de9f41ae9 = m
+		mode: import
+		source =
+				let
+					Source = PowerPlatform.Dataflows(null),
+					Workspaces = Source{[Id="Workspaces"]}[Data],
+					WS = Workspaces{[workspaceId="3cb5ae18-3ac2-45e3-937b-8f934a66d860"]}[Data],
+					DF = WS{[dataflowId="443da8fa-2e20-444b-a3a1-1345a5b54ee1"]}[Data],
+					TARGET1 = DF{[entity="TARGET"]}[Data],
+					#"Filtered Rows" = Table.SelectRows(TARGET1, each ([Scenario Code] = "Target_revised")),
+					#"Rimosse altre colonne" = Table.SelectColumns(#"Filtered Rows",{"Scenario Code", "Target Date", "Store Code", "Currency Target", "Target Local Value", "KEY_ANNO_CURR"}),
+					#"Merge di query eseguito" = Table.NestedJoin(#"Rimosse altre colonne", {"Target Date"}, #"CALENDARIO (2)", {"Date"}, "CALENDARIO (2)", JoinKind.LeftOuter),
+					#"Tabella CALENDARIO (2) espansa" = Table.ExpandTableColumn(#"Merge di query eseguito", "CALENDARIO (2)", {"Fiscal Year"}, {"Fiscal Year"}),
+					#"Inserita colonna combinata" = Table.AddColumn(#"Tabella CALENDARIO (2) espansa", "KEY_ANNOFISC_CURR", each Text.Combine({Text.From([Fiscal Year], "it-IT"), [Currency Target]}), type text)
+				in
+					#"Inserita colonna combinata"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation

@@ -1,0 +1,271 @@
+table GERARCHIA_AREA
+	lineageTag: 922d9c64-bba0-4ca2-b4e4-99578c8365bf
+
+	column MacroChannelCode
+		dataType: string
+		lineageTag: 348d467a-0c13-43a6-bb56-1e5341a2aa1c
+		summarizeBy: none
+		sourceColumn: Macro Channel Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Code identifying the macro sales channel (highest level). Examples: 'RTL' for Retail, 'WHL' for Wholesale, 'EOM' for E-commerce. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Macro Channel, Channel Group, Sales Channel Category"
+
+		annotation DisplayFolder = "Channel"
+
+		annotation 'Example Values' = "RTL, WHL, EOM, FRN"
+
+		annotation 'Common Questions' = "What are the macro channel codes? How many channels are in each macro channel?"
+
+		annotation 'Related Objects' = "STORES.'Macro Channel Code'"
+
+	column MacroChannelDescription
+		dataType: string
+		lineageTag: fdc29568-a88f-4f9a-85d3-7ad67e50b833
+		summarizeBy: none
+		sourceColumn: Macro Channel Description
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Business-friendly name of the macro sales channel (e.g., 'Retail', 'Wholesale', 'E-commerce'). Use for reporting and labels. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Macro Channel Name, Channel Group Name, Sales Channel Category"
+
+		annotation DisplayFolder = "Channel"
+
+		annotation 'Example Values' = "Retail, Wholesale, E-commerce, Franchise"
+
+		annotation 'Common Questions' = "What is the macro channel name for RTL? Which macro channel has the highest sales?"
+
+		annotation 'Related Objects' = "STORES.'Macro Channel Code'"
+
+	column ChannelCode
+		dataType: string
+		lineageTag: dd3b69aa-6c96-4f6e-8a41-d5b427e1bda4
+		summarizeBy: none
+		sourceColumn: Channel Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Code identifying the specific sales channel (e.g., 'BO' for Boutique, 'DS' for Department Store, 'EC' for E-commerce). Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Channel, Sales Channel, Store Channel, Channel ID"
+
+		annotation DisplayFolder = "Channel"
+
+		annotation 'Example Values' = "BO, DS, EC, OS, FL"
+
+		annotation 'Common Questions' = "What is the channel code for Boutique? How many stores are in each channel?"
+
+		annotation 'Related Objects' = "STORES.'Channel Code'"
+
+	column ChannelDescription
+		dataType: string
+		lineageTag: de9edeaa-b7f0-4a7a-8f61-ea4e501a822d
+		summarizeBy: none
+		sourceColumn: Channel Description
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Business-friendly name of the sales channel (e.g., 'Boutique', 'Department Store', 'E-commerce'). Use for reporting and labels. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Channel Name, Sales Channel, Store Type"
+
+		annotation DisplayFolder = "Channel"
+
+		annotation 'Example Values' = "Boutique, Department Store, E-commerce, Outlet, Flagship"
+
+		annotation 'Common Questions' = "What is the channel name for BO? How do different channels perform?"
+
+		annotation 'Related Objects' = "STORES.'Channel Code'"
+
+	column MacroAreaCode
+		dataType: string
+		lineageTag: a04e85ca-1e31-483d-9ed8-a9309869af90
+		summarizeBy: none
+		sourceColumn: Macro Area Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Code identifying the macro geographic area (highest level). Examples: 'EMEA' for Europe/Middle East/Africa, 'AMER' for Americas, 'APAC' for Asia-Pacific. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Macro Area, Region, Geographic Region"
+
+		annotation DisplayFolder = "Area"
+
+		annotation 'Example Values' = "EMEA, AMER, APAC, LATAM"
+
+		annotation 'Common Questions' = "What are the macro area codes? Which macro area has the highest sales?"
+
+		annotation 'Related Objects' = "STORES.'Macro Area Code', AREA_MANAGER"
+
+	column MacroAreaDescription
+		dataType: string
+		lineageTag: d4442b96-b19b-4130-bf1b-d24c3af1c3d9
+		summarizeBy: none
+		sourceColumn: Macro Area Description
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Business-friendly name of the macro geographic area (e.g., 'EMEA', 'Americas', 'Asia-Pacific'). Use for reporting and labels. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Macro Area Name, Region Name, Geographic Region"
+
+		annotation DisplayFolder = "Area"
+
+		annotation 'Example Values' = "Europe/Middle East/Africa, Americas, Asia-Pacific, Latin America"
+
+		annotation 'Common Questions' = "What is the macro area name for EMEA? Which region is performing best?"
+
+		annotation 'Related Objects' = "STORES.'Macro Area Code', AREA_MANAGER"
+
+	column AreaCode
+		dataType: string
+		lineageTag: 9bd79c1c-3049-4cb7-b9ce-b101bfaba509
+		summarizeBy: none
+		sourceColumn: Area Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Code identifying the specific geographic area (e.g., 'IT' for Italy, 'FR' for France, 'US' for United States). Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Area, Geographic Area, Country Code"
+
+		annotation DisplayFolder = "Area"
+
+		annotation 'Example Values' = "IT, FR, US, UK, JP, CN"
+
+		annotation 'Common Questions' = "What is the area code for Italy? Which area has the highest sales?"
+
+		annotation 'Related Objects' = "STORES.'Area Code', AREA_MANAGER"
+
+	column AreaDescription
+		dataType: string
+		lineageTag: 7197d3e5-6858-4f5e-9833-2abfaac7894a
+		summarizeBy: none
+		sourceColumn: Area Description
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Business-friendly name of the geographic area (e.g., 'Italy', 'France', 'United States'). Use for reporting and labels. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Area Name, Geographic Area, Country Name"
+
+		annotation DisplayFolder = "Area"
+
+		annotation 'Example Values' = "Italy, France, United States, United Kingdom, Japan, China"
+
+		annotation 'Common Questions' = "What is the area name for IT? How do different countries perform?"
+
+		annotation 'Related Objects' = "STORES.'Area Code', AREA_MANAGER"
+
+	column AreaCurrency
+		dataType: string
+		lineageTag: a284b7f0-f555-420b-98fa-edb93399b06c
+		summarizeBy: none
+		sourceColumn: Area Currency
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Local currency code for the geographic area (e.g., 'EUR' for Eurozone, 'USD' for US, 'GBP' for UK). Used for local currency reporting and exchange rate calculations. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Currency, Local Currency, Reporting Currency"
+
+		annotation DisplayFolder = "Area"
+
+		annotation 'Example Values' = "EUR, USD, GBP, JPY, CNY"
+
+		annotation 'Common Questions' = "What is the local currency for Italy? How do I convert local currency to reporting currency?"
+
+		annotation 'Related Objects' = "EXCHANGE_RATES, TARGET"
+
+	column ChannelSortOrder
+		dataType: double
+		isHidden
+		lineageTag: 9f8d9afe-a214-4905-878f-fec9e31ed997
+		summarizeBy: none
+		sourceColumn: Ordinamento Canale
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Technical sort order for channel hierarchy levels. Not for analytical use."
+
+	column AreaSortOrder
+		dataType: double
+		isHidden
+		lineageTag: a6c98a24-f3c4-4e2b-8044-3d5765f523df
+		summarizeBy: none
+		sourceColumn: Ordinamento Area
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Technical sort order for area hierarchy levels. Not for analytical use."
+
+	column MacroAreaSortOrder
+		dataType: double
+		isHidden
+		lineageTag: 5c1d2dcf-5856-4baf-a644-5b186a8b54a0
+		summarizeBy: none
+		sourceColumn: Ordinamento Macroarea
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Technical sort order for macro area hierarchy levels. Not for analytical use."
+
+	column MacroChannelSortOrder
+		dataType: double
+		isHidden
+		lineageTag: e07b293d-5552-4830-bb0b-b37a9bf8f636
+		summarizeBy: none
+		sourceColumn: Ordinamento Macrocanale
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Technical sort order for macro channel hierarchy levels. Not for analytical use."
+
+	partition GERARCHIA_AREA = m
+		mode: import
+		source =
+				let
+				        Origine = PowerPlatform.Dataflows(null),
+				        Workspaces = Origine{[Id="Workspaces"]}[Data],
+				        WS = Workspaces{[workspaceId="63075e43-ec19-4090-b204-854337b4b0d5"]}[Data],
+				        DF = WS{[dataflowId="9e62577e-6b91-4666-b6c3-868d086245db"]}[Data],
+				        GERARCHIA_AREA1 = DF{[entity="GERARCHIA_AREA"]}[Data],
+				        #"Removed Other Columns" = Table.SelectColumns(GERARCHIA_AREA1,{"Macro Channel Code", "Macro Channel Description", "Channel Code", "Channel Description", "Macro Area Code", "Macro Area Description", "Area Code", "Area Description", "Area Currency", "Ordinamento Canale", "Ordinamento Area", "Ordinamento Macroarea", "Ordinamento Macrocanale"})
+				in
+				        #"Removed Other Columns"
+
+		annotation Description = "Import partition for store area and channel hierarchy master data. Loads all area-channel combinations without date filtering."
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation Description = "Store area and channel hierarchy dimension. Defines a two-dimensional hierarchy combining geographic areas (Macro Area → Area) and sales channels (Macro Channel → Channel). Used to analyze store performance, regional sales, and channel-specific metrics. Grain: one row per area-channel combination. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "Area Hierarchy, Channel Hierarchy, Store Hierarchy, Regional Structure, Sales Channel Structure"
+
+	annotation DisplayFolder = "Store Master"
+
+	annotation RefreshPolicy = "Weekly on Sundays at 00:00 UTC; data latency ≤ 48 hours. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana Retail Operations Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "Area: EMEA, Italy, Milan; Channel: Retail, Wholesale, E-commerce"
+
+	annotation 'Common Questions' = "What are the area and channel hierarchies? How do sales compare by region? How do channels perform across areas? What is the contribution of each area by channel?"
+
+	annotation 'Related Objects' = "STORES, AREA_MANAGER, SCONTRINI, TARGET, BUDGET"

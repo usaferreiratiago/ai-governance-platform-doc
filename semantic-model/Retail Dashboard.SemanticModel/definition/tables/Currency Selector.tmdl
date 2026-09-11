@@ -1,0 +1,53 @@
+table 'Currency Selector'
+	lineageTag: a434b5b8-7659-4f4a-8f05-00c1e11680d6
+
+	column CurrencyCode
+		dataType: string
+		lineageTag: 67c61f5d-fff8-43d8-9c88-7d31243927bd
+		summarizeBy: none
+		sourceColumn: Currency
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "ISO currency code (e.g., EUR, USD, GBP). Used as the selection value for currency conversion and multi-currency reporting. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Currency, Currency Code, ISO Code, FX Code, Reporting Currency"
+
+		annotation DisplayFolder = "Currency Selection"
+
+		annotation 'Example Values' = "EUR, USD, GBP, CHF, JPY, CNY"
+
+		annotation 'Common Questions' = "What is the currency code for Euro? How do I select a different reporting currency? Which currencies are supported in the model?"
+
+		annotation 'Related Objects' = "EXCHANGE_RATES.'Currency', EXCHANGE_RATES.'Target Currency'"
+
+	partition 'Currency Selector' = m
+		mode: import
+		source =
+				let
+				        Origine = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i9WdiV1NQRAES6mWZ1T44baMfuyLpP//xVEJxYKMjjHRdaLp9hVzH0SnrpSndf/WAZ3e5HnaNWUfs4V1Jtrg0Zqit/O9FnJ+1uLL3cW/0cR5Qy1LdLtlsR1w9uJ/rfF+bkMefPV00ePLbEWxK/4Kk9pGLPx7DfG9WYkXh89mYyW+r2YjJY57s5ES77RmIyXuaM1GSvzYmo2U+Kc1GynxdG3B04mngy2zP9BzwtKPoX5Bxhxfncz2++g0l/36yT9/To/SeI2XWDZPPfxyUPRQzIWLn5SnL/6gU7ZPUChUNssOD7Aht0hxm7W6Zir2VfsL", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Currency = _t]),
+				        #"Changed Type" = Table.TransformColumnTypes(Origine,{{"Currency", type text}})
+				in
+				        #"Changed Type"
+
+		annotation Description = "Static import partition containing a hardcoded list of supported currencies. The current list includes: EUR, USD, GBP, CHF, JPY, CNY. This is a static selection table used for currency conversion reports. Proposed – pending Loro Piana validation on currency list completeness."
+
+	annotation PBI_ResultType = Table
+
+	annotation Description = "Currency selection dimension for dynamic currency conversion in reports. Provides a list of available currencies for user selection, enabling multi-currency reporting and comparative analysis across different currency denominations. Grain: one row per currency code. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "Currency, Currency Picker, Currency Selection, FX Currency, Reporting Currency"
+
+	annotation DisplayFolder = "Parameters"
+
+	annotation RefreshPolicy = "Static hardcoded currency list. No refresh required. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana Finance Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "EUR, USD, GBP, CHF, JPY, CNY"
+
+	annotation 'Common Questions' = "Which currencies are available for reporting? How do I change the reporting currency? What is the base currency for the model? How do I compare sales in EUR vs USD?"
+
+	annotation 'Related Objects' = "FACT_SALES, EXCHANGE_RATES, SCONTRINI, TARGET"

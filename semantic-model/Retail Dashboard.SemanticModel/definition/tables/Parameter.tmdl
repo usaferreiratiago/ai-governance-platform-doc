@@ -1,0 +1,93 @@
+table Parameter
+	lineageTag: 814c7d5a-d7ec-4456-9ff0-ae587f5ae315
+
+	column MetricName
+		lineageTag: c673fd62-284e-4910-b095-275ac06767f9
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: MetricSortOrder
+
+		relatedColumnDetails
+			groupByColumn: MetricGroup
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Business-friendly name of the metric (e.g., 'Traffic YTD', 'UPT YTD'). Use this field for selection controls and visual labels. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Metric Name, KPI Name, Performance Indicator, Selection Label"
+
+		annotation DisplayFolder = "Metric Selection"
+
+		annotation 'Example Values' = "Traffic YTD, UPT YTD, Ticket Number YTD, Conversion Rate YTD"
+
+		annotation 'Common Questions' = "What metrics are available? How do I select Traffic YTD? What does UPT YTD mean?"
+
+		annotation 'Related Objects' = "_measure"
+
+	column MetricGroup
+		isHidden
+		lineageTag: 414eb546-37cf-4baa-b562-8d4cdff5def6
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: MetricSortOrder
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Technical grouping field for internal logic. Not for analytical use."
+
+		annotation Synonyms = "Group, Internal Group"
+
+		annotation DisplayFolder = "Metadata"
+
+	column MetricSortOrder
+		isHidden
+		formatString: 0
+		lineageTag: 740582a6-89f4-4b6d-b700-e20238cd2749
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Technical sort order for metric display in selection controls. Lower numbers appear first. Not for analytical use."
+
+	partition 'Metric Selection' = calculated
+		mode: import
+		source =
+				{
+				    ("Traffic YTD", NAMEOF('_measure'[Traffic YTD]), 0),
+				    ("UPT YTD", NAMEOF('_measure'[UPT YTD]), 1),
+				    ("Ticket Number YTD", NAMEOF('_measure'[Ticket Number YTD]), 2),
+				    ("Conversion Rate YTD", NAMEOF('_measure'[Conversion Rate YTD]), 3)
+				}
+
+		annotation Description = "Calculated partition that unions selected metrics from the _measure table into a single selection dimension for dynamic KPI switching. Currently includes: Traffic YTD, UPT YTD, Ticket Number YTD, Conversion Rate YTD. Sort order is determined by the numeric values (0,1,2,3)."
+
+	annotation PBI_Id = 9b6fe5a44c214a08940f1fedc85d2c5c
+
+	annotation Description = "Metric selection dimension for dynamic KPI switching in reports. Provides a user-selectable list of key performance metrics (Traffic YTD, UPT YTD, Ticket Number YTD, Conversion Rate YTD) with sorting and internal grouping. Enables users to switch between different metrics in visuals without rebuilding reports. Grain: one row per metric. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "Metric Selector, KPI Selector, Dynamic Metrics, Performance Indicators, Metric Picker"
+
+	annotation DisplayFolder = "Parameters"
+
+	annotation RefreshPolicy = "Static hardcoded list. No refresh required. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana BI Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "Traffic YTD, UPT YTD, Ticket Number YTD, Conversion Rate YTD"
+
+	annotation 'Common Questions' = "How do I switch between metrics in a report? What KPIs are available for selection? How do I change the displayed metric? Which metric shows traffic vs conversion?"
+
+	annotation 'Related Objects' = "_measure, SCONTRINI, TARGET"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation

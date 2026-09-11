@@ -1,0 +1,148 @@
+table RLS_STORE_OPS_TABLE
+	isHidden
+	lineageTag: 3f880bbe-2a63-4e47-9035-b3dcd978fbab
+
+	column UserRole
+		dataType: string
+		isHidden
+		lineageTag: 6e4ed8ce-fd1b-46d4-a2db-c74bd1fed4a1
+		summarizeBy: none
+		sourceColumn: Role
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Role or job function of the user within store operations (e.g., 'Store Ops', 'Area Manager', 'Regional Ops'). Used for role-based security grouping. Proposed – pending Loro Piana validation on role values and definitions."
+
+		annotation Synonyms = "Role, Job Function, Operations Role, User Role"
+
+		annotation DisplayFolder = "User Details"
+
+		annotation 'Example Values' = "Store Ops, Area Manager, Regional Ops, Operations Director"
+
+		annotation 'Common Questions' = "What roles have access to operations data? Which users are in the Store Ops role?"
+
+		annotation 'Related Objects' = "RLS roles"
+
+	column UserFirstName
+		dataType: string
+		isHidden
+		lineageTag: 7b5c5efd-4d56-4668-819d-0e8fb257977f
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "First name of the store operations user (e.g., 'Maria', 'Giuseppe'). Used for identification and reporting. Proposed – pending Loro Piana validation on privacy requirements."
+
+		annotation Synonyms = "First Name, Given Name, User Name"
+
+		annotation DisplayFolder = "User Details"
+
+		annotation 'Example Values' = "Maria, Giuseppe, John, Chiara, Andrea"
+
+		annotation 'Common Questions' = "What is the first name of the operations user? How do I identify users by name?"
+
+		annotation 'Related Objects' = "RLS roles"
+
+	column UserLastName
+		dataType: string
+		isHidden
+		lineageTag: 74a089b9-af6c-4179-84c7-5cb04bdbaeaa
+		summarizeBy: none
+		sourceColumn: Surname
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Last name of the store operations user (e.g., 'Bianchi', 'Rossi'). Used for identification and reporting. Proposed – pending Loro Piana validation on privacy requirements."
+
+		annotation Synonyms = "Last Name, Surname, User Surname"
+
+		annotation DisplayFolder = "User Details"
+
+		annotation 'Example Values' = "Bianchi, Rossi, Smith, Conti, Ferrari"
+
+		annotation 'Common Questions' = "What is the last name of the operations user? How do I identify users by surname?"
+
+		annotation 'Related Objects' = "RLS roles"
+
+	column UserEmail
+		dataType: string
+		isHidden
+		lineageTag: 5d1e2686-399f-431d-8475-7d9de28822cd
+		summarizeBy: none
+		sourceColumn: Email
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Email address of the store operations user. Used as the primary identifier for RLS filtering based on the logged-in user's email address. Proposed – pending Loro Piana validation on email format and domain requirements."
+
+		annotation Synonyms = "Email, User Email, Operations Email, Login Email"
+
+		annotation DisplayFolder = "User Details"
+
+		annotation 'Example Values' = "maria.bianchi@loropiana.com, giuseppe.rossi@loropiana.com"
+
+		annotation 'Common Questions' = "What email addresses have operations access? How do I add a new operations user? What areas does maria.bianchi@loropiana.com have access to?"
+
+		annotation 'Related Objects' = "RLS roles"
+
+	column StoreAreaCode
+		dataType: string
+		isHidden
+		lineageTag: 8b1316d5-9c94-4229-b1f9-334fcf55dfb2
+		summarizeBy: none
+		sourceColumn: NEGOZI.COD_AREA
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Area code that the operations user has permission to access (e.g., 'IT', 'FR', 'US'). This value is used by RLS filters to restrict data visibility at the area level. Proposed – pending Loro Piana validation on area code format and mapping."
+
+		annotation Synonyms = "Area Code, Area ID, Accessible Area, Permitted Area, Geographic Area"
+
+		annotation DisplayFolder = "Area Access"
+
+		annotation 'Example Values' = "IT, FR, US, UK, JP"
+
+		annotation 'Common Questions' = "What areas can operations users access? How do I add a new area to a user's access? Which areas are visible to this user?"
+
+		annotation 'Related Objects' = "GERARCHIA_AREA.'Area Code', NEGOZI.'Area Code'"
+
+	partition RLS_STORE_OPS_TABLE = m
+		mode: import
+		source =
+				let
+				        Source = PowerPlatform.Dataflows(null),
+				        Workspaces = Source{[Id="Workspaces"]}[Data],
+				        WS = Workspaces{[workspaceId="24cd3e65-bd8a-49b4-9dec-3b93184909fc"]}[Data],
+				        DF = WS{[dataflowId="b3abe630-e70d-4473-a64b-a7634a8d2891"]}[Data],
+				        STORE_OPS_RLS = DF{[entity="STORE_OPS_RLS"]}[Data],
+				        // Select all relevant user and area columns
+				        #"Removed Other Columns" = Table.SelectColumns(STORE_OPS_RLS,{"Role", "Name", "Surname", "Email", "NEGOZI.COD_AREA"}),
+				        // Remove rows with null or empty area codes
+				        #"Filtered Rows" = Table.SelectRows(#"Removed Other Columns", each [NEGOZI.COD_AREA] <> null and [NEGOZI.COD_AREA] <> "")
+				in
+				        #"Filtered Rows"
+
+		annotation Description = "Import partition for store operations RLS user-area mapping. Loads user profile information and their assigned area codes from the STORE_OPS_RLS dataflow. This table powers Row-Level Security by matching the logged-in user's email to their accessible areas."
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation Description = "Row-Level Security (RLS) mapping table defining area-level access permissions for store operations users. Contains user profile information (Role, Name, Surname, Email) mapped to area codes (NEGOZI.COD_AREA). Used with RLS roles to filter data at the area level based on the logged-in user's email. Ensures store operations staff only see data for their assigned areas. Grain: one row per user per area assignment. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "RLS User-Area Mapping, Store Operations Security, Access Control List, User-Area Assignment, RLS Permissions"
+
+	annotation DisplayFolder = "Security"
+
+	annotation RefreshPolicy = "Refreshed with user access changes. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana Security Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "Role: Store Ops, User: Maria Bianchi, Email: maria.bianchi@loropiana.com, Area: IT"
+
+	annotation 'Common Questions' = "Which users have access to which areas? How is store operations security implemented? What areas can each operations user access? How do I add a new user or area assignment?"
+
+	annotation 'Related Objects' = "STORES, NEGOZI, GERARCHIA_AREA, SCONTRINI, RLS roles, RLS_STORE_OPS_TABLE (Temp)"

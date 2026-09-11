@@ -1,0 +1,431 @@
+table NEGOZI
+	lineageTag: 2e2027f6-d69a-4c49-a92b-47fc4f55e93e
+
+	column AreaCode
+		dataType: string
+		lineageTag: c8a02203-7b44-42d5-ad42-30f409c4f745
+		summarizeBy: none
+		sourceColumn: Area Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Code identifying the store's geographic area (e.g., 'IT', 'FR', 'US'). Used to link stores to area hierarchy. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Area Code, Area ID, Geographic Area Code"
+
+		annotation DisplayFolder = "Store Identification"
+
+		annotation 'Example Values' = "IT, FR, US, UK, JP"
+
+		annotation 'Common Questions' = "What is the area code for Italy? Which stores are in Italy?"
+
+		annotation 'Related Objects' = "GERARCHIA_AREA.'Area Code'"
+
+	column StoreDescription
+		dataType: string
+		lineageTag: 08d87063-1593-4d7a-adad-04a7f269c243
+		summarizeBy: none
+		sourceColumn: Store Description
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Business-friendly name of the store (e.g., 'Milano Via Montenapoleone', 'Roma Via Condotti'). Use this field for labels and reporting. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Store Name, Store Description, Boutique Name, Location Name"
+
+		annotation DisplayFolder = "Store Identification"
+
+		annotation 'Example Values' = "Milano Via Montenapoleone, Roma Via Condotti, Paris Avenue Montaigne, London Sloane Street"
+
+		annotation 'Common Questions' = "What is the store name for code LP001? Which stores are in Milan?"
+
+		annotation 'Related Objects' = "SCONTRINI.'Store Code'"
+
+	column StoreCode
+		dataType: string
+		lineageTag: 27e8ff97-4572-4423-9cd9-a7319e6f801e
+		summarizeBy: none
+		sourceColumn: Store Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Unique store code used as the primary identifier for stores (e.g., 'LP001', 'LP002'). Used for store-level analysis and relationships. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Store ID, Store Code, Store Identifier, Location Code"
+
+		annotation DisplayFolder = "Store Identification"
+
+		annotation 'Example Values' = "LP001, LP002, LP003, LP004"
+
+		annotation 'Common Questions' = "What is the store code for Milano? How many sales for store LP001?"
+
+		annotation 'Related Objects' = "SCONTRINI.'Store Code'"
+
+	column StoreTechnicalKey
+		dataType: string
+		isHidden
+		lineageTag: d9213b7c-c71b-4860-a8ea-8e5599de627d
+		summarizeBy: none
+		sourceColumn: Store Code DWH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Technical data warehouse key for the store. Not for analytical use."
+
+		annotation Synonyms = "DWH Key, Technical Store Key"
+
+	column LikeForLike1YearFlag
+		dataType: string
+		lineageTag: afdb03a5-7cc4-4420-ac62-54fecca0228c
+		summarizeBy: none
+		sourceColumn: Flag L4L 1year
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Like-for-Like flag for 1-year comparison. Indicates if the store is comparable for L4L analysis. Values: 'L4L' (comparable), 'Not L4L' (not comparable). Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "L4L 1Y, Like-for-Like 1 Year, LFL Flag"
+
+		annotation DisplayFolder = "Store Attributes"
+
+		annotation 'Example Values' = "L4L, Not L4L"
+
+		annotation 'Common Questions' = "Which stores are Like-for-Like? How do L4L stores perform? What stores are excluded from L4L analysis?"
+
+		annotation 'Related Objects' = "SCONTRINI"
+
+	column LikeForLike2YearsFlag
+		dataType: string
+		lineageTag: d752a1a7-9b3c-4e66-80cb-38f0e0b5ce75
+		summarizeBy: none
+		sourceColumn: Flag L4L 2years
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Like-for-Like flag for 2-year comparison. Indicates if the store is comparable for longer-term L4L analysis. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "L4L 2Y, Like-for-Like 2 Years, LFL 2Y Flag"
+
+		annotation DisplayFolder = "Store Attributes"
+
+		annotation 'Example Values' = "Y, N"
+
+		annotation 'Common Questions' = "Which stores are L4L for 2 years? How do 2-year L4L stores perform?"
+
+		annotation 'Related Objects' = "SCONTRINI"
+
+	column CountryCode
+		dataType: string
+		lineageTag: c2a7c85a-fee3-446f-8516-7d7f50077444
+		summarizeBy: none
+		sourceColumn: Country Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "ISO country code for the store location (e.g., 'IT', 'FR', 'US'). Links to Country Geography dimension. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Country Code, ISO Code, Nation Code"
+
+		annotation DisplayFolder = "Store Identification"
+
+		annotation 'Example Values' = "IT, FR, US, UK, JP"
+
+		annotation 'Common Questions' = "What country is store LP001 in? Which stores are in France?"
+
+		annotation 'Related Objects' = "NAZIONI.'Country Code'"
+
+	column ProfitCenterCode
+		dataType: string
+		lineageTag: 17f53d3f-77f8-472f-ac4c-8b3a3c630a76
+		summarizeBy: none
+		sourceColumn: Profit Center Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Profit center code used in financial reporting and accounting systems. Links to financial reporting hierarchies. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Profit Center, PC Code, Financial Code, Accounting Code"
+
+		annotation DisplayFolder = "Financial Attributes"
+
+		annotation 'Example Values' = "PC001, PC002, PC003"
+
+		annotation 'Common Questions' = "What is the profit center for store LP001? How do profit centers perform?"
+
+		annotation 'Related Objects' = "TARGET, BUDGET"
+
+	column HFMCode
+		dataType: string
+		lineageTag: 499c3159-a19d-44a8-bbaa-60753c08f8d1
+		summarizeBy: none
+		sourceColumn: HFM Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "HFM (Hyperion Financial Management) code used in financial consolidation and reporting. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "HFM Code, Financial Consolidation Code, Hyperion Code"
+
+		annotation DisplayFolder = "Financial Attributes"
+
+		annotation 'Example Values' = "HFM001, HFM002"
+
+		annotation 'Common Questions' = "What is the HFM code for store LP001?"
+
+		annotation 'Related Objects' = "TARGET, BUDGET"
+
+	column AreaManagerCode
+		dataType: double
+		isHidden
+		lineageTag: 6d2433b3-e5f0-4659-b638-1ccb45c339f3
+		summarizeBy: none
+		sourceColumn: Area Manager Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Technical code identifying the area manager assigned to the store. Not for analytical use."
+
+		annotation Synonyms = "Area Manager ID, Manager Code"
+
+	column StoreHFMCompositeKey
+		dataType: string
+		isHidden
+		lineageTag: 1a7ffd13-8ab3-444d-b0af-157c2c2199d8
+		summarizeBy: none
+		sourceColumn: KEY_NGZ_HFM
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Technical composite key combining store and HFM codes. Not for analytical use."
+
+		annotation Synonyms = "Composite Key, Store-HFM Key"
+
+	column StoreURHFMPCCompositeKey
+		dataType: string
+		isHidden
+		lineageTag: c5c704c0-7dd1-4c3f-a573-d14401bddf91
+		summarizeBy: none
+		sourceColumn: KEY_NGZ_UR_HFM_PC
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Technical composite key combining store, UR, HFM, and profit center. Not for analytical use."
+
+		annotation Synonyms = "Composite Key, Store-UR-HFM-PC Key"
+
+	column StoreClosureDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 27994e16-e2e1-4c48-904c-7795b4b09550
+		summarizeBy: none
+		sourceColumn: DATA_CHIUSURA
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Date when the store was closed (if applicable). Used to identify active vs. closed stores for performance analysis. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Closure Date, Close Date, Inactivation Date"
+
+		annotation DisplayFolder = "Store Attributes"
+
+		annotation 'Example Values' = "2024-12-31, null (active)"
+
+		annotation 'Common Questions' = "Which stores have closed? When was store LP001 closed? How many active stores do we have?"
+
+	column StoreTypeCode
+		dataType: string
+		lineageTag: 50fac42b-35a6-4d6d-a707-8a612fcf63c5
+		summarizeBy: none
+		sourceColumn: COD_TIPOLOGIA
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Store type classification code (e.g., 'BO' for Boutique, 'DS' for Department Store, 'OS' for Outlet). Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Store Type, Store Category, Type Code"
+
+		annotation DisplayFolder = "Store Attributes"
+
+		annotation 'Example Values' = "BO, DS, OS, FL"
+
+		annotation 'Common Questions' = "What types of stores do we have? How do different store types perform?"
+
+		annotation 'Related Objects' = "SCONTRINI"
+
+	column LogisticArea
+		dataType: string
+		lineageTag: 804c5d64-43c7-4353-8c0c-748a127eac09
+		summarizeBy: none
+		sourceColumn: Logistic Area
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Logistic area classification for the store. Used for supply chain and distribution analysis. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Logistics Area, Distribution Area, Supply Chain Zone"
+
+		annotation DisplayFolder = "Operational Attributes"
+
+		annotation 'Example Values' = "North, South, Central, East"
+
+		annotation 'Common Questions' = "What logistic areas do stores belong to? How do logistic areas impact performance?"
+
+		annotation 'Related Objects' = "SCONTRINI"
+
+	column AreaManagerDescription
+		dataType: string
+		lineageTag: 6ab9219c-5f6d-4977-8f59-f62fd341178e
+		summarizeBy: none
+		sourceColumn: Area Manager Description
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Name of the area manager responsible for the store (pre-joined from AREA_MANAGER table). Use for manager-level analysis. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Area Manager, Manager Name, Region Manager"
+
+		annotation DisplayFolder = "Store Attributes"
+
+		annotation 'Example Values' = "Giuseppe Rossi, Maria Bianchi, John Smith"
+
+		annotation 'Common Questions' = "Who is the area manager for store LP001? Which stores report to Giuseppe Rossi?"
+
+		annotation 'Related Objects' = "AREA_MANAGER"
+
+	column StoreAreaDescription
+		dataType: string
+		lineageTag: 6cd814ba-c052-46d2-8b19-24053cad2686
+		summarizeBy: none
+		sourceColumn: Area Description
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Geographic area name for the store (pre-joined from GERARCHIA_AREA). Use for area-level analysis. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Area Name, Geographic Area, Region"
+
+		annotation DisplayFolder = "Store Identification"
+
+		annotation 'Example Values' = "Italy, France, United States"
+
+		annotation 'Common Questions' = "What area is store LP001 in? Which stores are in Italy?"
+
+		annotation 'Related Objects' = "GERARCHIA_AREA"
+
+	column CountryDescription
+		dataType: string
+		lineageTag: f0095475-d6fa-41ca-82c8-e7339bdde7c5
+		summarizeBy: none
+		sourceColumn: Country Description
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Country name for the store (pre-joined from NAZIONI). Use for country-level analysis. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Country Name, Nation Name"
+
+		annotation DisplayFolder = "Store Identification"
+
+		annotation 'Example Values' = "Italy, France, United States"
+
+		annotation 'Common Questions' = "Which country is store LP001 in? How do stores perform by country?"
+
+		annotation 'Related Objects' = "NAZIONI"
+
+	column HierarchyAreaDescription
+		dataType: string
+		lineageTag: 3560bea0-1ae4-40d8-ac26-8ac8eed44f81
+		summarizeBy: none
+		sourceColumn: GERARCHIA_AREA.Area Description
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Area description from the GERARCHIA_AREA hierarchy. Pre-joined for hierarchical reporting. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Hierarchy Area, Area Description"
+
+		annotation DisplayFolder = "Store Identification"
+
+		annotation 'Example Values' = "Italy, France, United States"
+
+		annotation 'Common Questions' = "What is the hierarchy area for store LP001?"
+
+		annotation 'Related Objects' = "GERARCHIA_AREA"
+
+	column 'Has Tickets' = IF(COUNTROWS(RELATEDTABLE('SCONTRINI')) > 0, 1, 0)
+		formatString: 0
+		lineageTag: c47ed2f3-2a26-498a-b507-7762d334763b
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Flag indicating if the store has any sales transactions. Returns 1 if there are tickets (sales), 0 otherwise. Useful for identifying active vs. inactive stores. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Has Sales, Active Store Flag, Store with Tickets"
+
+		annotation DisplayFolder = "Store Metrics"
+
+		annotation 'Example Values' = "1 (has sales), 0 (no sales)"
+
+		annotation 'Common Questions' = "Which stores have sales? Which stores are inactive? How many stores have no transactions?"
+
+		annotation 'Related Objects' = "SCONTRINI"
+
+	partition NEGOZI = m
+		mode: import
+		source =
+				let
+				        Origine = PowerPlatform.Dataflows(null),
+				        Workspaces = Origine{[Id="Workspaces"]}[Data],
+				        WS = Workspaces{[workspaceId="63075e43-ec19-4090-b204-854337b4b0d5"]}[Data],
+				        DF = WS{[dataflowId="9e62577e-6b91-4666-b6c3-868d086245db"]}[Data],
+				        NEGOZI1 = DF{[entity="NEGOZI"]}[Data],
+				        // Select base columns from source
+				        #"Removed Other Columns" = Table.SelectColumns(NEGOZI1,{"Area Code", "Store Description", "Store Code", "Store Code DWH", "Flag L4L 1year", "Flag L4L 2years", "Country Code", "Profit Center Code", "HFM Code", "Area Manager Code", "KEY_NGZ_HFM", "KEY_NGZ_UR_HFM_PC", "DATA_CHIUSURA", "COD_TIPOLOGIA", "Logistic Area"}),
+				        // Replace L4L flag values: 1->L4L, 0->Not L4L
+				        #"Replaced Value" = Table.ReplaceValue(#"Removed Other Columns","1","L4L",Replacer.ReplaceText,{"Flag L4L 1year"}),
+				        #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value","0","Not L4L",Replacer.ReplaceText,{"Flag L4L 1year"}),
+				        // Merge with AREA_MANAGER for manager names
+				        #"Merged Queries" = Table.NestedJoin(#"Replaced Value1", {"Area Manager Code"}, AREA_MANAGER, {"Area Manager Code"}, "AREA_MANAGER", JoinKind.LeftOuter),
+				        #"Expanded AREA_MANAGER" = Table.ExpandTableColumn(#"Merged Queries", "AREA_MANAGER", {"Area Manager Description"}, {"Area Manager Description"}),
+				        // Merge with GERARCHIA_AREA for area descriptions
+				        #"Merged Queries1" = Table.NestedJoin(#"Expanded AREA_MANAGER", {"Area Code"}, GERARCHIA_AREA, {"Area Code"}, "GERARCHIA_AREA", JoinKind.LeftOuter),
+				        #"Expanded GERARCHIA_AREA" = Table.ExpandTableColumn(#"Merged Queries1", "GERARCHIA_AREA", {"Area Description"}, {"Area Description"}),
+				        // Merge with NAZIONI for country descriptions
+				        #"Merged Queries2" = Table.NestedJoin(#"Expanded GERARCHIA_AREA", {"Country Code"}, NAZIONI, {"Country Code"}, "NAZIONI", JoinKind.LeftOuter),
+				        #"Expanded NAZIONI" = Table.ExpandTableColumn(#"Merged Queries2", "NAZIONI", {"Country Description"}, {"Country Description"}),
+				        // Capitalize country descriptions
+				        #"Capitalized Each Word" = Table.TransformColumns(#"Expanded NAZIONI",{{"Country Description", Text.Proper, type text}}),
+				        // Remove stores ending with 'B' (closed or test stores)
+				        #"Filtered Rows" = Table.SelectRows(#"Capitalized Each Word", each not Text.EndsWith([Store Code], "B")),
+				        // Final merge for hierarchy area description
+				        #"Merged Queries Final" = Table.NestedJoin(#"Filtered Rows", {"Area Code"}, GERARCHIA_AREA, {"Area Code"}, "GERARCHIA_AREA", JoinKind.LeftOuter),
+				        #"Expanded GERARCHIA_AREA Final" = Table.ExpandTableColumn(#"Merged Queries Final", "GERARCHIA_AREA", {"Area Description"}, {"GERARCHIA_AREA.Area Description"})
+				in
+				        #"Expanded GERARCHIA_AREA Final"
+
+		annotation Description = "Import partition for store master data. Performs multiple joins to enrich store data with area, country, and area manager attributes. Note: Hardcoded L4L flag replacements (1→L4L, 0→Not L4L) and filter removing stores ending with 'B' (closed/test stores). Proposed – pending Loro Piana validation on these business rules."
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation Description = "Store master dimension for the luxury retail model. Contains store-level attributes including codes, descriptions, geographic and organizational hierarchy references (Area, Country, Area Manager), operational flags (Like-for-Like, closure date, store type), and financial codes (Profit Center, HFM). Pre-joined with Area, Country, and Area Manager dimensions for simplified reporting. Grain: one row per store. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "Stores, Store Master, Store Dimension, Retail Outlets, Boutiques, Store Locations"
+
+	annotation DisplayFolder = "Store Master"
+
+	annotation RefreshPolicy = "Weekly on Sundays at 00:00 UTC; data latency ≤ 48 hours. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana Retail Operations Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "Store: LP001 - Milano Via Montenapoleone, Area: Italy, Country: Italy, Area Manager: Giuseppe Rossi"
+
+	annotation 'Common Questions' = "Which stores are in our network? How do stores perform by sales? What stores are Like-for-Like? Which stores are closed? How do stores compare by country and area?"
+
+	annotation 'Related Objects' = "SCONTRINI, TARGET, BUDGET, AREA_MANAGER, GERARCHIA_AREA, NAZIONI"

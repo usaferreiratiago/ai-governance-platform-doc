@@ -1,0 +1,199 @@
+table OFFER
+	lineageTag: 166c4e85-3ca6-4651-939f-3cfea76145ca
+
+	column OfferCode
+		dataType: string
+		lineageTag: 5ff0a978-f54a-4e5f-97c2-6002354346ed
+		summarizeBy: none
+		sourceColumn: Offer Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Unique code identifying a specific offer (e.g., 'BAG_PROMO', 'SS24_BASIC'). Used to link product-color variants to specific offers. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Offer Code, Offer ID, Offer Identifier, Promo Code"
+
+		annotation DisplayFolder = "Offer Details"
+
+		annotation 'Example Values' = "BAG_PROMO, SS24_BASIC, FW24_EXCLUSIVE, SHOE_CLEARANCE"
+
+		annotation 'Common Questions' = "What is the offer code for the current promotion? How many products are in each offer? Which offer has the highest sales?"
+
+		annotation 'Related Objects' = "ARTICOLI_COLORE"
+
+	column MacroOfferCode
+		dataType: string
+		lineageTag: 60af81e6-dadf-4048-9097-dbe898592088
+		summarizeBy: none
+		sourceColumn: Macro Offer Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Code identifying the macro offer grouping (e.g., 'PROMOTIONS', 'CORE_COLLECTION', 'EXCLUSIVE'). Used to group offers for higher-level analysis. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Macro Offer ID, Offer Group Code, Campaign Code, Offer Category Code"
+
+		annotation DisplayFolder = "Offer Details"
+
+		annotation 'Example Values' = "PROMOTIONS, CORE_COLLECTION, EXCLUSIVE, SEASONAL, CLEARANCE"
+
+		annotation 'Common Questions' = "What are the macro offer groups? How many offers are in each macro offer?"
+
+		annotation 'Related Objects' = "ARTICOLI_COLORE"
+
+	column MacroOfferDescription
+		dataType: string
+		lineageTag: e82f7d8e-d985-470a-803e-67483346f2b1
+		summarizeBy: none
+		sourceColumn: Macro Offer
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Business-friendly description of the macro offer (e.g., 'Promotions', 'Core Collection'). Use for reporting and labels. Note: Hardcoded replacement in M code: 'PERSONALIZATION' → 'PERSONALIZ'. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Macro Offer Name, Offer Group Name, Campaign Name, Offer Category"
+
+		annotation DisplayFolder = "Offer Details"
+
+		annotation 'Example Values' = "Promotions, Core Collection, Exclusive, Seasonal, Clearance"
+
+		annotation 'Common Questions' = "What is the macro offer name for code PROMOTIONS? How do macro offers perform?"
+
+		annotation 'Related Objects' = "ARTICOLI_COLORE"
+
+	column OfferSortOrder
+		dataType: double
+		isHidden
+		lineageTag: cd6f3193-d6b0-4509-b84e-54f68981ef9c
+		summarizeBy: none
+		sourceColumn: Offer Ord
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Technical sort order for offers. Note: Hardcoded replacement in M code: 8 → 7. Not for analytical use."
+
+	column MacroOfferSortOrder
+		dataType: int64
+		isHidden
+		lineageTag: 6504efd3-73a3-4645-8a13-f41b9ad30fa0
+		summarizeBy: none
+		sourceColumn: Macro Offer Ord
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Technical sort order for macro offers. Not for analytical use."
+
+	column OfferDisplayLabel
+		dataType: string
+		lineageTag: 8cb8d8a0-27ae-4ee7-bb77-8300d545e818
+		summarizeBy: none
+		sourceColumn: Offer Label
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Display label combining offer name with year-over-year variance indicator (Δ vs LY). For visual display only. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Offer Label, Display Offer, Offer with Variance"
+
+		annotation DisplayFolder = "Offer Details"
+
+		annotation 'Example Values' = "BAG_PROMO Δ vs LY, SS24_BASIC Δ vs LY"
+
+		annotation 'Common Questions' = "What is the display label for this offer?"
+
+	column MacroOfferDisplayLabel
+		dataType: string
+		lineageTag: 7cf709f6-88fb-44af-a9cd-24bf9dd9a8ad
+		summarizeBy: none
+		sourceColumn: Macro Offer Label
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Display label combining macro offer name with year-over-year variance indicator (Δ vs LY). For visual display only. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Macro Offer Label, Display Macro Offer, Macro Offer with Variance"
+
+		annotation DisplayFolder = "Offer Details"
+
+		annotation 'Example Values' = "PROMOTIONS Δ vs LY, CORE_COLLECTION Δ vs LY"
+
+		annotation 'Common Questions' = "What is the display label for this macro offer?"
+
+	column OfferName
+		dataType: string
+		lineageTag: 6d5c96bc-da87-4985-a01e-ec68d3fbb1ff
+		summarizeBy: none
+		sourceColumn: Offer
+		sortByColumn: OfferSortOrder
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Business-friendly name of the offer. Note: Hardcoded logic in M code: 'nd' values are replaced with 'OTHER'. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Offer Name, Offer Description, Offer Title"
+
+		annotation DisplayFolder = "Offer Details"
+
+		annotation 'Example Values' = "BAG_PROMO, SS24_BASIC, FW24_EXCLUSIVE"
+
+		annotation 'Common Questions' = "What is the offer name? Which offers are available?"
+
+		annotation 'Related Objects' = "ARTICOLI_COLORE"
+
+	partition OFFER = m
+		mode: import
+		source =
+				let
+				        Source = PowerPlatform.Dataflows(null),
+				        Workspaces = Source{[Id="Workspaces"]}[Data],
+				        WS = Workspaces{[workspaceId="63075e43-ec19-4090-b204-854337b4b0d5"]}[Data],
+				        DF = WS{[dataflowId="9839110f-89f4-42a8-86a3-0da4749f930e"]}[Data],
+				        OFFER_ = DF{[entity="OFFER",version=""]}[Data],
+				        // Select base columns
+				        #"Removed Other Columns" = Table.SelectColumns(OFFER_,{"Offer Code", "Offer", "Macro Offer Code", "Macro Offer", "Offer Ord", "Macro Offer Ord"}),
+				        // Add display labels with Δ vs LY
+				        Personalizzato1 = Table.AddColumn(#"Removed Other Columns", "Offer Label", each [Offer] & Character.FromNumber(10) & "Δ vs LY"),
+				        Personalizzato2 = Table.AddColumn(Personalizzato1, "Macro Offer Label", each [Macro Offer] & Character.FromNumber(10) & "Δ vs LY"),
+				        // Replace 'nd' with 'OTHER' for Offer
+				        #"Added Conditional Column" = Table.AddColumn(Personalizzato2, "Custom", each if [Offer] = "nd" then "OTHER" else [Offer], type text),
+				        #"Renamed Columns" = Table.RenameColumns(#"Added Conditional Column",{{"Custom", "Offer New"}}),
+				        // Replace 'nd' with 'OTHER' for Macro Offer
+				        #"Replaced Value" = Table.ReplaceValue(#"Renamed Columns","nd","OTHER",Replacer.ReplaceText,{"Macro Offer"}),
+				        // Swap Offer with Offer New (contains 'OTHER' replacement)
+				        #"Renamed Columns1" = Table.RenameColumns(#"Replaced Value",{{"Offer", "Offer Tmp"}, {"Offer New", "Offer"}}),
+				        #"Removed Columns" = Table.RemoveColumns(#"Renamed Columns1",{"Offer Tmp"}),
+				        // Hardcoded sort order change: 8 → 7
+				        #"Replaced Value1" = Table.ReplaceValue(#"Removed Columns",8,7,Replacer.ReplaceValue,{"Offer Ord"}),
+				        // Hardcoded text replacement: PERSONALIZATION → PERSONALIZ
+				        #"Replaced Value2" = Table.ReplaceValue(#"Replaced Value1","PERSONALIZATION","PERSONALIZ",Replacer.ReplaceText,{"Macro Offer"}),
+				        #"Replaced Value3" = Table.ReplaceValue(#"Replaced Value2","PERSONALIZATION","PERSONALIZ",Replacer.ReplaceText,{"Offer"})
+				in
+				        #"Replaced Value3"
+
+		annotation Description = "Import partition for offer master data. Performs multiple hardcoded transformations: (1) Adds 'Δ vs LY' display labels, (2) Replaces 'nd' with 'OTHER' in Offer and Macro Offer, (3) Changes Offer Ord value 8→7, (4) Replaces 'PERSONALIZATION' with 'PERSONALIZ'. Proposed – pending Loro Piana validation on all business rules."
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation Description = "Offer hierarchy dimension for the luxury retail assortment. Defines product offer classifications at two levels: Offer (granular) and Macro Offer (grouped). Used for promotional analysis, offer performance tracking, and campaign reporting. Includes display labels with variance indicators and hardcoded business logic for offer grouping. Grain: one row per offer code. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "Offer, Offer Hierarchy, Promotional Offer, Offer Classification, Campaign Offer"
+
+	annotation DisplayFolder = "Product Master"
+
+	annotation RefreshPolicy = "Weekly on Sundays at 00:00 UTC; data latency ≤ 48 hours. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana Commercial Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "Offer: BAG_PROMO, Macro Offer: PROMOTIONS; Offer: SS24_BASIC, Macro Offer: CORE_COLLECTION"
+
+	annotation 'Common Questions' = "What offers are available? How do offers perform by sales? Which macro offer has the highest performance? How do offers compare within each macro offer?"
+
+	annotation 'Related Objects' = "ARTICOLI_COLORE, SCONTRINI, CLASSE_PRODOTTO, TARGET"

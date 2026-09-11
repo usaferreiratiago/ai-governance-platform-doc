@@ -1,0 +1,167 @@
+table DIPENDENTI_NEGOZIO_STR
+	lineageTag: 3a502b0d-3002-486f-9eb6-1c429bb008e4
+
+	column YearCode
+		dataType: string
+		lineageTag: 98fc8299-0a49-4721-9bbb-fce4e3f86f8b
+		summarizeBy: none
+		sourceColumn: COD_ANNO
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Calendar year of the employee FTE record (e.g., '2022', '2023', '2024'). Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Year, Calendar Year, Annual Period"
+
+		annotation DisplayFolder = "Time"
+
+	column MonthCode
+		dataType: string
+		lineageTag: 9c039289-dd27-4f1b-9771-c2d5e7628b83
+		summarizeBy: none
+		sourceColumn: COD_MESE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Month code for the FTE record (e.g., '01' for January, '12' for December). Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Month, Period, Month Number"
+
+		annotation DisplayFolder = "Time"
+
+	column EmployeeKey
+		dataType: string
+		lineageTag: 89ddbe44-3526-4e91-ad43-e4381264c156
+		summarizeBy: none
+		sourceColumn: COD_GLOABAL_EMPL
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Unique identifier for the employee. Links to employee master data. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Employee ID, Staff ID, Personnel Number"
+
+		annotation DisplayFolder = "Employee"
+
+	column StoreCode
+		dataType: string
+		lineageTag: 034c632e-3b44-40fe-a282-131e1518feb2
+		summarizeBy: none
+		sourceColumn: COD_NEGZ
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Store code identifying the location where the employee works. Links to Store dimension. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Store ID, Location Code, Boutique Code"
+
+		annotation DisplayFolder = "Store"
+
+	column ActualFTE
+		dataType: double
+		lineageTag: f8c96507-bcb0-4f94-acad-d0eba195b5f2
+		summarizeBy: sum
+		sourceColumn: VAL_FTE_EFFETTIVO
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Actual Full-Time Equivalent (FTE) value for the employee in the given month. Represents the fraction of a full-time position (e.g., 1.0 = full-time, 0.5 = part-time). Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "FTE, Full-Time Equivalent, Headcount Equivalent, Staffing Level"
+
+		annotation DisplayFolder = "Employee"
+
+	column YearMonthStoreKey
+		dataType: string
+		lineageTag: e4eeb63a-3f08-41c4-8620-dcbb9c2a6a88
+		summarizeBy: none
+		sourceColumn: KEY_ANNO_MESE_NEGZ
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Technical composite key combining Year, Month, and Store. Used for relationship to store targets and aggregation. Not for analytical use."
+
+		annotation Synonyms = "Composite Key, Year Month Store ID"
+
+		annotation DisplayFolder = "Technical"
+
+	column MonthNumber = [MonthCode]
+		dataType: int64
+		formatString: 0
+		lineageTag: 44a4bca0-d7eb-4337-b0c7-f4ea58a8d792
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation Description = "Numeric month (1-12) extracted from MonthCode for chronological ordering and date calculations. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Month Number, Period Number, Month Index"
+
+		annotation DisplayFolder = "Time"
+
+	column RoleDescriptionEN
+		dataType: string
+		lineageTag: b93e6ae4-6f10-472c-a87d-375e130b6b95
+		summarizeBy: none
+		sourceColumn: DES_MANSIONE_EN
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Employee role or job function in English (e.g., 'Store Manager', 'Sales Associate', 'Back Office'). Used for staffing analysis by role. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Role, Job Title, Position, Function, Job Role"
+
+		annotation DisplayFolder = "Employee"
+
+	column InStoreFlag
+		dataType: string
+		lineageTag: 559a24e6-88b3-4bb0-beaf-c1771121ad56
+		summarizeBy: none
+		sourceColumn: FLG_IN_STORE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Flag indicating if the employee works in-store ('Y') or in back-office/other ('N'). Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "In-Store, Store Staff, Frontline, Customer-Facing"
+
+		annotation DisplayFolder = "Employee"
+
+	partition DIPENDENTI_NEGOZIO_STR = m
+		mode: import
+		source =
+				let
+				        Origine = PowerPlatform.Dataflows(null),
+				        Workspaces = Origine{[Id="Workspaces"]}[Data],
+				        WS = Workspaces{[workspaceId="63075e43-ec19-4090-b204-854337b4b0d5"]}[Data],
+				        DF = WS{[dataflowId="9e62577e-6b91-4666-b6c3-868d086245db"]}[Data],
+				        DIPENDENTI_NEGOZIO_STR1 = DF{[entity="DIPENDENTI_NEGOZIO_STR_CRM"]}[Data],
+				        #"Removed Other Columns" = Table.SelectColumns(DIPENDENTI_NEGOZIO_STR1,{"COD_ANNO", "COD_MESE", "COD_GLOABAL_EMPL", "COD_NEGZ", "VAL_FTE_EFFETTIVO", "DES_MANSIONE_EN", "KEY_ANNO_MESE_NEGZ", "FLG_IN_STORE"})
+				in
+				        #"Removed Other Columns"
+
+		annotation Description = "Import partition for store employee FTE data. Source: Dataflow 'DIPENDENTI_NEGOZIO_STR_CRM'."
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation Description = "Store employee Full-Time Equivalent (FTE) data by month. Tracks employee headcount, FTE values, and role classifications across stores. Used for workforce planning, productivity analysis, and staffing optimization. Grain: one row per employee, month, and store. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "Store Employees, Staffing, FTE, Headcount, Employee Metrics, Workforce Planning"
+
+	annotation DisplayFolder = "Store Operations"
+
+	annotation RefreshPolicy = "Weekly on Sundays at 00:00 UTC; data latency ≤ 48 hours. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana Store Operations Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "Employee ID: EMP001, Store: MILAN01, FTE: 1.0, Role: Store Manager, Year: 2024, Month: 12"
+
+	annotation 'Common Questions' = "What is the total FTE per store? How many employees are in-store vs back-office? What is the employee turnover rate? How does staffing compare to target? What is the FTE by role and store?"
+
+	annotation 'Related Objects' = "NEGOZIO, DIM_EMPLOYEE, CALENDAR, STORE_TARGETS"

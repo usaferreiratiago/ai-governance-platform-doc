@@ -1,0 +1,79 @@
+table MARKETING_TYPE
+	lineageTag: 6f8efd96-de53-4b07-98c6-87d6e23acba2
+
+	column MarketingTypeCode
+		dataType: string
+		lineageTag: 3fec8bfd-6277-4642-8d1b-25ccfbce1a13
+		summarizeBy: none
+		sourceColumn: Marketing Type Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Unique code identifying a marketing type classification (e.g., 'M01', 'M02', 'M03'). Used to link product-color variants to their marketing type category. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Marketing Code, Promotional Code, Marketing Category Code, Campaign Code"
+
+		annotation DisplayFolder = "Marketing Type Details"
+
+		annotation 'Example Values' = "M01, M02, M03, M04, M05"
+
+		annotation 'Common Questions' = "What is the marketing type code for Core? How many products are in each marketing type? Which marketing type has the highest promotional sales?"
+
+		annotation 'Related Objects' = "ARTICOLI_COLORE.'Marketing Type Code'"
+
+	column MarketingTypeDescription
+		dataType: string
+		lineageTag: f873143c-a68d-4ecb-a4d8-9a8a254df394
+		summarizeBy: none
+		sourceColumn: Marketing Type Description
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Business-friendly description of the marketing type classification (e.g., 'Core', 'Seasonal', 'Promotional'). Use this field for labels and reporting. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Marketing Name, Promotional Category, Marketing Category Name, Campaign Type"
+
+		annotation DisplayFolder = "Marketing Type Details"
+
+		annotation 'Example Values' = "Core, Seasonal, Promotional, Exclusive, Capsule"
+
+		annotation 'Common Questions' = "What is the marketing type description for code M01? How do I filter by marketing type? What are the marketing type categories?"
+
+		annotation 'Related Objects' = "ARTICOLI_COLORE.'Marketing Type Code'"
+
+	partition MARKETING_TYPE = m
+		mode: import
+		source =
+				let
+				        Source = PowerPlatform.Dataflows(null),
+				        Workspaces = Source{[Id="Workspaces"]}[Data],
+				        WS = Workspaces{[workspaceId="63075e43-ec19-4090-b204-854337b4b0d5"]}[Data],
+				        DF = WS{[dataflowId="9839110f-89f4-42a8-86a3-0da4749f930e"]}[Data],
+				        MARKETING_TYPE1 = DF{[entity="MARKETING_TYPE"]}[Data],
+				        #"Removed Other Columns" = Table.SelectColumns(MARKETING_TYPE1,{"Marketing Type Code", "Marketing Type Description"})
+				in
+				        #"Removed Other Columns"
+
+		annotation Description = "Import partition for marketing type master data. Loads all marketing type classifications without date filtering."
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation Description = "Marketing type dimension for the luxury retail assortment. Defines product classification logic used for marketing and promotional strategies (e.g., 'Core', 'Seasonal', 'Promotional', 'Exclusive'). Links to product-color variants to identify marketing type classifications for campaign planning and performance analysis. Grain: one row per marketing type code. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "Marketing Type, Marketing Classification, Promotional Category, Marketing Strategy, Campaign Category"
+
+	annotation DisplayFolder = "Product Master"
+
+	annotation RefreshPolicy = "Weekly on Sundays at 00:00 UTC; data latency ≤ 48 hours. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana Marketing Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "M01: Core, M02: Seasonal, M03: Promotional, M04: Exclusive, M05: Capsule"
+
+	annotation 'Common Questions' = "What are the marketing type classifications? How do marketing types differ? Which products are in each marketing type? How does marketing type influence promotional performance?"
+
+	annotation 'Related Objects' = "ARTICOLI_COLORE.'Marketing Type Code', ARTICOLI, CLASSE_PRODOTTO, SCONTRINI, TARGET"

@@ -1,0 +1,79 @@
+table 'STAGE OF LIFE'
+	lineageTag: 2ea44f5d-ac80-4e1a-9c2d-244efa67217b
+
+	column LifecycleStageCode
+		dataType: string
+		lineageTag: a43ea075-f843-413d-b73d-324a96a0287f
+		summarizeBy: none
+		sourceColumn: Stage of Life Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Unique code identifying a product lifecycle stage (e.g., 'NEW' for new/current season, 'OLD' for prior season, 'DIS' for discontinued). Used to link products to their lifecycle stage. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Stage Code, Lifecycle Code, Product Stage Code, Seasonality Code"
+
+		annotation DisplayFolder = "Lifecycle Details"
+
+		annotation 'Example Values' = "NEW, OLD, DIS, SAMPLE, TEST"
+
+		annotation 'Common Questions' = "What is the lifecycle stage code for New products? How many products are in each lifecycle stage? Which lifecycle stage has the highest sell-through?"
+
+		annotation 'Related Objects' = "ARTICOLI.'Stage of Life Code'"
+
+	column LifecycleStageDescription
+		dataType: string
+		lineageTag: 4ce0c29f-4c68-4c8e-b8f9-a9cfd4eaf9cb
+		summarizeBy: none
+		sourceColumn: Stage of Life
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Business-friendly description of the product lifecycle stage (e.g., 'New/Current Season', 'Old/Prior Season', 'Discontinued'). Use for labels and reporting. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Stage Name, Lifecycle Stage, Product Stage Name, Seasonality Description"
+
+		annotation DisplayFolder = "Lifecycle Details"
+
+		annotation 'Example Values' = "New/Current Season, Old/Prior Season, Discontinued, Sample, Test Product"
+
+		annotation 'Common Questions' = "What is the lifecycle stage description for code NEW? How do I filter by lifecycle stage? What are the product lifecycle categories?"
+
+		annotation 'Related Objects' = "ARTICOLI.'Stage of Life Code'"
+
+	partition 'STAGE OF LIFE' = m
+		mode: import
+		source =
+				let
+				        Source = PowerPlatform.Dataflows(null),
+				        Workspaces = Source{[Id="Workspaces"]}[Data],
+				        WS = Workspaces{[workspaceId="63075e43-ec19-4090-b204-854337b4b0d5"]}[Data],
+				        DF = WS{[dataflowId="dcbf1499-ee35-4598-9b58-2d0142058031"]}[Data],
+				        STAGE_OF_LIFE_ = DF{[entity="STAGE_OF_LIFE",version=""]}[Data],
+				        #"Removed Other Columns" = Table.SelectColumns(STAGE_OF_LIFE_,{"Stage of Life Code", "Stage of Life"})
+				in
+				        #"Removed Other Columns"
+
+		annotation Description = "Import partition for product lifecycle stage master data. Loads all lifecycle stage classifications without date filtering."
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation Description = "Product lifecycle stage dimension for the luxury retail assortment. Defines the product lifecycle status (e.g., 'NEW' for current season, 'OLD' for prior season, 'DIS' for discontinued). Used for assortment planning, inventory management, and performance analysis by lifecycle stage. Links to products for lifecycle-based reporting. Grain: one row per stage of life code. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "Lifecycle Stage, Product Stage, Stage of Life, Product Lifecycle, Seasonality Stage"
+
+	annotation DisplayFolder = "Product Master"
+
+	annotation RefreshPolicy = "Weekly on Sundays at 00:00 UTC; data latency ≤ 48 hours. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana Product Management Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "NEW: New/Current Season, OLD: Old/Prior Season, DIS: Discontinued, SAMPLE: Sample, TEST: Test Product"
+
+	annotation 'Common Questions' = "What are the product lifecycle stages? How do new products perform vs old? Which products are discontinued? What is the stage distribution of our assortment? How does lifecycle stage affect sell-through?"
+
+	annotation 'Related Objects' = "ARTICOLI.'Stage of Life Code', CLASSE_PRODOTTO, SCONTRINI, TARGET"

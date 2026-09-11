@@ -1,0 +1,128 @@
+table SCONTRINI_TEMP
+	lineageTag: ac3a659c-d687-401d-a3da-14a0bf5b77dd
+
+	column 'Ticket ID'
+		lineageTag: 85d677db-51ec-41eb-bbda-1eb76544ee55
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: SCONTRINI[Ticket ID]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Unique ticket identifier. Used to track individual transactions and basket composition. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Ticket ID, Transaction ID, Receipt Number, Basket ID"
+
+		annotation DisplayFolder = "Ticket Details"
+
+		annotation 'Example Values' = "T12345, T67890, T11223"
+
+		annotation 'Common Questions' = "What is the ticket ID? How many items per ticket? What categories are in ticket T12345?"
+
+		annotation 'Related Objects' = "SCONTRINI[Ticket ID]"
+
+	column 'CATEGORY DISTINCT'
+		formatString: 0
+		lineageTag: 593f5942-de69-4fc1-88bb-f9b7824c7e45
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [CATEGORY DISTINCT]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Number of distinct product categories sold within the ticket. Calculated as distinct count of Category Code from line items on the ticket. Used to measure basket diversity and cross-category purchasing. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Category Count, Basket Diversity, Distinct Categories, Product Range per Ticket"
+
+		annotation DisplayFolder = "Metrics"
+
+		annotation 'Example Values' = "1, 2, 3, 4, 5"
+
+		annotation 'Common Questions' = "How many categories are in each ticket? What is the average basket diversity? Which tickets have the most categories?"
+
+		annotation 'Related Objects' = "CLASSE_PRODOTTO[Category Code]"
+
+	column Date
+		formatString: General Date
+		lineageTag: 1c870400-93bb-4af5-9bb5-e8c741e87944
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: SCONTRINI[Date]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Date of the sales transaction. Used for time-based analysis and trend reporting. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Date, Transaction Date, Sale Date"
+
+		annotation DisplayFolder = "Time"
+
+		annotation 'Example Values' = "2026-08-07"
+
+		annotation 'Common Questions' = "What is the transaction date? How do ticket categories vary by date?"
+
+		annotation 'Related Objects' = "SCONTRINI[Date]"
+
+	column 'Store Code'
+		lineageTag: 6e4d2418-be6e-48ca-bada-1f04a0983dae
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: SCONTRINI[Store Code]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Store code where the transaction occurred. Links to Stores dimension for store-level analysis. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Store ID, Store Code, Location"
+
+		annotation DisplayFolder = "Store"
+
+		annotation 'Example Values' = "LP001, LP002"
+
+		annotation 'Common Questions' = "Which store is the ticket from? How does basket diversity vary by store?"
+
+		annotation 'Related Objects' = "STORES[Store Code]"
+
+	partition 'Ticket Category Summary' = calculated
+		mode: import
+		source =
+				
+				SUMMARIZE(
+				        FILTER(
+				                SCONTRINI,
+				                AND(
+				                        SCONTRINI[Ticket Row Type] = "VEN",
+				                        OR(SCONTRINI[Ticket Type] = "SBMST", SCONTRINI[Ticket Type] = "SBVEN")
+				                )
+				        ),
+				        SCONTRINI[Date],
+				        SCONTRINI[Store Code],
+				        SCONTRINI[Ticket ID],
+				        "CATEGORY DISTINCT", DISTINCTCOUNT(CLASSE_PRODOTTO[Category Code])
+				)
+
+		annotation Description = "Calculated partition that aggregates sales transactions to produce per-ticket category summaries. Filters for 'VEN' Ticket Row Type and Ticket Types 'SBMST' or 'SBVEN'. Counts distinct product categories sold per ticket per day."
+
+	annotation PBI_Id = 125f55f35c5c45fa8dbc400d3b67b60b
+
+	annotation Description = "Ticket category summary table aggregating sales transactions by date, store, and ticket. Provides count of distinct product categories sold per ticket. Used for ticket-level category coverage analysis, basket analysis, and product range assessment. Grain: one row per date, store, and ticket. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "Ticket Summary, Basket Category Count, Per-Ticket Categories, Transaction Category Coverage"
+
+	annotation DisplayFolder = "Sales Analysis"
+
+	annotation RefreshPolicy = "Refreshed with sales data. Data reflects latest transactions. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana Commercial Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "Date: 2026-08-07, Store: LP001, Ticket: T12345, Categories: 3"
+
+	annotation 'Common Questions' = "How many categories does each ticket contain? What is the average number of categories per ticket? Which tickets have the highest category diversity? How does category coverage vary by store?"
+
+	annotation 'Related Objects' = "SCONTRINI, STORES, CLASSE_PRODOTTO"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation

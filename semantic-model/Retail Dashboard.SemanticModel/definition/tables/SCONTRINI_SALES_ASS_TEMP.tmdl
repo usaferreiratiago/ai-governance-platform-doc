@@ -1,0 +1,128 @@
+table SCONTRINI_SALES_ASS_TEMP
+	lineageTag: 67f3703c-d247-4de9-9bc7-d976404b5400
+
+	column Date
+		formatString: General Date
+		lineageTag: 3ca1ad49-2ccf-49ca-a08a-854cadc151d3
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: SCONTRINI[Date]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Date of the sales transactions. Used for daily analysis and time-based reporting. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Date, Transaction Date, Sale Date"
+
+		annotation DisplayFolder = "Time"
+
+		annotation 'Example Values' = "2026-08-07"
+
+		annotation 'Common Questions' = "What is the date of the summary? How do daily trends compare?"
+
+		annotation 'Related Objects' = "SCONTRINI[Date]"
+
+	column 'Store Code'
+		lineageTag: 43679847-59c4-4d9c-90e8-1360ac0ff62e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: SCONTRINI[Store Code]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Store code where the transactions occurred. Links to Stores dimension for store-level analysis. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Store ID, Store Code, Location"
+
+		annotation DisplayFolder = "Store"
+
+		annotation 'Example Values' = "LP001, LP002"
+
+		annotation 'Common Questions' = "Which stores are included? How do stores compare?"
+
+		annotation 'Related Objects' = "STORES[Store Code]"
+
+	column 'Sales Associate Code'
+		lineageTag: b055608e-c671-4a7e-839f-a0c64d6db95c
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: SCONTRINI[Sales Associate Code]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Sales associate code identifying the associate who made the sales. Links to Sales Associates dimension for individual performance analysis. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Associate Code, SA Code, Employee ID"
+
+		annotation DisplayFolder = "Associate"
+
+		annotation 'Example Values' = "12345, 67890"
+
+		annotation 'Common Questions' = "Which associates are included? How do associates compare?"
+
+		annotation 'Related Objects' = "OPERATORI_NEGOZI[Sales Associate Code]"
+
+	column 'CATEGORY DISTINCT'
+		formatString: 0
+		lineageTag: b889683b-4a0b-4e06-91df-5a34fb5e9c84
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [CATEGORY DISTINCT]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Number of distinct product categories sold by the associate on that date. Calculated as distinct count of Category Code from sales transactions. Used to measure category coverage and product knowledge. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Category Count, Distinct Categories, Product Range, Category Coverage"
+
+		annotation DisplayFolder = "Metrics"
+
+		annotation 'Example Values' = "5, 10, 15"
+
+		annotation 'Common Questions' = "How many categories does each associate sell? What is the average category count per associate? Which associates have the highest category coverage?"
+
+		annotation 'Related Objects' = "CLASSE_PRODOTTO[Category Code]"
+
+	partition 'Sales Associate Summary' = calculated
+		mode: import
+		source =
+				
+				SUMMARIZE(
+				        FILTER(
+				                SCONTRINI,
+				                AND(
+				                        SCONTRINI[Ticket Row Type] = "VEN",
+				                        OR(SCONTRINI[Ticket Type] = "SBMST", SCONTRINI[Ticket Type] = "SBVEN")
+				                )
+				        ),
+				        SCONTRINI[Date],
+				        SCONTRINI[Store Code],
+				        SCONTRINI[Sales Associate Code],
+				        "CATEGORY DISTINCT", DISTINCTCOUNT(CLASSE_PRODOTTO[Category Code])
+				)
+
+		annotation Description = "Calculated partition that aggregates sales transactions to produce daily summaries per store and sales associate. Filters for 'VEN' Ticket Row Type and Ticket Types 'SBMST' or 'SBVEN'. Counts distinct product categories sold per associate per day."
+
+	annotation PBI_Id = 4d95c564dd4f4ba388931e3f0c0d5e64
+
+	annotation Description = "Sales associate summary table aggregating sales transactions by date, store, and sales associate. Provides count of distinct product categories sold per associate per day. Used for associate-level performance analysis, category coverage, and productivity tracking. Grain: one row per date, store, and sales associate. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "Associate Summary, Sales Associate Performance, Daily Associate Metrics, Category Coverage"
+
+	annotation DisplayFolder = "Store Master"
+
+	annotation RefreshPolicy = "Refreshed with sales data. Data reflects latest transactions. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana Retail Operations Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "Date: 2026-08-07, Store: LP001, Associate: 12345, Categories: 5"
+
+	annotation 'Common Questions' = "How many categories does each associate sell per day? Which associates sell the most categories? What is the category coverage per store? How does associate productivity vary by day?"
+
+	annotation 'Related Objects' = "SCONTRINI, STORES, OPERATORI_NEGOZI, CLASSE_PRODOTTO"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation

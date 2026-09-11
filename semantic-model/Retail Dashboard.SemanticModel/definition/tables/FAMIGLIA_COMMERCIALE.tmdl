@@ -1,0 +1,79 @@
+table FAMIGLIA_COMMERCIALE
+	lineageTag: 43b3d3a3-fcf6-4ef7-abf7-5c3fabbd96dc
+
+	column CommercialFamilyCode
+		dataType: string
+		lineageTag: 625148c6-93c3-4c08-9016-33a19576617f
+		summarizeBy: none
+		sourceColumn: Commercial Family Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Unique code identifying a commercial family (e.g., 'RTW', 'LTH', 'ACC'). Used to link products to their commercial grouping and for reporting by family. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Family Code, Commercial Group ID, Family ID, Market Code"
+
+		annotation DisplayFolder = "Commercial Family"
+
+		annotation 'Example Values' = "RTW, LTH, ACC, KNIT, WOVEN, BAG, SHO"
+
+		annotation 'Common Questions' = "What is the commercial family code for Ready-to-Wear? How many products are in each commercial family? Which commercial family has the highest sales?"
+
+		annotation 'Related Objects' = "ARTICOLI.'Commercial Family Code'"
+
+	column CommercialFamilyDescription
+		dataType: string
+		lineageTag: dc04bc76-31ce-40d8-92c5-48a6b514080c
+		summarizeBy: none
+		sourceColumn: Commercial Family Description
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Business-friendly name of the commercial family (e.g., 'Ready-to-Wear', 'Leather Goods'). Use this field for labels, reporting, and visual grouping. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Family Name, Commercial Family Name, Market Family Name, Family Description"
+
+		annotation DisplayFolder = "Commercial Family"
+
+		annotation 'Example Values' = "Ready-to-Wear, Leather Goods, Accessories, Knitwear, Woven Items, Bags, Shoes"
+
+		annotation 'Common Questions' = "What is the commercial family name for code LTH? Which commercial family has the best performance? What is the revenue mix by commercial family?"
+
+		annotation 'Related Objects' = "ARTICOLI.'Commercial Family Code'"
+
+	partition FAMIGLIA_COMMERCIALE = m
+		mode: import
+		source =
+				let
+				        Source = PowerPlatform.Dataflows(null),
+				        Workspaces = Source{[Id="Workspaces"]}[Data],
+				        WS = Workspaces{[workspaceId="63075e43-ec19-4090-b204-854337b4b0d5"]}[Data],
+				        DF = WS{[dataflowId="dcbf1499-ee35-4598-9b58-2d0142058031"]}[Data],
+				        FAMIGLIA_COMMERCIALE1 = DF{[entity="FAMIGLIA_COMMERCIALE"]}[Data],
+				        #"Removed Other Columns" = Table.SelectColumns(FAMIGLIA_COMMERCIALE1,{"Commercial Family Code", "Commercial Family Description"})
+				in
+				        #"Removed Other Columns"
+
+		annotation Description = "Import partition for commercial family master data. Loads all commercial families without date filtering."
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation Description = "Commercial family dimension for the luxury retail assortment. Represents a mid-level product grouping within the commercial hierarchy, aggregating products for market positioning and pricing strategy. Links to products and business hierarchy for sales analysis. Grain: one row per commercial family code. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "Commercial Family, Market Family, Product Family, Commercial Group, Family Dimension"
+
+	annotation DisplayFolder = "Product Master"
+
+	annotation RefreshPolicy = "Weekly on Sundays at 00:00 UTC; data latency ≤ 48 hours. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana Commercial Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "RTW: Ready-to-Wear, LTH: Leather Goods, ACC: Accessories, KNIT: Knitwear, WOVEN: Woven Items"
+
+	annotation 'Common Questions' = "What are the commercial families? Which commercial family has the highest sales? How do commercial families compare to business categories? What is the revenue mix by commercial family?"
+
+	annotation 'Related Objects' = "ARTICOLI.'Commercial Family Code', CLASSE_PRODOTTO, BUSINESS, SCONTRINI, TARGET"

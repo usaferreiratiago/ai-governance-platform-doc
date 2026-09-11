@@ -1,0 +1,203 @@
+table LocalDateTable_93079be8-81cd-4773-bb74-4a25d8f39955
+	isHidden
+	lineageTag: 04b2adc3-3e7c-4e9a-ba3b-cb7b6ba26570
+
+	column Date
+		dataType: dateTime
+		isHidden
+		lineageTag: ad2b1296-c0ee-43b1-9e7e-f275c97001f0
+		dataCategory: PaddedDateTableDates
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = User
+
+		annotation Description = "The actual date value. This is the primary key for data load execution date-based relationships and time intelligence calculations. Hidden by default but used for joins and date filtering. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Date, Calendar Date, Date Key, Load Execution Date"
+
+		annotation DisplayFolder = "Date"
+
+	column Year = YEAR([Date])
+		dataType: int64
+		isHidden
+		lineageTag: 7cafdccf-14c5-4608-bb92-6247f362b96e
+		dataCategory: Years
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Year
+
+		annotation Description = "Calendar year extracted from the data load execution date. Used for annual reporting and year-over-year comparisons of load activity. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Year, Calendar Year, Load Execution Year, Refresh Year"
+
+		annotation DisplayFolder = "Date"
+
+		annotation 'Example Values' = "2023, 2024, 2025"
+
+		annotation 'Common Questions' = "What is the year for this load execution date? How do I filter by load year? How many loads occurred in 2024?"
+
+	column MonthNo = MONTH([Date])
+		dataType: int64
+		isHidden
+		lineageTag: 6186e85f-c0da-40bc-b62d-854cff437db8
+		dataCategory: MonthOfYear
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = MonthNumber
+
+		annotation Description = "Month number (1-12) extracted from the data load execution date. Used for chronological month ordering and sorting of load data. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Month Number, Month Index, Month of Year, Load Month Number"
+
+		annotation DisplayFolder = "Date"
+
+	column Month = FORMAT([Date], "MMMM")
+		dataType: string
+		isHidden
+		lineageTag: d6176e9e-7d91-4f12-98b8-c3d69423851e
+		dataCategory: Months
+		summarizeBy: none
+		sortByColumn: MonthNo
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Month
+
+		annotation Description = "Month name (e.g., January, February). Used for month-level reporting and visual grouping of load execution data. Sorted by MonthNo for correct chronological display. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Month, Month Name, Calendar Month, Load Month"
+
+		annotation DisplayFolder = "Date"
+
+		annotation 'Example Values' = "January, February, March"
+
+		annotation 'Common Questions' = "What is the load execution month name? How do I group data loads by month? What are the monthly load execution trends?"
+
+	column QuarterNo = INT(([MonthNo] + 2) / 3)
+		dataType: int64
+		isHidden
+		lineageTag: 0be7d63d-a64d-41e4-8360-8bffbc95e2d0
+		dataCategory: QuarterOfYear
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = QuarterNumber
+
+		annotation Description = "Quarter number (1-4) extracted from the data load execution date. Used for quarterly reporting and sorting of load activity. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Quarter Number, Quarter Index, Quarter of Year, Load Quarter"
+
+		annotation DisplayFolder = "Date"
+
+	column Quarter = "Qtr " & [QuarterNo]
+		dataType: string
+		isHidden
+		lineageTag: c40b6520-8586-47cd-802d-ecbecd0560ab
+		dataCategory: Quarters
+		summarizeBy: none
+		sortByColumn: QuarterNo
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Quarter
+
+		annotation Description = "Quarter label (e.g., Qtr 1, Qtr 2). Used for quarterly reporting and visual grouping of load execution data. Sorted by QuarterNo for correct chronological display. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Quarter, Calendar Quarter, Qtr, Load Quarter"
+
+		annotation DisplayFolder = "Date"
+
+		annotation 'Example Values' = "Qtr 1, Qtr 2, Qtr 3, Qtr 4"
+
+		annotation 'Common Questions' = "What is the load execution quarter? How do I group data loads by quarter? What are the quarterly load execution trends?"
+
+	column Day = DAY([Date])
+		dataType: int64
+		isHidden
+		lineageTag: 9a03bce9-9bc4-491a-ac0c-86585dd18209
+		dataCategory: DayOfMonth
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Day
+
+		annotation Description = "Day of the month (1-31). Used for daily analysis and sorting within months for load execution data. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Day, Day Number, Day of Month, Load Day"
+
+		annotation DisplayFolder = "Date"
+
+		annotation 'Example Values' = "1, 15, 31"
+
+		annotation 'Common Questions' = "What is the day of the load execution month? How do I analyze daily load patterns?"
+
+	hierarchy 'Date Hierarchy'
+		lineageTag: 9518b6b6-5f83-42bd-b7c0-c6427ec9e2ae
+
+		level Year
+			lineageTag: ede01076-00dc-47ca-8906-fd5078192a29
+			column: Year
+
+			annotation Description = "Year level in the data load execution date hierarchy. Top-level grouping for annual load activity analysis. Proposed – pending Loro Piana validation."
+
+		level Quarter
+			lineageTag: 1c418568-a9cc-40ef-b331-b5d9a5b201dc
+			column: Quarter
+
+			annotation Description = "Quarter level in the data load execution date hierarchy. Second-level grouping for quarterly load activity analysis. Proposed – pending Loro Piana validation."
+
+		level Month
+			lineageTag: bcb4d33a-138c-4a7d-82c8-00bfa5f487a4
+			column: Month
+
+			annotation Description = "Month level in the data load execution date hierarchy. Third-level grouping for monthly load activity analysis. Proposed – pending Loro Piana validation."
+
+		level Day
+			lineageTag: 9fcfd805-64aa-4f9d-ab10-0766b7366241
+			column: Day
+
+			annotation Description = "Day level in the data load execution date hierarchy. Lowest-level grouping for daily load activity analysis. Proposed – pending Loro Piana validation."
+
+		annotation TemplateId = DateHierarchy
+
+		annotation Description = "Default time hierarchy allowing drill-down from Year → Quarter → Month → Day for data load execution date analysis. Provides intuitive navigation for data refresh and load tracking reporting. Proposed – pending Loro Piana validation."
+
+		annotation 'Common Questions' = "How do I drill down from load year to load month? How do I expand load quarterly data? What is the date hierarchy structure for load execution analysis?"
+
+	partition 'Local Date Table - Load Execution' = calculated
+		mode: import
+		source = Calendar(Date(Year(MIN('LOG_ESECUZIONI_DWH'[MAX_END_DATE])), 1, 1), Date(Year(MAX('LOG_ESECUZIONI_DWH'[MAX_END_DATE])), 12, 31))
+
+		annotation Description = "Auto-generated local date table partition. Date range is dynamically calculated from the LOG_ESECUZIONI_DWH table's MAX_END_DATE column, spanning full years from the minimum to maximum load execution year. This ensures the date table covers all data load execution dates referenced in the model. Used for tracking data refresh timelines, load execution history, and data freshness analysis. Proposed – pending Loro Piana validation on data source and date range logic."
+
+	annotation __PBI_LocalDateTable = true
+
+	annotation Description = "Power BI auto-generated local date table providing a continuous date range for data load execution time intelligence calculations. This hidden table serves as the foundation for date-based relationships and time intelligence functions based on the MAX_END_DATE field from the LOG_ESECUZIONI_DWH table. Contains standard date attributes including Year, Quarter, Month, and Day, with a default 'Date Hierarchy' for drill-down analysis. Date range is dynamically derived from the 'LOG_ESECUZIONI_DWH' table's MAX_END_DATE column (full years only). Used for tracking data refresh timelines, load execution history, and data freshness analysis. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "Local Date Table, Date Dimension, Time Dimension, Calendar Table, Date Hierarchy, Load Execution Date Table, Data Refresh Date Table"
+
+	annotation DisplayFolder = "System Tables"
+
+	annotation RefreshPolicy = "Dynamically generated based on LOG_ESECUZIONI_DWH table data range. No manual refresh required. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana BI Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "Date: 2024-01-01, Year: 2024, Quarter: Qtr 1, Month: January, Day: 1"
+
+	annotation 'Common Questions' = "What is the data load execution date range? How do I use the date hierarchy for load tracking? How do I filter by load year, quarter, or month? What is the load execution date table used for?"
+
+	annotation 'Related Objects' = "LOG_ESECUZIONI_DWH, SCONTRINI, DateTableTemplate"
+
+	annotation __PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table

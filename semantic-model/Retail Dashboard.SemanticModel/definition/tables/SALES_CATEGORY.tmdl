@@ -1,0 +1,99 @@
+table SALES_CATEGORY
+	lineageTag: 28e962e8-40d5-4cba-9361-3ee0b4651d05
+
+	column SalesCategoryCode
+		dataType: string
+		lineageTag: 6de6cc02-7d06-45d5-a127-c252657a937f
+		summarizeBy: none
+		sourceColumn: Sales Category Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Unique code identifying a sales category (e.g., 'SC01', 'SC02'). Used to link products to their sales category for revenue analysis. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Sales Category Code, Revenue Category ID, Category Code"
+
+		annotation DisplayFolder = "Sales Category Details"
+
+		annotation 'Example Values' = "SC01, SC02, SC03, SC04, SC05"
+
+		annotation 'Common Questions' = "What is the sales category code for Bags? How many products are in each sales category? Which sales category has the highest revenue?"
+
+		annotation 'Related Objects' = "ARTICOLI, SCONTRINI"
+
+	column SalesCategoryDescriptionITA
+		dataType: string
+		lineageTag: f597cf28-af48-4c74-9506-587774adf995
+		summarizeBy: none
+		sourceColumn: Sales Category Description ITA
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Italian description of the sales category (e.g., 'Borse', 'Scarpe'). Use for Italian-language reporting and labels. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Italian Category Name, Categoria ITA, Italian Label"
+
+		annotation DisplayFolder = "Sales Category Details"
+
+		annotation 'Example Values' = "Borse, Scarpe, Abbigliamento, Accessori"
+
+		annotation 'Common Questions' = "Qual è la descrizione italiana della categoria? Come si chiama la categoria in italiano?"
+
+		annotation 'Related Objects' = "ARTICOLI, SCONTRINI"
+
+	column SalesCategoryDescriptionENG
+		dataType: string
+		lineageTag: e0ae317f-2bfd-47d5-926d-452d8b4ac87a
+		summarizeBy: none
+		sourceColumn: Sales Category Description ENG
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "English description of the sales category (e.g., 'Bags', 'Shoes'). Use for English-language reporting and international dashboards. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "English Category Name, Category Name, English Label"
+
+		annotation DisplayFolder = "Sales Category Details"
+
+		annotation 'Example Values' = "Bags, Shoes, Ready-to-Wear, Accessories"
+
+		annotation 'Common Questions' = "What is the English category name? How do I display categories in English?"
+
+		annotation 'Related Objects' = "ARTICOLI, SCONTRINI"
+
+	partition SALES_CATEGORY = m
+		mode: import
+		source =
+				let
+				        Source = PowerPlatform.Dataflows(null),
+				        Workspaces = Source{[Id="Workspaces"]}[Data],
+				        WS = Workspaces{[workspaceId="63075e43-ec19-4090-b204-854337b4b0d5"]}[Data],
+				        DF = WS{[dataflowId="e7e9b0fe-2430-4fd1-b2b4-5e8162474593"]}[Data],
+				        SALES_CATEGORY1 = DF{[entity="SALES_CATEGORY"]}[Data],
+				        #"Removed Other Columns" = Table.SelectColumns(SALES_CATEGORY1,{"Sales Category Code", "Sales Category Description ITA", "Sales Category Description ENG"})
+				in
+				        #"Removed Other Columns"
+
+		annotation Description = "Import partition for sales category master data. Loads all sales categories without date filtering."
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation Description = "Sales category dimension for the luxury retail assortment. Defines product categorization used for sales reporting and revenue analysis. Provides bilingual labels (Italian and English) for international reporting. Links to products and sales transactions for category-level performance analysis. Grain: one row per sales category code. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "Sales Category, Revenue Category, Sales Classification, Product Category"
+
+	annotation DisplayFolder = "Product Master"
+
+	annotation RefreshPolicy = "Weekly on Sundays at 00:00 UTC; data latency ≤ 48 hours. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana Commercial Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "SC01: Bags / Borse, SC02: Shoes / Scarpe, SC03: Ready-to-Wear / Abbigliamento, SC04: Accessories / Accessori"
+
+	annotation 'Common Questions' = "What are the sales categories? How do sales categories differ from product categories? What is the revenue mix by sales category? Which sales category has the highest sales?"
+
+	annotation 'Related Objects' = "ARTICOLI, CLASSE_PRODOTTO, SCONTRINI, TARGET"

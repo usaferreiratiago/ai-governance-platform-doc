@@ -1,0 +1,74 @@
+table 'Filter Markdown-FullPrice'
+	lineageTag: a72a7202-c439-4923-b57f-912ef38719c0
+
+	column PriceTypeLabel
+		dataType: string
+		lineageTag: 573745de-933f-4b5b-aca8-361988ae2d21
+		summarizeBy: none
+		sourceColumn: Label
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Display label for the price type selection (e.g., 'Full Price', 'Markdown'). Use this field in filter controls and visual labels. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Price Type, Label, Filter Label, Price Category"
+
+		annotation DisplayFolder = "Price Filter"
+
+		annotation 'Example Values' = "Full Price, Markdown"
+
+		annotation 'Common Questions' = "What are the available price types? How do I select Markdown items?"
+
+		annotation 'Related Objects' = "SCONTRINI.'Flag Sale'"
+
+	column PriceTypeFlag
+		dataType: int64
+		formatString: 0
+		lineageTag: f4212472-cd19-4168-b25b-f72b5398fb7a
+		summarizeBy: none
+		sourceColumn: Flag Sale
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Numeric flag representing the price type: 0 typically indicates Full Price, 1 indicates Markdown. Used for filtering fact tables. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Flag Sale, Price Type ID, Discount Flag, Full Price Indicator"
+
+		annotation DisplayFolder = "Price Filter"
+
+		annotation 'Example Values' = "0 (Full Price), 1 (Markdown)"
+
+		annotation 'Common Questions' = "What does Flag Sale=0 mean? How do I filter by markdown status? What is the difference between Flag Sale 0 and 1?"
+
+		annotation 'Related Objects' = "SCONTRINI.'Flag Sale'"
+
+	partition 'Price Type Filter' = m
+		mode: import
+		source =
+				let
+				        Origine = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i9W8k0syk7JL89T0lEyVIrViVZyK83RUQgoykxOBQoZKMXGAsA=", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Label = _t, Flag Sale = _t]),
+				        #"Changed Type" = Table.TransformColumnTypes(Origine,{{"Label", type text}, {"Flag Sale", Int64.Type}})
+				in
+				        #"Changed Type"
+
+		annotation Description = "Static import partition containing a hardcoded list of price types. Current values: Label='Full Price', Flag Sale=0; Label='Markdown', Flag Sale=1. Used for filtering full-price vs. markdown sales."
+
+	annotation PBI_ResultType = Table
+
+	annotation Description = "Selection filter for markdown vs. full-price items. Provides a user-selectable list of price types (e.g., 'Full Price', 'Markdown') with corresponding numeric flags for filtering sales, stock, and performance metrics. Used in reports to isolate full-price or discounted sales. Grain: one row per price type. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "Price Type Filter, Markdown Filter, Full-Price Filter, Discount Filter, Price Status"
+
+	annotation DisplayFolder = "Parameters"
+
+	annotation RefreshPolicy = "Static hardcoded list. No refresh required. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana Commercial Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "Full Price (Flag Sale = 0), Markdown (Flag Sale = 1)"
+
+	annotation 'Common Questions' = "How do I filter to show only full-price sales? How do I compare markdown vs full-price performance? What is the split between full-price and markdown revenue? Which products are sold at full price?"
+
+	annotation 'Related Objects' = "SCONTRINI.'Flag Sale', SCONTRINI.'Markdown Percentage', TARGET"

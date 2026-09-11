@@ -1,0 +1,99 @@
+table SOTTO_CLASSE_PRODOTTO
+	lineageTag: 4d471790-3660-426e-b15e-0865f4bdd609
+
+	column SubCategoryCode
+		dataType: string
+		lineageTag: d339f4a2-22fb-4d0e-afec-2aeb677f924c
+		summarizeBy: none
+		sourceColumn: Sub Category Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Unique code identifying a product sub-category (e.g., 'DRS' for Dresses, 'SHP' for Shoes). Used to link products to their sub-category classification and for detailed assortment analysis. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Sub-Category Code, Sub-Category ID, Detailed Category Code, Merchandise Sub-Category Code"
+
+		annotation DisplayFolder = "Sub-Category Details"
+
+		annotation 'Example Values' = "DRS, SHP, BAG, KNT, WOV, ACC, JWL, SLG"
+
+		annotation 'Common Questions' = "What is the sub-category code for Dresses? How many products are in each sub-category? Which sub-category has the highest sales?"
+
+		annotation 'Related Objects' = "ARTICOLI.'Sub Category Code', SOTTO_CLASSE_PRODOTTO"
+
+	column SubCategoryDescriptionITA
+		dataType: string
+		lineageTag: 96246efe-adb8-445b-adee-57ef0e422869
+		summarizeBy: none
+		sourceColumn: Sub Category Description ITA
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Italian business label of the product sub-category (e.g., 'Abiti', 'Scarpe', 'Borse'). Use for Italian-speaking audiences and local reporting. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Italian Sub-Category Name, Sub-Categoria ITA, Italian Label"
+
+		annotation DisplayFolder = "Sub-Category Details"
+
+		annotation 'Example Values' = "Abiti, Scarpe, Borse, Maglieria, Tessuti"
+
+		annotation 'Common Questions' = "Qual è il nome italiano della sub-categoria? Come si chiama in italiano la sub-categoria DRS?"
+
+		annotation 'Related Objects' = "SOTTO_CLASSE_PRODOTTO.'Sub Category Code'"
+
+	column SubCategoryDescriptionENG
+		dataType: string
+		lineageTag: c5e49f62-bae7-4de5-af38-30e0e6d55ee4
+		summarizeBy: none
+		sourceColumn: Sub Category Description ENG
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "English business label of the product sub-category (e.g., 'Dresses', 'Shoes', 'Bags'). Use for international reporting and executive dashboards. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "English Sub-Category Name, Sub-Category Name, Sub-Category Label, Display Sub-Category"
+
+		annotation DisplayFolder = "Sub-Category Details"
+
+		annotation 'Example Values' = "Dresses, Shoes, Bags, Knitwear, Woven Items"
+
+		annotation 'Common Questions' = "What is the English name for sub-category DRS? How do sub-categories perform in English reports? What is the sub-category name for code SHP?"
+
+		annotation 'Related Objects' = "SOTTO_CLASSE_PRODOTTO.'Sub Category Code'"
+
+	partition SOTTO_CLASSE_PRODOTTO = m
+		mode: import
+		source =
+				let
+				        Source = PowerPlatform.Dataflows(null),
+				        Workspaces = Source{[Id="Workspaces"]}[Data],
+				        WS = Workspaces{[workspaceId="63075e43-ec19-4090-b204-854337b4b0d5"]}[Data],
+				        DF = WS{[dataflowId="dcbf1499-ee35-4598-9b58-2d0142058031"]}[Data],
+				        SOTTO_CLASSE_PRODOTTO1 = DF{[entity="SOTTO_CLASSE_PRODOTTO"]}[Data],
+				        #"Removed Other Columns" = Table.SelectColumns(SOTTO_CLASSE_PRODOTTO1,{"Sub Category Code", "Sub Category Description ITA", "Sub Category Description ENG"})
+				in
+				        #"Removed Other Columns"
+
+		annotation Description = "Import partition for sub-category master data. Loads all sub-category classifications without date filtering."
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation Description = "Sub-category dimension for the luxury retail assortment. Defines detailed product sub-category classifications within the main product category hierarchy. Includes bilingual descriptions (Italian and English) for international reporting. Links to products and parent categories for granular assortment analysis. Grain: one row per sub-category code. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "Sub-Category, Product Sub-Category, Sub-Category Dimension, Detailed Category, Merchandise Sub-Category"
+
+	annotation DisplayFolder = "Product Master"
+
+	annotation RefreshPolicy = "Weekly on Sundays at 00:00 UTC; data latency ≤ 48 hours. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana Product Management Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "DRS: Dresses / Abiti, SHP: Shoes / Scarpe, BAG: Bags / Borse, KNT: Knitwear / Maglieria"
+
+	annotation 'Common Questions' = "What are the sub-categories within Ready-to-Wear? How do sub-categories perform by sales? Which sub-category has the highest growth? How do Italian and English sub-category names compare?"
+
+	annotation 'Related Objects' = "ARTICOLI, CLASSE_PRODOTTO, SOTTO_CLASSE_PRODOTTO, SCONTRINI, TARGET"

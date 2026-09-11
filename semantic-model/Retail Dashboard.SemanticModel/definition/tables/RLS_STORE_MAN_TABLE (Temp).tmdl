@@ -1,0 +1,62 @@
+table 'RLS_STORE_MAN_TABLE (Temp)'
+	isHidden
+	lineageTag: 720b35ae-7c66-48b5-be92-d30910de523c
+
+	column StoreCode
+		dataType: string
+		isHidden
+		lineageTag: 7fb85686-88d7-4d83-9068-085d7328a710
+		summarizeBy: none
+		sourceColumn: Store Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Store code that the manager has permission to access (e.g., 'LP001', 'LP002'). This value is used by RLS filters to restrict data visibility. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Store ID, Store Code, Accessible Store, Permitted Store"
+
+		annotation DisplayFolder = "Store Access"
+
+		annotation 'Example Values' = "LP001, LP002, LP003"
+
+		annotation 'Common Questions' = "What stores can a manager access? How do I add a new store to a manager's access? Which stores are visible in this role?"
+
+		annotation 'Related Objects' = "STORES.'Store Code'"
+
+	partition 'Store Manager Access' = m
+		mode: import
+		source =
+				let
+				        Origine = RLS_STORE_MAN_TABLE,
+				        // Select only the Store Code column
+				        #"Removed Other Columns" = Table.SelectColumns(Origine,{"Store Code"}),
+				        // Remove duplicate store codes
+				        #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns"),
+				        // Remove null or empty store codes
+				        #"Filtered Rows" = Table.SelectRows(#"Removed Duplicates", each [Store Code] <> null and [Store Code] <> "")
+				in
+				        #"Filtered Rows"
+
+		annotation Description = "Import partition for store manager access control data. Loads distinct, non-null store codes from the RLS_STORE_MAN_TABLE source. These codes are used for Row-Level Security filtering to control store visibility by manager role."
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation Description = "Row-Level Security (RLS) dimension table defining store access permissions for store managers. This hidden table contains the list of store codes that each store manager has permission to view and analyze. Used in conjunction with RLS roles to filter data at the store level, ensuring managers only see data for their assigned stores. Grain: one row per store code per manager. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "RLS Store Access, Store Manager Permissions, Store Security, Access Control, Store Filter"
+
+	annotation DisplayFolder = "Security"
+
+	annotation RefreshPolicy = "Refreshed with user access changes. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana Security Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "LP001, LP002, LP003"
+
+	annotation 'Common Questions' = "Which stores can a manager access? How is store-level security implemented? What stores are visible to each manager?"
+
+	annotation 'Related Objects' = "STORES, NEGOZI, SCONTRINI, RLS roles"

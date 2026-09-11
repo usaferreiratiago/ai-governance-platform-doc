@@ -1,0 +1,79 @@
+table LOGICA_ACQUISTO
+	lineageTag: c6db8be4-fa35-4401-b18f-be2712f90d95
+
+	column BuyingLogicCode
+		dataType: string
+		lineageTag: c7152770-f724-4268-bfe5-1ff3600b6653
+		summarizeBy: none
+		sourceColumn: Buying Logic Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Unique code identifying a buying logic classification (e.g., 'B01', 'B02', 'B03'). Used to link product-color variants to their buying logic category. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Buying Code, Purchase Logic Code, Procurement Code, Buying Category Code"
+
+		annotation DisplayFolder = "Buying Logic Details"
+
+		annotation 'Example Values' = "B01, B02, B03, B04, B05"
+
+		annotation 'Common Questions' = "What is the buying logic code for Core Collection? How many products are in each buying logic? Which buying logic has the highest purchase volume?"
+
+		annotation 'Related Objects' = "ARTICOLI_COLORE.'Buying Logic Code'"
+
+	column BuyingLogicDescription
+		dataType: string
+		lineageTag: 1e561faf-7801-4c3f-ba35-0be43f07b3ab
+		summarizeBy: none
+		sourceColumn: Buying Logic Description
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Business-friendly description of the buying logic classification (e.g., 'Core Collection', 'Seasonal', 'Capsule'). Use this field for labels and reporting. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Buying Name, Purchase Logic Name, Procurement Category, Buying Category Name"
+
+		annotation DisplayFolder = "Buying Logic Details"
+
+		annotation 'Example Values' = "Core Collection, Seasonal, Capsule, Basic, Exclusive"
+
+		annotation 'Common Questions' = "What is the buying logic description for code B01? How do I filter by buying logic? What are the buying logic categories?"
+
+		annotation 'Related Objects' = "ARTICOLI_COLORE.'Buying Logic Code'"
+
+	partition LOGICA_ACQUISTO = m
+		mode: import
+		source =
+				let
+				        Source = PowerPlatform.Dataflows(null),
+				        Workspaces = Source{[Id="Workspaces"]}[Data],
+				        WS = Workspaces{[workspaceId="63075e43-ec19-4090-b204-854337b4b0d5"]}[Data],
+				        DF = WS{[dataflowId="9839110f-89f4-42a8-86a3-0da4749f930e"]}[Data],
+				        LOGICA_ACQUISTO1 = DF{[entity="LOGICA_ACQUISTO"]}[Data],
+				        #"Removed Other Columns" = Table.SelectColumns(LOGICA_ACQUISTO1,{"Buying Logic Code", "Buying Logic Description"})
+				in
+				        #"Removed Other Columns"
+
+		annotation Description = "Import partition for buying logic master data. Loads all buying logic classifications without date filtering."
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation Description = "Buying logic dimension for the luxury retail assortment. Defines product classification logic used for purchasing and procurement decisions. Helps categorize products for buying strategies, vendor negotiations, and assortment planning. Links to product-color variants to identify buying logic classifications. Grain: one row per buying logic code. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "Buying Logic, Purchase Logic, Procurement Classification, Buying Strategy, Purchasing Category"
+
+	annotation DisplayFolder = "Product Master"
+
+	annotation RefreshPolicy = "Weekly on Sundays at 00:00 UTC; data latency ≤ 48 hours. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana Buying Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "B01: Core Collection, B02: Seasonal, B03: Capsule, B04: Basic, B05: Exclusive"
+
+	annotation 'Common Questions' = "What are the buying logic classifications? How do buying logic categories differ? Which products follow each buying logic? How does buying logic influence procurement decisions?"
+
+	annotation 'Related Objects' = "ARTICOLI_COLORE.'Buying Logic Code', ARTICOLI, CLASSE_PRODOTTO, SCONTRINI"

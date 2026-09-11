@@ -1,0 +1,73 @@
+table Store_Selection_Table
+	lineageTag: fd6f08b8-571f-48b2-9b34-45fe06ef1c11
+
+	column StoreTypeName
+		dataType: string
+		lineageTag: 833a3e68-078c-4d45-98ba-439302988cef
+		summarizeBy: none
+		sourceColumn: Store type
+		sortByColumn: StoreTypeSortOrder
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Business-friendly name of the store type (e.g., 'Boutique', 'Department Store', 'Outlet'). Use this field for selection controls and visual labels. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Store Type, Store Format, Store Category, Retail Type, Channel Type"
+
+		annotation DisplayFolder = "Store Type Selection"
+
+		annotation 'Example Values' = "Boutique, Department Store, Outlet, Flagship, E-commerce"
+
+		annotation 'Common Questions' = "What store types are available? How do I select Boutique stores? What store formats do we have?"
+
+		annotation 'Related Objects' = "STORES.'Store Type Code', NEGOZI.'COD_TIPOLOGIA'"
+
+	column StoreTypeSortOrder
+		dataType: int64
+		formatString: 0
+		lineageTag: 00309ae7-d1cc-4da4-a7e3-3205ec6fed02
+		summarizeBy: sum
+		sourceColumn: Order
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Numeric sort order for store type display in selection controls. Lower numbers appear first. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Sort Order, Display Order, Store Type Order"
+
+		annotation DisplayFolder = "Store Type Selection"
+
+		annotation 'Example Values' = "1, 2, 3, 4, 5"
+
+		annotation 'Common Questions' = "How are store types ordered? Can I change the sort order of store types?"
+
+	partition 'Store Type Selection' = m
+		mode: import
+		source =
+				let
+				        Origine = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i9W8CktJy0yNVYrVg3MSEwsyMlP0lAyUYrVjFZxKS5IzE9MydMBCsZqxyXnFCpGxAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [#"Store type" = _t, Order = _t]),
+				        #"Changed Type" = Table.TransformColumnTypes(Origine,{{"Store type", type text}, {"Order", Int64.Type}})
+				in
+				        #"Changed Type"
+
+		annotation Description = "Static import partition containing a hardcoded list of selectable store types. Current store types include: Boutique, Department Store, Outlet, Flagship, E-commerce. This is a static selection table used for filtering and segmenting store analysis in reports."
+
+	annotation PBI_ResultType = Table
+
+	annotation Description = "Store type selection dimension for filtering and segmenting store analysis. Provides a user-selectable list of store types (e.g., 'Boutique', 'Department Store', 'Outlet') for filtering reports and visuals. Enables users to focus on specific store formats and compare performance across different retail channels. Grain: one row per store type. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "Store Type Selector, Store Format Selection, Store Channel Filter, Retail Type Picker, Store Category"
+
+	annotation DisplayFolder = "Parameters"
+
+	annotation RefreshPolicy = "Static hardcoded list. No refresh required. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana Retail Operations Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "Boutique, Department Store, Outlet, Flagship, E-commerce"
+
+	annotation 'Common Questions' = "How do I filter by store type? What store types are available? How do I compare Boutique vs Outlet performance? What is the difference between store types?"
+
+	annotation 'Related Objects' = "STORES, SCONTRINI, TARGET, NEGOZI"

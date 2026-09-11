@@ -1,0 +1,85 @@
+table 'Scontrini e Macro Category'
+	lineageTag: e0b40ae1-146c-4528-b536-154a6d49c30f
+
+	column 'Ticket ID'
+		lineageTag: d9c8b3c7-3d6b-4139-a095-4156f27fd688
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: SCONTRINI[Ticket ID]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Unique ticket identifier for sales transactions. Used to link to the original sales ticket and perform basket diversity analysis at the macro category level. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Ticket ID, Transaction ID, Receipt Number, Basket ID"
+
+		annotation DisplayFolder = "Ticket Details"
+
+		annotation 'Example Values' = "T12345, T67890"
+
+		annotation 'Common Questions' = "What is the ticket ID? How many macro categories are in ticket T12345?"
+
+		annotation 'Related Objects' = "SCONTRINI[Ticket ID]"
+
+	column BAG
+		formatString: 0
+		lineageTag: c9626263-0547-4946-9354-e973d7aa1707
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [BAG]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Number of distinct macro product categories sold within the ticket. Calculated as distinct count of Macro Category from line items on the ticket. Used to measure macro-level basket diversity and cross-category purchasing patterns. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Macro Category Count, Basket Macro Category Diversity, Distinct Macro Categories, Macro Category Range per Ticket"
+
+		annotation DisplayFolder = "Metrics"
+
+		annotation 'Example Values' = "1, 2, 3, 4, 5"
+
+		annotation 'Common Questions' = "How many macro categories are in each ticket? What is the average macro category diversity? Which tickets have the most macro categories?"
+
+		annotation 'Related Objects' = "SCONTRINI[Macro Category]"
+
+	partition 'Ticket Macro Category Count' = calculated
+		mode: import
+		source =
+				SUMMARIZE(
+				        SCONTRINI,
+				        SCONTRINI[Ticket ID],
+				        "BAG",
+				        CALCULATE(
+				                DISTINCTCOUNT(SCONTRINI[Macro Category]),
+				                AND(
+				                        OR(SCONTRINI[Ticket Type] = "SBMST", SCONTRINI[Ticket Type] = "SBVEN"),
+				                        SCONTRINI[Ticket Row Type] = "VEN"
+				                )
+				        )
+				)
+
+		annotation Description = "Calculated partition that summarizes tickets to count distinct macro product categories per ticket. Filters: Ticket Type IN ('SBMST','SBVEN') and Ticket Row Type = 'VEN'. Produces a per-ticket count of distinct macro categories (Bags, Shoes, Ready-to-Wear, etc.) within each sales transaction."
+
+	annotation PBI_Id = a2cf36a95a714f288af31e7b942554e4
+
+	annotation Description = "Ticket-level macro category count. Calculates the number of distinct macro product categories (e.g., Bags, Shoes, Ready-to-Wear) per sales ticket. Used to analyze basket diversity at the macro category level, cross-category purchasing behavior, and assortment performance. Grain: one row per ticket ID. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "Ticket Macro Category Count, Macro Category Basket Diversity, Distinct Macro Categories Per Ticket, Basket Macro Category Diversity"
+
+	annotation DisplayFolder = "Sales Analysis"
+
+	annotation RefreshPolicy = "Refreshed with sales data. Data reflects latest transactions. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana Commercial Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "Ticket: T12345, Macro Categories: 3 (Bags, Shoes, Ready-to-Wear)"
+
+	annotation 'Common Questions' = "How many macro categories are in each ticket? What is the average macro category diversity? Which tickets have the most macro categories? How does macro category basket diversity vary by store?"
+
+	annotation 'Related Objects' = "SCONTRINI, CLASSE_PRODOTTO, STORES, TARGET"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation

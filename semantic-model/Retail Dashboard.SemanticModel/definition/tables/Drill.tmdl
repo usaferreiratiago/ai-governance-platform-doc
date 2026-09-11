@@ -1,0 +1,88 @@
+table Drill
+	lineageTag: a5b65abf-bee9-4872-b74f-52aad970765b
+
+	column HierarchyLevelValue
+		lineageTag: 9e4ffe99-9cfc-4c5f-a622-82eaf64a1764
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: HierarchyLevelSortOrder
+
+		relatedColumnDetails
+			groupByColumn: HierarchyLevelGroup
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Unified display field combining three levels of the business hierarchy: Macro Category, Macrobusiness, and Business. Use this field for dynamic drill-down, filtering, and selection across hierarchy levels. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Business Hierarchy Value, Hierarchy Level, Drill Value, Selection Field, Unified Hierarchy"
+
+		annotation DisplayFolder = "Hierarchy Selection"
+
+		annotation 'Example Values' = "Ready-to-Wear (Macro Category), Knitwear (Macrobusiness), Cashmere Sweaters (Business)"
+
+		annotation 'Common Questions' = "Which hierarchy level does a value belong to? How do I filter by specific hierarchy levels? What values are available across all levels?"
+
+		annotation 'Related Objects' = "BUSINESS.'Business Description', BUSINESS.'Macrobusiness Description', BUSINESS.'Macro Category'"
+
+	column HierarchyLevelGroup
+		isHidden
+		lineageTag: e94cc3a6-4860-49c0-8b15-531a13fe8b7b
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: HierarchyLevelSortOrder
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Technical grouping field indicating the source hierarchy level: 'Macro Category', 'Macrobusiness', or 'Business'. Used for internal logic, source tracking, and determining the hierarchy level of each value."
+
+		annotation Synonyms = "Level Type, Source Level, Hierarchy Source"
+
+		annotation DisplayFolder = "Metadata"
+
+	column HierarchyLevelSortOrder
+		isHidden
+		formatString: 0
+		lineageTag: 665c7ddf-51a2-40ab-b1d1-53008d3a575b
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Technical sort order for the unified hierarchy dimension. Controls display ordering: Macro Category (1), Macrobusiness (0), Business (2)."
+
+	partition 'Business Hierarchy Selection' = calculated
+		mode: import
+		source =
+				{
+				    ("Macro Category", NAMEOF('BUSINESS'[Macro Category]), 1),
+				    ("Macrobusiness", NAMEOF('BUSINESS'[Macrobusiness Description]), 0),
+				    ("Business", NAMEOF('BUSINESS'[Business Description]), 2)
+				}
+
+		annotation Description = "Calculated partition that unions three levels of the business hierarchy from the BUSINESS table: Macro Category (highest level), Macrobusiness (middle level), and Business (most granular level). This creates a unified selection dimension for dynamic drill-down and filtering across all hierarchy levels. The sort order is: Macrobusiness (0), Macro Category (1), Business (2)."
+
+	annotation PBI_Id = 5c72e271385a403ab7850e1a8eb28810
+
+	annotation Description = "Calculated dimension that unions three levels of the business hierarchy (Macro Category → Macrobusiness → Business) into a single selection list for dynamic drill-down and filtering. Enables users to select any level of the business hierarchy from one unified field for analysis and visualization. Grain: one row per unique business hierarchy value across all levels. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "Business Hierarchy Drill, Drill Dimension, Hierarchy Selection, Business Level Selection, Unified Business Hierarchy"
+
+	annotation DisplayFolder = "Product Master"
+
+	annotation RefreshPolicy = "Weekly on Sundays at 00:00 UTC; data latency ≤ 48 hours. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana Commercial Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "Macro Category: Ready-to-Wear, Macrobusiness: Knitwear, Business: Cashmere Sweaters"
+
+	annotation 'Common Questions' = "How do I drill down from Macro Category to Business? What are the different hierarchy levels available? How do I filter by Business hierarchy? What is the difference between Macro Category, Macrobusiness, and Business?"
+
+	annotation 'Related Objects' = "BUSINESS.'Business Description', BUSINESS.'Macrobusiness Description', BUSINESS.'Macro Category', CLASSE_PRODOTTO, ARTICOLI"

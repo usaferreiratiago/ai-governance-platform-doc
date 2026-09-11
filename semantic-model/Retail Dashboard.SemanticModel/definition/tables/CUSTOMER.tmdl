@@ -1,0 +1,421 @@
+table CUSTOMER
+	lineageTag: 25e28974-6a80-4a19-85e8-24ed030dfb72
+
+	column CustomerCode
+		dataType: int64
+		lineageTag: 0ea73b14-8a7e-4bb4-b247-e2789a00d758
+		summarizeBy: none
+		sourceColumn: Customer Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Unique identifier for the customer. Used as the primary key for customer-related fact tables. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Customer ID, Client ID, Customer Number, CRM ID"
+
+		annotation DisplayFolder = "Identification"
+
+	column CountryCode
+		dataType: string
+		lineageTag: fac70978-f697-423e-b00c-bfe8a32df9bc
+		summarizeBy: none
+		sourceColumn: Country Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "ISO country code of the customer's residence or primary market. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Country ISO, Country ID, Residence Country"
+
+		annotation DisplayFolder = "Geography"
+
+	column NationalityCode
+		dataType: string
+		lineageTag: ae4e6e3a-eb0e-43d1-9219-ff33114611bb
+		summarizeBy: none
+		sourceColumn: Nationality Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "ISO code representing the customer's nationality. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Nationality ISO, Nationality ID, Citizenship Code"
+
+		annotation DisplayFolder = "Demographics"
+
+	column CountryDescription
+		dataType: string
+		lineageTag: 43bd79c2-9149-4f06-ac2d-ffeb0cad0f9a
+		summarizeBy: none
+		sourceColumn: Country Description
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Business-friendly country name of the customer's residence. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Country Name, Residence Country Name, Country"
+
+		annotation DisplayFolder = "Geography"
+
+	column NationalityDescription
+		dataType: string
+		lineageTag: c5f5b43b-dfde-4b40-9840-2a7b17685c0f
+		summarizeBy: none
+		sourceColumn: Nationality Description
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Business-friendly nationality name of the customer. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Nationality, Nationality Name, Citizenship"
+
+		annotation DisplayFolder = "Demographics"
+
+	column DistributionAreaByNationality
+		dataType: string
+		lineageTag: e3d5d2e6-fa2a-4203-bd6a-69c2e8ce3abb
+		summarizeBy: none
+		sourceColumn: Distr Area by Nationality
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Distribution area segmentation based on customer nationality. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Area, Distribution Region, Nationality Area"
+
+		annotation DisplayFolder = "Geography"
+
+	column DistributionAreaCRMByNationality
+		dataType: string
+		lineageTag: 8e400e84-8154-4016-86af-b0a3109627a7
+		summarizeBy: none
+		sourceColumn: Distr Area CRM by Nationality
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "CRM-specific distribution area based on customer nationality. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "CRM Area, CRM Region, Nationality CRM Area"
+
+		annotation DisplayFolder = "Geography"
+
+	column DistributionAreaByCountry
+		dataType: string
+		lineageTag: 7f346d2c-6620-4c4c-b4f5-c461db252b17
+		summarizeBy: none
+		sourceColumn: Distr Area by Country
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Distribution area segmentation based on customer country. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Area, Distribution Region, Country Area"
+
+		annotation DisplayFolder = "Geography"
+
+	column DistributionAreaCRMByCountry
+		dataType: string
+		lineageTag: e4a39b9b-2467-42a0-b81d-a17a69bd3652
+		summarizeBy: none
+		sourceColumn: Distr Area CRM by Country
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "CRM-specific distribution area based on customer country. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "CRM Area, CRM Region, Country CRM Area"
+
+		annotation DisplayFolder = "Geography"
+
+	column RegistrationYearMonth
+		dataType: string
+		lineageTag: 586171c9-14eb-4469-baf7-5b95b42f7a9a
+		summarizeBy: none
+		sourceColumn: Anno Mese Iscr
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Year and month of customer registration in format YYYYMM. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Registration Month, Sign-up Period, Customer Since"
+
+		annotation DisplayFolder = "Registration"
+
+	column RegistrationStoreKey
+		dataType: string
+		lineageTag: d039f25a-4e70-479d-afc2-39e0aa904930
+		summarizeBy: none
+		sourceColumn: KEY_ANNO_MESE_NEGZ
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Technical key combining registration year-month and store. Used for internal relationships. Not for analytical use."
+
+		annotation Synonyms = "Registration Store Key, Store-Month Key"
+
+		annotation DisplayFolder = "Registration"
+
+	column RegistrationStore
+		dataType: string
+		lineageTag: 4101d84e-7293-4e13-800e-da05c4c9a9d9
+		summarizeBy: none
+		sourceColumn: Registration Store
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Store name where the customer registered their account. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Registration Store Name, Sign-up Store, Store of Registration"
+
+		annotation DisplayFolder = "Registration"
+
+	column RegistrationStoreCode
+		dataType: string
+		lineageTag: 6c0da55d-d367-4e4e-8296-bccb71293d59
+		summarizeBy: none
+		sourceColumn: Registration Store Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Store code where the customer registered their account. Used for joining to store master data. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Registration Store ID, Sign-up Store Code"
+
+		annotation DisplayFolder = "Registration"
+
+	column RegistrationArea
+		dataType: string
+		lineageTag: 2381c91c-1d10-47f1-a739-60c0bbc55de8
+		summarizeBy: none
+		sourceColumn: Registration Area
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Geographic area where the customer registered. Used for regional analysis of customer acquisition. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Area, Region, Registration Region"
+
+		annotation DisplayFolder = "Registration"
+
+	column RegistrationChannel
+		dataType: string
+		lineageTag: c2caf14f-9fc7-40ea-874f-9ff16eb14e32
+		summarizeBy: none
+		sourceColumn: Registration Channel
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Channel through which the customer registered (e.g., 'Boutique', 'Online', 'Event'). Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Channel, Acquisition Channel, Registration Source"
+
+		annotation DisplayFolder = "Registration"
+
+	column FlagGeneric
+		dataType: string
+		lineageTag: 39208071-2dcb-49f8-9edb-8a6c857dcd28
+		summarizeBy: none
+		sourceColumn: Flag Gen
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Generic customer flag. Allowed values: 'Y' or 'N'. Business definition pending Loro Piana validation. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Gen Flag, Generic Flag"
+
+		annotation DisplayFolder = "CRM Flags"
+
+	column FlagDiplomatic
+		dataType: string
+		lineageTag: 2916bee2-c193-41ad-84df-bf2de6a8e16d
+		summarizeBy: none
+		sourceColumn: Flag Dip
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Flag indicating if customer has diplomatic status. Allowed values: 'Y' or 'N'. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Diplomatic Flag, Flag Dip"
+
+		annotation DisplayFolder = "CRM Flags"
+
+	column FlagReachable
+		dataType: string
+		lineageTag: 9282ccea-371a-403d-87c4-51e467590a17
+		summarizeBy: none
+		sourceColumn: Flag Reachable
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Flag indicating if customer can be reached via marketing communications. Allowed values: 'Y' or 'N'. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Reachable Flag, Contactable, Marketing Consent"
+
+		annotation DisplayFolder = "CRM Flags"
+
+	column FlagMonoShoes
+		dataType: string
+		lineageTag: ba3b56d7-f7f5-4713-8f7a-d23b38c8bb01
+		summarizeBy: none
+		sourceColumn: Flag Mono Shoes
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Flag indicating if customer is a mono-shoe customer (purchases only shoes). Allowed values: 'Y' or 'N'. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Mono-Shoe Flag, Shoes-Only Customer"
+
+		annotation DisplayFolder = "CRM Flags"
+
+	column AgeGroup
+		dataType: string
+		lineageTag: 665c2e2b-4ae3-497e-b8df-402173ed6732
+		summarizeBy: none
+		sourceColumn: Fascia Eta
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Customer age group segmentation (e.g., '18-25', '26-35', '36-50', '51+'). Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Age Band, Age Segment, Customer Age Group"
+
+		annotation DisplayFolder = "Demographics"
+
+	column StoreOfCompetenceCode
+		dataType: string
+		lineageTag: 9cfa0679-da1e-483e-9055-55d7d50fd5a7
+		summarizeBy: none
+		sourceColumn: Store of Comp Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Store code of the store of competence (primary store assigned to the customer). Used for store relationship management. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Primary Store Code, Competence Store"
+
+		annotation DisplayFolder = "Store"
+
+	column GenderCode
+		dataType: string
+		lineageTag: 3c4ac79d-d89b-4ffc-a9ac-9f546a795bfb
+		summarizeBy: none
+		sourceColumn: Sex
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Customer gender code. Allowed values: 'M' (Male), 'F' (Female), or other values. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Gender, Sex, Gender Code"
+
+		annotation DisplayFolder = "Demographics"
+
+	column NationalityNormalized
+		dataType: string
+		lineageTag: ced73f6d-4e5d-4847-bf13-bae73c2009eb
+		summarizeBy: none
+		sourceColumn: Nationality Norm
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Normalized nationality classification for consistent reporting. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Normalized Nationality, Standard Nationality"
+
+		annotation DisplayFolder = "Demographics"
+
+	column GenderLabel
+		dataType: string
+		lineageTag: 1fc8fa5c-83ae-4bb8-9b24-9cc424ed25ce
+		summarizeBy: none
+		sourceColumn: Sex_New
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Business-friendly gender label derived from GenderCode. 'F' → 'Ladies', 'M' → 'Men', otherwise original value. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Gender Description, Gender Name, Customer Gender"
+
+		annotation DisplayFolder = "Demographics"
+
+	column DistributionAreaCRMByNationalityLabel
+		dataType: string
+		lineageTag: ea7d17ef-a164-44fb-b5e9-4e89c4815dd2
+		summarizeBy: none
+		sourceColumn: Distr Area CRM by Nationality Label
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Display label combining CRM distribution area with year-over-year variance indicator (Δ vs LY). For visual display only. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "CRM Area Label, Distribution Display"
+
+		annotation DisplayFolder = "Geography"
+
+	column RegistrationDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 53f35eaf-2b8f-41c2-bf91-4eb9bdc71242
+		summarizeBy: none
+		sourceColumn: Data Iscrizione
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Full date when the customer registered. Use for time-based customer acquisition analysis. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Customer Since, Sign-up Date, Registration Date"
+
+		annotation DisplayFolder = "Registration"
+
+	column FlagReachableClienting
+		dataType: string
+		lineageTag: fd8304dd-6b35-4ac5-8642-d584d5014293
+		summarizeBy: none
+		sourceColumn: Flag Reachable Clienting
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Flag indicating if customer can be reached for clienting activities. Allowed values: 'Y' or 'N'. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Clienting Reachable, Clienting Consent"
+
+		annotation DisplayFolder = "CRM Flags"
+
+	partition CUSTOMER = m
+		mode: import
+		source =
+				let
+				        Source = PowerPlatform.Dataflows(null),
+				        Workspaces = Source{[Id="Workspaces"]}[Data],
+				        WS = Workspaces{[workspaceId="c1da6628-8762-41e9-a944-14a26fdfae09"]}[Data],
+				        DF = WS{[dataflowId="59cc4d93-74f6-41fd-b727-8de53a06f212"]}[Data],
+				        CUSTOMER1 = DF{[entity="CUSTOMER"]}[Data],
+				        // M code transformations:
+				        // 1. GenderLabel derived from Sex: 'F' → 'Ladies', 'M' → 'Men'
+				        // 2. DistributionAreaCRMByNationalityLabel combines area with "Δ vs LY"
+				        #"Added Conditional Column" = Table.AddColumn(CUSTOMER1, "Sex_New", each if [Sex] = "F" then "Ladies" else if [Sex] = "M" then "Men" else [Sex], type text),
+				        #"Added Custom" = Table.AddColumn(#"Added Conditional Column", "Distr Area CRM by Nationality Label", each [Distr Area CRM by Nationality] & Character.FromNumber(10) & "Δ vs LY"),
+				        #"Removed Other Columns" = Table.SelectColumns(#"Added Custom",{"Customer Code", "Country Code", "Data Iscrizione", "Nationality Code", "Country Description", "Nationality Description", "Distr Area by Nationality", "Distr Area CRM by Nationality", "Distr Area by Country", "Distr Area CRM by Country", "Anno Mese Iscr", "KEY_ANNO_MESE_NEGZ", "Registration Store Code", "Registration Store", "Registration Area", "Registration Channel", "Flag Gen", "Flag Dip", "Flag Reachable", "Flag Reachable Clienting", "Flag Mono Shoes", "Fascia Eta", "Store of Comp Code", "Sex", "Nationality Norm", "Sex_New", "Distr Area CRM by Nationality Label"})
+				in
+				        #"Removed Other Columns"
+
+		annotation Description = "Import partition for customer master data. Contains M code transformations: GenderLabel from 'Sex', and DistributionAreaCRMByNationalityLabel with 'Δ vs LY'. Proposed – pending validation of transformation logic."
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation Description = "Customer master dimension containing demographic, geographic, and registration information for luxury retail clients. Includes customer attributes such as nationality, country, registration details, CRM flags, and segmentation. Grain: one row per customer. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "Customer, Client, Shopper, Customer Master, CRM Customer, Luxury Client"
+
+	annotation DisplayFolder = "Customer Master"
+
+	annotation RefreshPolicy = "Weekly on Sundays at 00:00 UTC; data latency ≤ 48 hours. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana CRM Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation PrivacyClassification = "Contains personal customer data. Handle with appropriate data governance and privacy controls. Proposed – pending Loro Piana validation."

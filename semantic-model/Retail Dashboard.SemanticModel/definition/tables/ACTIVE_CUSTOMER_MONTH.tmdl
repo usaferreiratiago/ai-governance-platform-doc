@@ -1,0 +1,136 @@
+table ACTIVE_CUSTOMER_MONTH
+	lineageTag: e8a2119f-0982-41bf-a812-4c2813101901
+
+	measure '__superprova Hi ticket' = CALCULATE(SUMX(SCONTRINI, SCONTRINI[INCASSATO_VAL]))
+		formatString: 0
+		isHidden
+		lineageTag: 3fa38af1-3c89-4bd7-a30f-986bdeed7052
+
+		annotation Description = "TECHNICAL TEST MEASURE – DO NOT USE IN REPORTS. Unvalidated and deprecated. Proposed – pending Loro Piana validation on permanent removal."
+
+	column Year
+		dataType: int64
+		lineageTag: d6373dc1-e8e2-4586-b235-316816de138c
+		summarizeBy: none
+		sourceColumn: ANNO_COD
+
+		annotation Description = "Calendar year of customer activity (e.g., 2022, 2023). Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Calendar Year, Year, Fiscal Year, Annual Period"
+
+		annotation DisplayFolder = "Time"
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column MonthCode
+		dataType: string
+		formatString: 0
+		lineageTag: ae3f90f9-7ef0-4791-9362-fde9999cf09c
+		summarizeBy: none
+		sourceColumn: MESE_COD
+
+		annotation Description = "Numeric month (1–12). Use with MonthName for chronological ordering. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Month, Month Number, Calendar Month, Period"
+
+		annotation DisplayFolder = "Time"
+
+		annotation SummarizationSetBy = Automatic
+
+	column CustomerType
+		dataType: string
+		lineageTag: ba9363b9-3a34-4c2c-8a6a-4675ddee1413
+		summarizeBy: none
+		sourceColumn: YEAR_CUST_TYPE_DES
+
+		annotation Description = "Customer acquisition classification. Allowed values: 'NEW' (first-time this year) or 'EXISTING' (prior customers). Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Customer Category, Customer Segment, Acquisition Type, Client Type"
+
+		annotation DisplayFolder = "Customer"
+
+		annotation SummarizationSetBy = Automatic
+
+	column CustomerKey
+		dataType: int64
+		isHidden
+		lineageTag: d74de32f-d089-47f5-a4f5-d2473f3ae1e4
+		summarizeBy: none
+		sourceColumn: CLI_DWH_KEY
+
+		annotation Description = "Internal data warehouse key for customer. Not for analytical use."
+
+		annotation Synonyms = "Customer ID, Client ID"
+
+		annotation DisplayFolder = "Customer"
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column YTDTier
+		dataType: string
+		lineageTag: 2ea6e2a0-2311-4706-bc2f-6499a46ba740
+		summarizeBy: none
+		sourceColumn: TIER_YTD_COD
+
+		annotation Description = "Year‑to‑date customer tier. Order (highest → lowest): LUXURY, PREMIUM, STANDARD, BASIC. Based on YTD purchase value. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Tier, Customer Tier, YTD Segment, Loyalty Tier"
+
+		annotation DisplayFolder = "Customer"
+
+		annotation SummarizationSetBy = Automatic
+
+	column TierLabel
+		dataType: string
+		lineageTag: a89253dd-bf68-4ab8-8594-26c2f3abe5a7
+		summarizeBy: none
+		sourceColumn: "Tier Label "
+
+		annotation Description = "Display label combining tier code with year‑over‑year variance (Δ vs LY). For visual display only. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Tier Display, Tier Label with Variance"
+
+		annotation DisplayFolder = "Customer"
+
+		annotation SummarizationSetBy = Automatic
+
+	partition ACTIVE_CUSTOMER_MONTH = m
+		mode: import
+		source =
+				let
+				        Source = PowerPlatform.Dataflows(null),
+				        Workspaces = Source{[Id="Workspaces"]}[Data],
+				        WS = Workspaces{[workspaceId="c1da6628-8762-41e9-a944-14a26fdfae09"]}[Data],
+				        DF = WS{[dataflowId="e53fadbe-4d2d-4411-a1e3-ce8380a4031e"]}[Data],
+				        ACTIVE_CUSTOMER_MONTH_ = DF{[entity="ACTIVE_CUSTOMER_MONTH",version=""]}[Data],
+				        // Filter years – currently limited to 2022–2023; parameterize for full history if needed
+				        #"Filtered Rows" = Table.SelectRows(ACTIVE_CUSTOMER_MONTH_, each ([ANNO_COD] = "2022" or [ANNO_COD] = "2023")),
+				        #"Removed Other Columns" = Table.SelectColumns(#"Filtered Rows",{"ANNO_COD", "MESE_COD", "YEAR_CUST_TYPE_DES", "CLI_DWH_KEY", "TIER_YTD_COD"}),
+				        #"Added Custom" = Table.AddColumn(#"Removed Other Columns", "Tier Label", each [TIER_YTD_COD] & Character.FromNumber(10) & "Δ vs LY"),
+				        #"Removed Other Columns Final" = Table.SelectColumns(#"Added Custom",{"ANNO_COD", "MESE_COD", "YEAR_CUST_TYPE_DES", "CLI_DWH_KEY", "TIER_YTD_COD", "Tier Label"})
+				in
+				        #"Removed Other Columns Final"
+
+		annotation Description = "Import partition. Data currently limited to 2022–2023. Configure parameter for full historical coverage. Proposed – pending Loro Piana validation on required data range."
+
+	changedProperty = Name
+
+	annotation Description = "Monthly active customer metrics. Grain: one row per customer (CustomerKey), year, month, customer type, and YTD tier. Active customers made at least one purchase during the month. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "Active Customers, Monthly Customers, Customer Activity, Customer Metrics"
+
+	annotation DisplayFolder = "Customer Metrics"
+
+	annotation RefreshPolicy = "Weekly on Sundays at 00:00 UTC; data latency ≤ 48 hours. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana Commercial Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-06 (pending business sign-off)."
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation

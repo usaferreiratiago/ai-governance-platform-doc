@@ -1,0 +1,203 @@
+table LocalDateTable_feb346b4-23d8-4ba1-896e-401992cb5d39
+	isHidden
+	lineageTag: 3ee05dac-27dc-4f59-a8d0-b5bdb46209b9
+
+	column Date
+		dataType: dateTime
+		isHidden
+		lineageTag: bf6ba05c-effb-4532-86bb-9d6c4fc2447a
+		dataCategory: PaddedDateTableDates
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = User
+
+		annotation Description = "The actual date value representing the Last Year (LY) reference date. This is the primary key for LY date-based relationships and time intelligence calculations. Hidden by default but used for joins and date filtering. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Date, Calendar Date, Date Key, LY Date, Last Year Date"
+
+		annotation DisplayFolder = "Date"
+
+	column Year = YEAR([Date])
+		dataType: int64
+		isHidden
+		lineageTag: 718403f1-9ee7-4755-943d-14249cdc5a03
+		dataCategory: Years
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Year
+
+		annotation Description = "Calendar year extracted from the last year (LY) date. Used for annual reporting and year-over-year comparisons. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Year, Calendar Year, LY Year, Last Year, YoY Year"
+
+		annotation DisplayFolder = "Date"
+
+		annotation 'Example Values' = "2023, 2024, 2025"
+
+		annotation 'Common Questions' = "What is the LY year for this date? How do I filter by LY year? What was the performance in the LY year?"
+
+	column MonthNo = MONTH([Date])
+		dataType: int64
+		isHidden
+		lineageTag: 313d546d-5aa4-426e-8e16-f4e77f5ea5a0
+		dataCategory: MonthOfYear
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = MonthNumber
+
+		annotation Description = "Month number (1-12) extracted from the last year date. Used for chronological month ordering and sorting of LY data. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Month Number, Month Index, Month of Year, LY Month Number"
+
+		annotation DisplayFolder = "Date"
+
+	column Month = FORMAT([Date], "MMMM")
+		dataType: string
+		isHidden
+		lineageTag: 59f5f093-bb78-4571-9749-83972340e7fe
+		dataCategory: Months
+		summarizeBy: none
+		sortByColumn: MonthNo
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Month
+
+		annotation Description = "Month name (e.g., January, February). Used for month-level reporting and visual grouping of LY data. Sorted by MonthNo for correct chronological display. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Month, Month Name, Calendar Month, LY Month"
+
+		annotation DisplayFolder = "Date"
+
+		annotation 'Example Values' = "January, February, March"
+
+		annotation 'Common Questions' = "What is the LY month name? How do I group LY data by month? What are the monthly LY trends?"
+
+	column QuarterNo = INT(([MonthNo] + 2) / 3)
+		dataType: int64
+		isHidden
+		lineageTag: 778c632f-81f3-4793-9046-5b06e231bab7
+		dataCategory: QuarterOfYear
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = QuarterNumber
+
+		annotation Description = "Quarter number (1-4) extracted from the last year date. Used for quarterly reporting and sorting of LY data. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Quarter Number, Quarter Index, Quarter of Year, LY Quarter"
+
+		annotation DisplayFolder = "Date"
+
+	column Quarter = "Qtr " & [QuarterNo]
+		dataType: string
+		isHidden
+		lineageTag: 95e81494-0478-4edf-91cc-fa190ff1a422
+		dataCategory: Quarters
+		summarizeBy: none
+		sortByColumn: QuarterNo
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Quarter
+
+		annotation Description = "Quarter label (e.g., Qtr 1, Qtr 2). Used for quarterly reporting and visual grouping of LY data. Sorted by QuarterNo for correct chronological display. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Quarter, Calendar Quarter, Qtr, LY Quarter"
+
+		annotation DisplayFolder = "Date"
+
+		annotation 'Example Values' = "Qtr 1, Qtr 2, Qtr 3, Qtr 4"
+
+		annotation 'Common Questions' = "What is the LY quarter? How do I group LY data by quarter? What are the quarterly LY trends?"
+
+	column Day = DAY([Date])
+		dataType: int64
+		isHidden
+		lineageTag: 4a104f6e-aeed-4329-aa7e-bd4ff41ff204
+		dataCategory: DayOfMonth
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Day
+
+		annotation Description = "Day of the month (1-31). Used for daily analysis and sorting within months for LY data. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Day, Day Number, Day of Month, LY Day"
+
+		annotation DisplayFolder = "Date"
+
+		annotation 'Example Values' = "1, 15, 31"
+
+		annotation 'Common Questions' = "What is the day of the LY month? How do I analyze daily LY data?"
+
+	hierarchy 'Date Hierarchy'
+		lineageTag: 068f3116-60f4-4f14-8f18-7e1639d4b39c
+
+		level Year
+			lineageTag: 4616909e-1b23-4a54-a37b-58e4ef4a914c
+			column: Year
+
+			annotation Description = "Year level in the last year date hierarchy. Top-level grouping for annual LY analysis. Proposed – pending Loro Piana validation."
+
+		level Quarter
+			lineageTag: 96be1f87-6710-49c7-bfe1-79b117e1e216
+			column: Quarter
+
+			annotation Description = "Quarter level in the last year date hierarchy. Second-level grouping for quarterly LY analysis. Proposed – pending Loro Piana validation."
+
+		level Month
+			lineageTag: 586b14e3-31a6-466d-968b-196a04e26278
+			column: Month
+
+			annotation Description = "Month level in the last year date hierarchy. Third-level grouping for monthly LY analysis. Proposed – pending Loro Piana validation."
+
+		level Day
+			lineageTag: 40ede1ab-5350-47f5-be74-7f6bf1fa7c26
+			column: Day
+
+			annotation Description = "Day level in the last year date hierarchy. Lowest-level grouping for daily LY analysis. Proposed – pending Loro Piana validation."
+
+		annotation TemplateId = DateHierarchy
+
+		annotation Description = "Default time hierarchy allowing drill-down from Year → Quarter → Month → Day for last year date analysis. Provides intuitive navigation for year-over-year reporting and LY reference analysis. Proposed – pending Loro Piana validation."
+
+		annotation 'Common Questions' = "How do I drill down from LY year to LY month? How do I expand LY quarterly data? What is the date hierarchy structure for LY analysis?"
+
+	partition 'Local Date Table - Last Year Date' = calculated
+		mode: import
+		source = Calendar(Date(Year(MIN('CALENDARIO'[Date LY])), 1, 1), Date(Year(MAX('CALENDARIO'[Date LY])), 12, 31))
+
+		annotation Description = "Auto-generated local date table partition. Date range is dynamically calculated from the CALENDARIO table's Date LY (last year date) column, spanning full years from the minimum to maximum LY year. This ensures the date table covers all last year dates referenced in the model. Used for year-over-year comparisons, same-period-last-year analysis, and LY reference calculations. Proposed – pending Loro Piana validation on data source and date range logic."
+
+	annotation __PBI_LocalDateTable = true
+
+	annotation Description = "Power BI auto-generated local date table providing a continuous date range for last year (LY) date-based time intelligence calculations. This hidden table serves as the foundation for date-based relationships and time intelligence functions based on the Date LY (last year date) field from the CALENDARIO table. Contains standard date attributes including Year, Quarter, Month, and Day, with a default 'Date Hierarchy' for drill-down analysis. Date range is dynamically derived from the 'CALENDARIO' table's Date LY column (full years only). Used for year-over-year comparisons, same-period-last-year analysis, and LY reference calculations. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "Local Date Table, Date Dimension, Time Dimension, Calendar Table, Date Hierarchy, Last Year Date Table, LY Date Table, Year-Over-Year Date Table"
+
+	annotation DisplayFolder = "System Tables"
+
+	annotation RefreshPolicy = "Dynamically generated based on CALENDARIO table data range. No manual refresh required. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana BI Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "Date: 2024-01-01, Year: 2024, Quarter: Qtr 1, Month: January, Day: 1"
+
+	annotation 'Common Questions' = "What is the last year date range? How do I use the date hierarchy for year-over-year analysis? How do I filter by LY year, quarter, or month? What is the last year date table used for?"
+
+	annotation 'Related Objects' = "CALENDARIO, SCONTRINI, TARGET, DateTableTemplate"
+
+	annotation __PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table

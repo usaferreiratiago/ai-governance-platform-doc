@@ -1,0 +1,190 @@
+table SCONTRINI_HIGHVALUE
+	lineageTag: 8143fa51-b0ab-4479-8351-7b61a20c3815
+
+	column Date
+		formatString: General Date
+		lineageTag: 9c8193cb-856e-42ac-a06d-df6ff948f99b
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: SCONTRINI[Date]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Date of the transaction. Used for time-based analysis of high-value purchases and trend tracking. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Date, Transaction Date, Purchase Date"
+
+		annotation DisplayFolder = "Time"
+
+		annotation 'Example Values' = "2026-08-07"
+
+		annotation 'Common Questions' = "When did high-value transactions occur? How does high-value purchasing trend over time?"
+
+		annotation 'Related Objects' = "SCONTRINI[Date]"
+
+	column 'Store Code'
+		lineageTag: 26e4d0e9-a61b-4a93-b677-b1d3881bd000
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: SCONTRINI[Store Code]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Store code where the high-value transaction occurred. Links to Stores dimension for store-level analysis of luxury sales. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Store ID, Store Code, Location"
+
+		annotation DisplayFolder = "Store"
+
+		annotation 'Example Values' = "LP001, LP002"
+
+		annotation 'Common Questions' = "Which stores have the most high-value transactions? Which stores attract luxury clients?"
+
+		annotation 'Related Objects' = "SCONTRINI[Store Code], STORES"
+
+	column 'Customer Code'
+		dataType: string
+		isHidden
+		lineageTag: 6f5a1754-b591-4fc6-a86a-d24e28fffc05
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: SCONTRINI[Customer Code]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Customer identifier for the high-value transaction. Used for linking to Customer dimension for VIC client analysis. Marked as hidden to protect customer privacy. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Customer ID, Client Code, Customer Key"
+
+		annotation DisplayFolder = "Customer"
+
+		annotation 'Related Objects' = "SCONTRINI[Customer Code], CUSTOMER"
+
+	column Flag
+		formatString: 0
+		lineageTag: 94072dbb-c77d-443a-9b8f-2c51c7611d6a
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Flag]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Flag indicating high-value transaction. Returns 1 if transaction value ≥ €15,000 during April-August OR ≥ €25,000 at any time. Used for VIC and high-ticket analysis. Note: Excludes customers with Flag Gen = '1' or Flag Dip = '1'. Proposed – pending Loro Piana validation on threshold amounts."
+
+		annotation Synonyms = "High Value Flag, VIC Flag, High Ticket Flag, Elite Transaction"
+
+		annotation DisplayFolder = "Metrics"
+
+		annotation 'Example Values' = "1 (High Value), 0 (Standard)"
+
+		annotation 'Common Questions' = "Which transactions are flagged as high-value? What is the threshold for high-value? How many high-value transactions do we have?"
+
+		annotation 'Related Objects' = "SCONTRINI_HIGHVALUE[Transaction Value]"
+
+	column 'Transaction Value'
+		lineageTag: 21f3b12a-4190-4f04-a2ce-0e790946d4d0
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Transaction Value]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Total value of the transaction in Euros (INCASSATO_EUR). Aggregated per customer, date, and store. Used for high-value threshold evaluation. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Transaction Amount, Purchase Value, Total Value, Sales Amount"
+
+		annotation DisplayFolder = "Metrics"
+
+		annotation 'Example Values' = "15000, 25000, 50000, 100000"
+
+		annotation 'Common Questions' = "What is the value of the transaction? Which transactions exceeded the high-value threshold?"
+
+		annotation 'Related Objects' = "SCONTRINI[INCASSATO_EUR]"
+
+	column HiValueDisplayLabel
+		dataType: string
+		lineageTag: 01396d03-80b9-46a8-81c9-a5cc7a01ddd5
+		summarizeBy: none
+
+		annotation Description = "Display label combining transaction value with high-value flag. For visual display only. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "High Value Label, Display Label, Value with Flag"
+
+		annotation DisplayFolder = "Metrics"
+
+		annotation 'Example Values' = "28,000 (High Value), 12,000 (Standard)"
+
+		annotation 'Common Questions' = "What is the display label for high-value transactions?"
+
+		annotation expression =
+				VAR val = [TransactionValue]
+				VAR flag = [IsHighValueFlag]
+				RETURN
+				        COALESCE(
+				            IF(ABS(val)<=10^3, FORMAT(val, "#,##0"),
+				            IF(ABS(val)<=10^6, FORMAT(val, "#,##0,.00K"),
+				            IF(ABS(val)<=10^9, FORMAT(val, "#,##0,,.00Mln"),
+				            FORMAT(val, "#,##0,,,.00Bn")))), "-")
+				        & IF(flag = 1, " (High Value)", "")
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'High Value Transactions' = calculated
+		mode: import
+		source =
+				
+				SUMMARIZE(
+				        FILTER(
+				                SCONTRINI,
+				                AND(
+				                        RELATED(CUSTOMER[Flag Gen]) = "0",
+				                        RELATED(CUSTOMER[Flag Dip]) = "0"
+				                )
+				        ),
+				        SCONTRINI[Date],
+				        SCONTRINI[Customer Code],
+				        SCONTRINI[Store Code],
+				        "Transaction Value", SUM(SCONTRINI[INCASSATO_EUR]),
+				        "Flag", IF(
+				                OR(
+				                        AND(
+				                                SUM(SCONTRINI[INCASSATO_EUR]) >= 15000,
+				                                MONTH(SCONTRINI[Date]) IN {4,5,6,7,8}
+				                        ),
+				                        SUM(SCONTRINI[INCASSATO_EUR]) >= 25000
+				                ),
+				                1,
+				                0
+				        )
+				)
+				
+				/*
+				Note: The following commented code represents an alternative approach
+				using Ticket ID level aggregation:
+				
+				SUMMARIZE(FILTER(SCONTRINI, AND(SCONTRINI[Ticket Row Type] = "VEN",OR(SCONTRINI[Ticket Type] = "SBMST",SCONTRINI[Ticket Type] = "SBVEN"))),
+				            SCONTRINI[Date],
+				            SCONTRINI[Ticket ID],
+				            SCONTRINI[Store Code],
+				            "Total Value", SUM(SCONTRINI[Net Sales Eur]))
+				*/
+
+	annotation Description = "High-value transaction summary table tracking luxury purchases above defined thresholds. Identifies transactions with total value ≥ €15,000 (during April-August) or ≥ €25,000 (any time). Excludes flagged customers (Flag Gen and Flag Dip). Used for VIC (Very Important Client) and high-ticket analysis, luxury client identification, and elite customer performance tracking. Grain: one row per customer per date per store with transaction value and high-value flag. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "High Value Transactions, High Ticket, VIC Transactions, Luxury Purchases, Elite Transactions"
+
+	annotation DisplayFolder = "Sales Analysis"
+
+	annotation RefreshPolicy = "Refreshed with sales data. Data reflects latest transactions. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana Commercial Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "Date: 2026-08-07, Customer: C12345, Store: LP001, Value: €28,000, Flag: 1 (High Value)"
+
+	annotation 'Common Questions' = "Which transactions are considered high-value? What is the threshold for high-value purchases? How many high-value transactions occurred? Who are our VIC clients? What is the value distribution of high-value transactions?"
+
+	annotation 'Related Objects' = "SCONTRINI, CUSTOMER, STORES, _measure"

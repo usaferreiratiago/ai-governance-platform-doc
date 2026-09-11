@@ -1,0 +1,118 @@
+table STAGIONALITA
+	lineageTag: bdfbfcc9-6fe3-4ed3-b0b6-3ac33f9c8a35
+
+	column 'Seasonality Code'
+		dataType: string
+		lineageTag: a14d149d-3beb-419f-8661-5a62df431126
+		summarizeBy: none
+		sourceColumn: Seasonality Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Seasonality Description'
+		dataType: string
+		lineageTag: d977a150-878e-4cb9-be00-bb6177755f7d
+		summarizeBy: none
+		sourceColumn: Seasonality Description
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Sub Seasonality Code'
+		dataType: string
+		lineageTag: 23b6e20b-c66b-45e6-ac16-17e1785f520c
+		summarizeBy: none
+		sourceColumn: Sub Seasonality Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Sub Seasonality Description'
+		dataType: string
+		lineageTag: b1eee8cf-dc54-4220-813c-e45cbd2c6823
+		summarizeBy: none
+		sourceColumn: Sub Seasonality Description
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation __PBI_SemanticLinks = [{"LinkTarget":{"TableName":"STAGIONALITA","TableItemName":"Sub Seasonality Description (gruppi)","ObjectType":4},"LinkType":"UsedInGroup"}]
+
+	column 'Sub Seasonality Description (gruppi)' =
+			SWITCH(
+			TRUE,
+			ISBLANK('STAGIONALITA'[Sub Seasonality Description]),
+			"(Vuoto)",
+			'STAGIONALITA'[Sub Seasonality Description] IN {"NO SEASONAL - COLLAB & EVENTS"},
+			"COLLAB & EVENTS",
+			'STAGIONALITA'[Sub Seasonality Description] IN {"NO SEASONAL - GLI ESSENZIALI"},
+			"ESSENZIALI",
+			'STAGIONALITA'[Sub Seasonality Description] IN {"NO SEASONAL - THE GIFT OF KINGS"},
+			"GOK",
+			'STAGIONALITA'[Sub Seasonality Description] IN {"SEASONAL - HOLIDAY/RESORT"},
+			"HOLIDAY/RESORT",
+			'STAGIONALITA'[Sub Seasonality Description] IN {"NO SEASONAL - LIFESTYLE"},
+			"LIFESTYLE",
+			'STAGIONALITA'[Sub Seasonality Description] IN {"nd",
+				"NOT DEFINED"},
+			"OTHER",
+			'STAGIONALITA'[Sub Seasonality Description] IN {"NO SEASONAL - PERSONALIZATION"},
+			"PERSONALIZATION",
+			'STAGIONALITA'[Sub Seasonality Description] IN {"SEASONAL"},
+			"SEASONAL",
+			'STAGIONALITA'[Sub Seasonality Description] IN {"NO SEASONAL - VICUNA"},
+			"VICUNA",
+			'STAGIONALITA'[Sub Seasonality Description]
+			)
+		lineageTag: 8562127c-90a5-4ce0-ba61-a72e82b6397d
+		summarizeBy: none
+
+		extendedProperty GroupingMetadata =
+				{
+				  "version": 0,
+				  "groupedColumns": [
+				    {
+				      "Column": {
+				        "Expression": {
+				          "SourceRef": {
+				            "Entity": "STAGIONALITA"
+				          }
+				        },
+				        "Property": "Sub Seasonality Description"
+				      }
+				    }
+				  ]
+				}
+
+		annotation GroupingDesignState = {"Version":0,"Sources":[{"Name":"s","Entity":"STAGIONALITA"}],"GroupedColumns":[{"Column":{"Expression":{"SourceRef":{"Source":"s"}},"Property":"Sub Seasonality Description"}}],"GroupItems":[{"DisplayName":"(Vuoto)","BlankDefaultPlaceholder":true},{"DisplayName":"COLLAB & EVENTS","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"s"}},"Property":"Sub Seasonality Description"}}],"Values":[[{"Literal":{"Value":"'NO SEASONAL - COLLAB & EVENTS'"}}]]}}},{"DisplayName":"ESSENZIALI","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"s"}},"Property":"Sub Seasonality Description"}}],"Values":[[{"Literal":{"Value":"'NO SEASONAL - GLI ESSENZIALI'"}}]]}}},{"DisplayName":"GOK","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"s"}},"Property":"Sub Seasonality Description"}}],"Values":[[{"Literal":{"Value":"'NO SEASONAL - THE GIFT OF KINGS'"}}]]}}},{"DisplayName":"HOLIDAY/RESORT","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"s"}},"Property":"Sub Seasonality Description"}}],"Values":[[{"Literal":{"Value":"'SEASONAL - HOLIDAY/RESORT'"}}]]}}},{"DisplayName":"LIFESTYLE","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"s"}},"Property":"Sub Seasonality Description"}}],"Values":[[{"Literal":{"Value":"'NO SEASONAL - LIFESTYLE'"}}]]}}},{"DisplayName":"OTHER","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"s"}},"Property":"Sub Seasonality Description"}}],"Values":[[{"Literal":{"Value":"'nd'"}}],[{"Literal":{"Value":"'NOT DEFINED'"}}]]}}},{"DisplayName":"PERSONALIZATION","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"s"}},"Property":"Sub Seasonality Description"}}],"Values":[[{"Literal":{"Value":"'NO SEASONAL - PERSONALIZATION'"}}]]}}},{"DisplayName":"SEASONAL","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"s"}},"Property":"Sub Seasonality Description"}}],"Values":[[{"Literal":{"Value":"'SEASONAL'"}}]]}}},{"DisplayName":"VICUNA","Expression":{"In":{"Expressions":[{"Column":{"Expression":{"SourceRef":{"Source":"s"}},"Property":"Sub Seasonality Description"}}],"Values":[[{"Literal":{"Value":"'NO SEASONAL - VICUNA'"}}]]}}}]}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Seasonality Desc Label'
+		dataType: string
+		lineageTag: b5fc997a-24fd-4e77-9c4d-6a2c7625c76b
+		summarizeBy: none
+		sourceColumn: Seasonality Desc Label
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Sub Seasonality Description Δ vs LY' = [Sub Seasonality Description (gruppi)]  & UNICHAR(10) & "Δ vs LY"
+		lineageTag: 493a4f47-e07e-478a-bb39-aaadf1edec12
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition STAGIONALITA-5b1fdf14-cdac-41b6-9361-76bdce279af0 = m
+		mode: import
+		source =
+				let
+					Source = PowerPlatform.Dataflows(null),
+					Workspaces = Source{[Id="Workspaces"]}[Data],
+					WS = Workspaces{[workspaceId="63075e43-ec19-4090-b204-854337b4b0d5"]}[Data],
+					DF = WS{[dataflowId="e7e9b0fe-2430-4fd1-b2b4-5e8162474593"]}[Data],
+					STAGIONALITA1 = DF{[entity="STAGIONALITA"]}[Data],
+					Personalizzato1 = Table.AddColumn(STAGIONALITA1, "Seasonality Desc Label", each [Seasonality Description]  & Character.FromNumber(10) & "Δ vs LY"),
+					#"Rimosse altre colonne" = Table.SelectColumns(Personalizzato1,{"Sub Seasonality Code", "Sub Seasonality Description", "Seasonality Description", "Seasonality Code", "Seasonality Desc Label"})
+				in
+					#"Rimosse altre colonne"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation

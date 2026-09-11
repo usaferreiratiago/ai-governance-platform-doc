@@ -1,0 +1,203 @@
+table LocalDateTable_69846e10-17ea-429b-ab34-f1f3bd51de5e
+	isHidden
+	lineageTag: e8744b67-faf6-4c98-9db1-88de6d98c58a
+
+	column Date
+		dataType: dateTime
+		isHidden
+		lineageTag: e936fd4f-5824-4ee9-ac93-bd7df25efad6
+		dataCategory: PaddedDateTableDates
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = User
+
+		annotation Description = "The actual date value. This is the primary key for sales associate summary date-based relationships and time intelligence calculations. Hidden by default but used for joins and date filtering. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Date, Calendar Date, Date Key, Associate Summary Date"
+
+		annotation DisplayFolder = "Date"
+
+	column Year = YEAR([Date])
+		dataType: int64
+		isHidden
+		lineageTag: b9e6a6e3-220b-41e9-9787-4a3e4ff4dc16
+		dataCategory: Years
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Year
+
+		annotation Description = "Calendar year extracted from the sales associate summary date. Used for annual reporting and year-over-year comparisons of associate performance. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Year, Calendar Year, Associate Performance Year"
+
+		annotation DisplayFolder = "Date"
+
+		annotation 'Example Values' = "2023, 2024, 2025"
+
+		annotation 'Common Questions' = "What is the year for this associate summary date? How do I filter by year for associate performance? What was the associate performance in 2024?"
+
+	column MonthNo = MONTH([Date])
+		dataType: int64
+		isHidden
+		lineageTag: a2e7b92b-2698-410b-8297-a6efbeec943b
+		dataCategory: MonthOfYear
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = MonthNumber
+
+		annotation Description = "Month number (1-12) extracted from the sales associate summary date. Used for chronological month ordering and sorting. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Month Number, Month Index, Month of Year"
+
+		annotation DisplayFolder = "Date"
+
+	column Month = FORMAT([Date], "MMMM")
+		dataType: string
+		isHidden
+		lineageTag: d2d0f538-baaa-465a-a641-8b6cfc689b11
+		dataCategory: Months
+		summarizeBy: none
+		sortByColumn: MonthNo
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Month
+
+		annotation Description = "Month name (e.g., January, February). Used for month-level reporting and visual grouping for associate performance. Sorted by MonthNo for correct chronological display. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Month, Month Name, Calendar Month"
+
+		annotation DisplayFolder = "Date"
+
+		annotation 'Example Values' = "January, February, March"
+
+		annotation 'Common Questions' = "What is the month name for associate summary data? How do I group associate performance by month? What are the monthly associate performance trends?"
+
+	column QuarterNo = INT(([MonthNo] + 2) / 3)
+		dataType: int64
+		isHidden
+		lineageTag: eb938683-e529-4221-b263-ac67596948fa
+		dataCategory: QuarterOfYear
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = QuarterNumber
+
+		annotation Description = "Quarter number (1-4) extracted from the sales associate summary date. Used for quarterly reporting and sorting. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Quarter Number, Quarter Index, Quarter of Year"
+
+		annotation DisplayFolder = "Date"
+
+	column Quarter = "Qtr " & [QuarterNo]
+		dataType: string
+		isHidden
+		lineageTag: a5fe1328-a5da-498b-b2ba-db6c96bf03a3
+		dataCategory: Quarters
+		summarizeBy: none
+		sortByColumn: QuarterNo
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Quarter
+
+		annotation Description = "Quarter label (e.g., Qtr 1, Qtr 2). Used for quarterly reporting and visual grouping for associate performance. Sorted by QuarterNo for correct chronological display. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Quarter, Calendar Quarter, Qtr"
+
+		annotation DisplayFolder = "Date"
+
+		annotation 'Example Values' = "Qtr 1, Qtr 2, Qtr 3, Qtr 4"
+
+		annotation 'Common Questions' = "What is the quarter for associate summary data? How do I group associate performance by quarter? What are the quarterly associate performance trends?"
+
+	column Day = DAY([Date])
+		dataType: int64
+		isHidden
+		lineageTag: 1925d2b3-1fd7-42c5-96c1-80f7ce0f8f02
+		dataCategory: DayOfMonth
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Day
+
+		annotation Description = "Day of the month (1-31). Used for daily analysis and sorting within months for associate performance. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Day, Day Number, Day of Month"
+
+		annotation DisplayFolder = "Date"
+
+		annotation 'Example Values' = "1, 15, 31"
+
+		annotation 'Common Questions' = "What is the day of the month for associate summary data? How do I analyze daily associate performance?"
+
+	hierarchy 'Date Hierarchy'
+		lineageTag: e14c70f0-e055-433c-894f-bd7004021f1a
+
+		level Year
+			lineageTag: 4c8bdbca-4139-42d2-a66d-3874b7c25400
+			column: Year
+
+			annotation Description = "Year level in the sales associate summary date hierarchy. Top-level grouping for annual associate performance analysis. Proposed – pending Loro Piana validation."
+
+		level Quarter
+			lineageTag: 90589dad-bc6f-4d38-88b8-2a0943924ee2
+			column: Quarter
+
+			annotation Description = "Quarter level in the sales associate summary date hierarchy. Second-level grouping for quarterly associate performance analysis. Proposed – pending Loro Piana validation."
+
+		level Month
+			lineageTag: df65bba9-aa1f-493a-944e-b1d48e6cfa1a
+			column: Month
+
+			annotation Description = "Month level in the sales associate summary date hierarchy. Third-level grouping for monthly associate performance analysis. Proposed – pending Loro Piana validation."
+
+		level Day
+			lineageTag: 030e130f-a0e1-4179-b46e-76b26088279c
+			column: Day
+
+			annotation Description = "Day level in the sales associate summary date hierarchy. Lowest-level grouping for daily associate performance analysis. Proposed – pending Loro Piana validation."
+
+		annotation TemplateId = DateHierarchy
+
+		annotation Description = "Default time hierarchy allowing drill-down from Year → Quarter → Month → Day for sales associate summary analysis. Provides intuitive navigation for date-based reporting and associate performance tracking. Proposed – pending Loro Piana validation."
+
+		annotation 'Common Questions' = "How do I drill down from year to month for associate performance? How do I expand quarterly data for associate metrics? What is the date hierarchy structure for associate summary analysis?"
+
+	partition 'Local Date Table - Sales Associate Summary' = calculated
+		mode: import
+		source = Calendar(Date(Year(MIN('SCONTRINI_SALES_ASS_TEMP'[Date])), 1, 1), Date(Year(MAX('SCONTRINI_SALES_ASS_TEMP'[Date])), 12, 31))
+
+		annotation Description = "Auto-generated local date table partition. Date range is dynamically calculated from the SCONTRINI_SALES_ASS_TEMP table's Date column, spanning full years from the minimum to maximum year. This ensures the date table covers all sales associate summary dates referenced in the model. Used for associate performance analysis and daily metrics. Proposed – pending Loro Piana validation on data source and date range logic."
+
+	annotation __PBI_LocalDateTable = true
+
+	annotation Description = "Power BI auto-generated local date table providing a continuous date range for sales associate summary time intelligence calculations. This hidden table serves as the foundation for date-based relationships and time intelligence functions based on the Date field from the SCONTRINI_SALES_ASS_TEMP table. Contains standard date attributes including Year, Quarter, Month, and Day, with a default 'Date Hierarchy' for drill-down analysis. Date range is dynamically derived from the 'SCONTRINI_SALES_ASS_TEMP' table's Date column (full years only). Used for sales associate performance analysis, daily metrics, and associate-level reporting. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "Local Date Table, Date Dimension, Time Dimension, Calendar Table, Date Hierarchy, Sales Associate Date Table, Associate Performance Date Table"
+
+	annotation DisplayFolder = "System Tables"
+
+	annotation RefreshPolicy = "Dynamically generated based on SCONTRINI_SALES_ASS_TEMP table data range. No manual refresh required. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana BI Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "Date: 2024-01-01, Year: 2024, Quarter: Qtr 1, Month: January, Day: 1"
+
+	annotation 'Common Questions' = "What is the date range for sales associate summary data? How do I use the date hierarchy for associate performance analysis? How do I filter by year, quarter, or month for sales associate metrics? What is the sales associate date table used for?"
+
+	annotation 'Related Objects' = "SCONTRINI_SALES_ASS_TEMP, SCONTRINI, STORES, OPERATORI_NEGOZI, CLASSE_PRODOTTO"
+
+	annotation __PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table

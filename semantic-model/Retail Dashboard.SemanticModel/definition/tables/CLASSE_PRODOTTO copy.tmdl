@@ -1,0 +1,106 @@
+        table 'Product Category'
+                lineageTag: 64c3d5b8-f6a4-4567-a25d-d55d43cd2ab5
+                annotation Description = "Product category (classe prodotto) dimension for the luxury retail assortment. Classifies SKUs into merchandising categories (e.g., Bags, Shoes, Ready-to-Wear) and category groups (e.g., Leather Goods, Apparel). Used to analyze sales, conversion, stock performance, and customer KPIs. Grain: one row per product category. Proposed – pending Loro Piana validation."
+                annotation Synonyms = "Product Category, Category, Classe Prodotto, Merchandise Category, Luxury Category"
+                annotation DisplayFolder = "Product Master"
+                annotation RefreshPolicy = "Weekly on Sundays at 00:00 UTC; data latency ≤ 48 hours. Proposed – pending Loro Piana validation."
+                annotation BusinessOwner = "Loro Piana Product Management Team. Proposed – pending validation."
+                annotation CertificationStatus = "Certified by BI Team on 2026-08-06 (pending business sign-off)."
+                annotation 'Example Values' = "Bags / Borse (BAG), Shoes / Scarpe (SHO), Ready-to-Wear / Abbigliamento (RTW), Accessories / Accessori (ACC)"
+                annotation 'Common Questions' = "Which product categories drive the highest full-price sales in boutiques? How does category mix differ by region or flagship store? What is the contribution of Leather Goods versus Apparel to total luxury retail revenue? Which categories are over-assorted versus sell-out?"
+                annotation 'Related Objects' = "ARTICOLI, ARTICOLI.'Category Code', SOTTO_CLASSE_PRODOTTO, SALES_CATEGORY, FAMIGLIA_COMMERCIALE, BUSINESS, GENERE_PRODOTTO, MACRO COLLECTION, SCONTRINI, TARGET"
+
+                column CategoryCode
+                        dataType: string
+                        lineageTag: 79ef90fe-bc63-4808-8455-e0e1b2174401
+                        summarizeBy: none
+                        sourceColumn: Category Code
+                        annotation Description = "Unique business key that identifies a product category in the luxury assortment hierarchy (e.g., Bags, Shoes, Ready-to-Wear). Used to join article master data to category attributes and to slice sales, stock and customer KPIs by merchandising class. Proposed – pending Loro Piana validation."
+                        annotation Synonyms = "Category ID, Category Key, Product Category Code, Merchandise Category Code"
+                        annotation DisplayFolder = "Category"
+                        annotation 'Example Values' = "BAG, SHO, RTW, ACC, WCH, JWL, SLG, BEL"
+                        annotation 'Common Questions' = "What is the category code for Handbags? Which Category Code drives the highest full-price sell-through? How many SKUs are mapped to each Category Code?"
+                        annotation 'Related Objects' = "ARTICOLI.'Category Code', CLASSE_PRODOTTO.'Category Description ENG', CLASSE_PRODOTTO.'Category Description ITA', CLASSE_PRODOTTO.'Category Group Code', SOTTO_CLASSE_PRODOTTO.'Sub Category Code', SALES_CATEGORY.'Sales Category Code'"
+                        annotation SummarizationSetBy = Automatic
+
+                column CategoryDescriptionITA
+                        dataType: string
+                        lineageTag: 0db2696e-e149-4b8d-90ea-0876bf5eff03
+                        summarizeBy: none
+                        sourceColumn: Category Description ITA
+                        annotation Description = "Italian business label of the product category, intended for HQ, Italian boutiques and local reporting. Prefer this field when the audience is Italian-speaking; use CategoryCode for joins and filters. Proposed – pending Loro Piana validation."
+                        annotation Synonyms = "Italian Category Name, Categoria ITA, Italian Label"
+                        annotation DisplayFolder = "Category"
+                        annotation 'Example Values' = "Borse, Scarpe, Abbigliamento, Accessori, Orologi, Gioielli, Piccola Pelletteria, Cinture"
+                        annotation 'Common Questions' = "Quali sono le categorie prodotto in italiano? Quale Category Description ITA ha generato più fatturato a prezzo pieno? Come confrontare le vendite di Borse e Scarpe?"
+                        annotation 'Related Objects' = "CLASSE_PRODOTTO.'Category Code', CLASSE_PRODOTTO.'Category Description ENG', ARTICOLI.'Category Code', SCONTRINI.'Item Code'"
+                        annotation SummarizationSetBy = Automatic
+
+                column CategoryDescriptionENG
+                        dataType: string
+                        lineageTag: ba4f4943-9b21-4d18-a5d9-0aa5f8fa6bf0
+                        summarizeBy: none
+                        sourceColumn: Category Description ENG
+                        annotation Description = "English business label of the product category for international boutiques, regional managers and executive dashboards. Primary display attribute used in many sales and assortment visuals when filtering or grouping by Product Category. Proposed – pending Loro Piana validation."
+                        annotation Synonyms = "English Category Name, Category Name, Display Category, Category Label"
+                        annotation DisplayFolder = "Category"
+                        annotation 'Example Values' = "Bags, Shoes, Ready-to-Wear, Accessories, Watches, Jewelry, Small Leather Goods, Belts"
+                        annotation 'Common Questions' = "Which Category Description ENG contributed most to luxury retail sales this season? How does Bags compare to Ready-to-Wear on full-price mix? What is the YoY growth by English category label?"
+                        annotation 'Related Objects' = "CLASSE_PRODOTTO.'Category Code', CLASSE_PRODOTTO.'Category Description ITA', ARTICOLI.'Category Code', SCONTRINI.'Item Code', _measure"
+                        annotation SummarizationSetBy = Automatic
+
+                column CategoryGroupCode
+                        dataType: string
+                        lineageTag: 3f2b3cd9-80db-4a4d-a474-878871a1fee3
+                        summarizeBy: none
+                        sourceColumn: Category Group Code
+                        annotation Description = "Higher-level merchandising group code that aggregates product categories into commercial macro-families (e.g., Leather Goods, Apparel, Hard Luxury). Enables executive roll-ups above single Category Code without losing the detailed class. Proposed – pending Loro Piana validation."
+                        annotation Synonyms = "Category Group, Merchandise Group, Macro Category, Business Group ID"
+                        annotation DisplayFolder = "Category Group"
+                        annotation 'Example Values' = "LTH, APP, HRD, SFT, ACC, RTW"
+                        annotation 'Common Questions' = "Which Category Group Code has the strongest sell-out in flagship stores? How are Category Codes distributed across Category Group Codes? What is the contribution of Leather Goods versus Apparel?"
+                        annotation 'Related Objects' = "CLASSE_PRODOTTO.'Category Group Description', CLASSE_PRODOTTO.'Category Code', ARTICOLI.'Category Code', FAMIGLIA_COMMERCIALE, MACRO COLLECTION, BUSINESS"
+                        annotation SummarizationSetBy = Automatic
+
+                column CategoryGroupDescription
+                        dataType: string
+                        lineageTag: 08675745-922e-49d2-8816-86494ff0f415
+                        summarizeBy: none
+                        sourceColumn: Category Group Description
+                        annotation Description = "Business-facing name of the category group used in assortment strategy, buying plans and board-level retail reporting. Prefer this label for visuals; use CategoryGroupCode for stable filtering and relationships. Proposed – pending Loro Piana validation."
+                        annotation Synonyms = "Category Group Name, Merchandise Group Name, Macro Category Name, Business Group Name"
+                        annotation DisplayFolder = "Category Group"
+                        annotation 'Example Values' = "Leather Goods, Apparel, Hard Luxury, Soft Accessories, Accessories, Ready-to-Wear"
+                        annotation 'Common Questions' = "What is the revenue mix by Category Group Description? Which category group is under-indexing versus target? How does Soft Accessories perform versus Hard Luxury in tourist boutiques?"
+                        annotation 'Related Objects' = "CLASSE_PRODOTTO.'Category Group Code', CLASSE_PRODOTTO.'Category Description ENG', ARTICOLI.'Category Code', TARGET, SALES_CATEGORY, FAMIGLIA_COMMERCIALE"
+                        annotation SummarizationSetBy = Automatic
+
+                column SourceSystem
+                        dataType: string
+                        lineageTag: 3f125f2a-adcf-4f68-84ba-12b06bfd9da1
+                        summarizeBy: none
+                        sourceColumn: Source
+                        annotation Description = "Origin system or master-data domain from which the category record was loaded (ERP, product MDM, PLM or dataflow). Useful for data lineage, reconciliation and to distinguish authoritative luxury product taxonomy sources. Proposed – pending Loro Piana validation."
+                        annotation Synonyms = "Source, Data Source, System Origin, MDM Source"
+                        annotation DisplayFolder = "Metadata"
+                        annotation 'Example Values' = "SAP, MDM, PLM, Dataflow, Manual, Legacy"
+                        annotation 'Common Questions' = "Which source system owns the product category taxonomy? Are there categories present only in MDM and missing in SAP? How many Category Codes come from each Source?"
+                        annotation 'Related Objects' = "CLASSE_PRODOTTO.'Category Code', ARTICOLI.'Category Code', LOG_ESECUZIONI_DWH"
+                        annotation SummarizationSetBy = Automatic
+
+                partition CLASSE_PRODOTTO = m
+                        mode: import
+                        source =
+                                let
+                                        Source = PowerPlatform.Dataflows(null),
+                                        Workspaces = Source{[Id="Workspaces"]}[Data],
+                                        WS = Workspaces{[workspaceId="63075e43-ec19-4090-b204-854337b4b0d5"]}[Data],
+                                        DF = WS{[dataflowId="dcbf1499-ee35-4598-9b58-2d0142058031"]}[Data],
+                                        CLASSE_PRODOTTO1 = DF{[entity="CLASSE_PRODOTTO"]}[Data],
+                                        #"Removed Other Columns" = Table.SelectColumns(CLASSE_PRODOTTO1,{"Category Code", "Category Description ITA", "Source", "Category Description ENG", "Category Group Code", "Category Group Description"})
+                                in
+                                        #"Removed Other Columns"
+                        annotation Description = "Import partition for product category master data. Loads all category records without date filtering."
+
+                annotation PBI_ResultType = Table
+                annotation PBI_NavigationStepName = Navigation

@@ -1,0 +1,139 @@
+table OPERATORI_NEGOZI
+	lineageTag: dafb2b75-9e56-44b5-a33c-ef2c1ae1f003
+
+	column StoreCode
+		dataType: string
+		lineageTag: c6837d04-4895-4d6b-aecf-1792ff203d38
+		summarizeBy: none
+		sourceColumn: Store Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Store code where the sales associate is assigned (e.g., 'LP001', 'LP002'). Links to the Stores dimension for store-level analysis. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Store ID, Store Code, Location Code, Assigned Store"
+
+		annotation DisplayFolder = "Associate Details"
+
+		annotation 'Example Values' = "LP001, LP002, LP003, LP004"
+
+		annotation 'Common Questions' = "Which store does the associate work at? How many associates are in each store?"
+
+		annotation 'Related Objects' = "STORES.'Store Code'"
+
+	column SalesAssociateCode
+		dataType: string
+		lineageTag: 363b6b6d-7adc-4322-a4df-8716579a2e62
+		summarizeBy: none
+		sourceColumn: Sales Associate Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Unique code identifying the sales associate (e.g., '12345', '67890'). Used as the primary key for associate-level performance analysis and relationships. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Associate Code, SA Code, Employee ID, Staff ID, Sales Rep Code"
+
+		annotation DisplayFolder = "Associate Details"
+
+		annotation 'Example Values' = "12345, 67890, 11223, 44556"
+
+		annotation 'Common Questions' = "What is the associate code for Maria Bianchi? How many sales for associate 12345?"
+
+		annotation 'Related Objects' = "SCONTRINI"
+
+	column SalesAssociateFirstName
+		dataType: string
+		lineageTag: b9e43d44-9a3d-4efe-9ca3-9415c7f99141
+		summarizeBy: none
+		sourceColumn: SA Name
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "First name of the sales associate (e.g., 'Maria', 'Giuseppe'). Use for labels and reporting. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "First Name, Given Name, Associate First Name"
+
+		annotation DisplayFolder = "Associate Details"
+
+		annotation 'Example Values' = "Maria, Giuseppe, John, Chiara, Andrea"
+
+		annotation 'Common Questions' = "What is the first name of associate 12345? Which associates are named Maria?"
+
+		annotation 'Related Objects' = "SCONTRINI"
+
+	column SalesAssociateLastName
+		dataType: string
+		lineageTag: f5c3cfe4-9464-49b4-a220-fd29407d3594
+		summarizeBy: none
+		sourceColumn: SA Surname
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Last name of the sales associate (e.g., 'Bianchi', 'Rossi'). Use for labels and reporting. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Last Name, Surname, Associate Last Name"
+
+		annotation DisplayFolder = "Associate Details"
+
+		annotation 'Example Values' = "Bianchi, Rossi, Smith, Conti, Ferrari"
+
+		annotation 'Common Questions' = "What is the last name of associate 12345? Which associates are named Rossi?"
+
+		annotation 'Related Objects' = "SCONTRINI"
+
+	column CompensationStoreCode
+		dataType: string
+		lineageTag: d143c8b4-019a-4941-a55d-8d3137f668be
+		summarizeBy: none
+		sourceColumn: Store of Comp Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Store code used for compensation calculations for the sales associate (e.g., 'LP001', 'LP002'). May differ from assigned store for payroll and commission purposes. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Compensation Store, Payroll Store, Commission Store"
+
+		annotation DisplayFolder = "Associate Details"
+
+		annotation 'Example Values' = "LP001, LP002, LP003"
+
+		annotation 'Common Questions' = "What store is used for compensation for associate 12345? How does compensation store differ from assigned store?"
+
+		annotation 'Related Objects' = "STORES.'Store Code'"
+
+	partition OPERATORI_NEGOZI = m
+		mode: import
+		source =
+				let
+				        Origine = PowerPlatform.Dataflows(null),
+				        Workspaces = Origine{[Id="Workspaces"]}[Data],
+				        WS = Workspaces{[workspaceId="63075e43-ec19-4090-b204-854337b4b0d5"]}[Data],
+				        DF = WS{[dataflowId="9e62577e-6b91-4666-b6c3-868d086245db"]}[Data],
+				        OPERATORI_NEGOZI1 = DF{[entity="OPERATORI_NEGOZI"]}[Data],
+				        #"Removed Other Columns" = Table.SelectColumns(OPERATORI_NEGOZI1,{"Store Code", "Sales Associate Code", "SA Name", "SA Surname", "Store of Comp Code"})
+				in
+				        #"Removed Other Columns"
+
+		annotation Description = "Import partition for sales associate master data. Loads all associate records without date filtering."
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation Description = "Sales associate dimension for the luxury retail model. Contains store sales associate (SA) information including codes, names, and store assignments. Enables sales performance analysis at the individual associate level, tracking productivity, conversion rates, and client engagement. Links to stores for location-based analysis. Grain: one row per sales associate. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "Sales Associates, Store Operators, Sales Staff, Store Employees, Associates"
+
+	annotation DisplayFolder = "Store Master"
+
+	annotation RefreshPolicy = "Weekly on Sundays at 00:00 UTC; data latency ≤ 48 hours. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana Retail Operations Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "Store: LP001, Associate: 12345, Name: Maria Bianchi"
+
+	annotation 'Common Questions' = "Who are the sales associates at each store? What is the performance of each associate? Which store has the most associates? Who is the top-performing sales associate?"
+
+	annotation 'Related Objects' = "STORES, SCONTRINI, TARGET"

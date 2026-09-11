@@ -1,0 +1,458 @@
+table CALENDARIO
+	lineageTag: ed9a727c-e7bc-434f-bf80-a9204a249c49
+
+	column Date
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 3832fa13-0b47-4660-9d6e-2afb3a21771c
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Calendar date. Used as the primary key for date-based relationships. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Date, Calendar Date, Day"
+
+		annotation DisplayFolder = "Date Attributes"
+
+	column YearMonthCode
+		dataType: string
+		lineageTag: 70d795fb-f392-485a-b19e-cbba81ffa013
+		summarizeBy: none
+		sourceColumn: ANNO_MESE_COD
+		sortByColumn: EndMonthDate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Year-month code in format YYYYMM (e.g., '202401' for January 2024). Used for sorting and grouping. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "YearMonth, Period Code"
+
+		annotation DisplayFolder = "Date Attributes"
+
+	column WeekCode
+		dataType: string
+		lineageTag: 41854f3b-4fb9-409a-b64a-7b203c29675d
+		summarizeBy: none
+		sourceColumn: WEEK_COD
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Week code (e.g., 'W01', 'W02'). Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Week, Week Number"
+
+		annotation DisplayFolder = "Date Attributes"
+
+	column MonthName
+		dataType: string
+		lineageTag: c053f935-e419-4c68-8726-9e1de50b0321
+		summarizeBy: none
+		sourceColumn: MESE_DES
+		sortByColumn: MonthNumber
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Full month name (e.g., 'January', 'February'). Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Month, Month Description"
+
+		annotation DisplayFolder = "Date Attributes"
+
+	column YearCode
+		dataType: string
+		lineageTag: 6617269e-d4fe-4dca-8937-2a2bd47e9ccf
+		summarizeBy: none
+		sourceColumn: ANNO_COD
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Year code (e.g., '2024'). Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Year, Calendar Year"
+
+		annotation DisplayFolder = "Date Attributes"
+
+	column EndMonthDate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 6279b35e-e13a-483f-ad0b-57dfc533fa1a
+		summarizeBy: none
+		sourceColumn: END_MONTH_DTA
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation Description = "Date of the last day of the month for each calendar date. Used for month-end comparisons. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Month End Date, End of Month"
+
+		annotation DisplayFolder = "Date Attributes"
+
+	column DayOfWeekCode
+		dataType: string
+		lineageTag: b66ebdfa-e79f-4db4-b5f9-c460861a0a06
+		summarizeBy: none
+		sourceColumn: DAY_OF_WEEK_COD
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Day of week code (1 = Monday, 7 = Sunday). Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Day of Week, Weekday"
+
+		annotation DisplayFolder = "Date Attributes"
+
+	column PriorYearDate
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 200c071f-04bb-4773-8931-b5f51906d375
+		summarizeBy: none
+		sourceColumn: COD_AGO_DTA
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Date exactly one year prior to the current date (same day, month). Used for year-over-year comparisons. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Last Year Date, LY Date, AGO"
+
+		annotation DisplayFolder = "Date Shifts"
+
+	column PriorYearYearCode
+		dataType: string
+		lineageTag: 2581dc44-6341-4510-933a-18282e2a1b60
+		summarizeBy: none
+		sourceColumn: ANNO_AGO_COD
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Year of the prior year date. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Last Year Year, LY Year"
+
+		annotation DisplayFolder = "Date Shifts"
+
+	column PriorYearMonthCode
+		dataType: string
+		lineageTag: 53b00cf5-20ac-43ca-8f5d-d75e4fe55d03
+		summarizeBy: none
+		sourceColumn: ANNO_MESE_AGO_COD
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Year-month code for the prior year date. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Last Year Month"
+
+		annotation DisplayFolder = "Date Shifts"
+
+	column TwoYearsPriorDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: d8bf222b-356e-4daa-b527-cc982ab96fcd
+		summarizeBy: none
+		sourceColumn: DATA_2AGO_DTA
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Date exactly two years prior to the current date. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "2 Years Ago Date, 2AGO"
+
+		annotation DisplayFolder = "Date Shifts"
+
+	column TwoYearsPriorYearCode
+		dataType: string
+		lineageTag: 6ab04287-efa9-4fd1-8897-3b376c59daf5
+		summarizeBy: none
+		sourceColumn: ANNO_2AGO_COD
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Year of the date two years prior. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "2 Years Ago Year"
+
+		annotation DisplayFolder = "Date Shifts"
+
+	column TwoYearsPriorMonthCode
+		dataType: string
+		lineageTag: 87b585dd-a9e0-4a93-bf73-6ac76f389b54
+		summarizeBy: none
+		sourceColumn: ANNO_MESE_2AGO_COD
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Year-month code for the date two years prior. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "2 Years Ago Month"
+
+		annotation DisplayFolder = "Date Shifts"
+
+	column ThreeYearsPriorDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 50589f54-e727-4e34-afd3-9ffaeff6ce29
+		summarizeBy: none
+		sourceColumn: COD_3AGO_DTA
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Date exactly three years prior to the current date. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "3 Years Ago Date, 3AGO"
+
+		annotation DisplayFolder = "Date Shifts"
+
+	column ThreeYearsPriorYearCode
+		dataType: string
+		lineageTag: aca35511-4fd3-4e9b-856c-a0242a0d5c55
+		summarizeBy: none
+		sourceColumn: ANNO_3AGO_COD
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Year of the date three years prior. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "3 Years Ago Year"
+
+		annotation DisplayFolder = "Date Shifts"
+
+	column ThreeYearsPriorMonthCode
+		dataType: string
+		lineageTag: 6ce7fde7-6c40-4181-8c74-05a3bb6e5bf0
+		summarizeBy: none
+		sourceColumn: ANNO_MESE_3AGO_COD
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Year-month code for the date three years prior. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "3 Years Ago Month"
+
+		annotation DisplayFolder = "Date Shifts"
+
+	column PriorWeekDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 8de5fd91-727c-4854-acbe-137faceff158
+		summarizeBy: none
+		sourceColumn: DATA_WAGO_DTA
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Date exactly one week prior to the current date. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Last Week Date, WAGO"
+
+		annotation DisplayFolder = "Date Shifts"
+
+	column TwoWeeksPriorDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 19fe7bbc-e484-4b11-843b-b3537b65dbef
+		summarizeBy: none
+		sourceColumn: DATA_2WAGO_DTA
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Date exactly two weeks prior to the current date. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "2 Weeks Ago Date, 2WAGO"
+
+		annotation DisplayFolder = "Date Shifts"
+
+	column ThreeWeeksPriorDate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: fed595e6-16ae-47b0-8db9-fa1e37495292
+		summarizeBy: none
+		sourceColumn: DAAT_3WAGO_DTA
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Date exactly three weeks prior to the current date. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "3 Weeks Ago Date, 3WAGO"
+
+		annotation DisplayFolder = "Date Shifts"
+
+	column FiscalYear
+		dataType: int64
+		formatString: 0
+		lineageTag: 79413ee5-7984-4ef9-9b01-00e757a4dd90
+		summarizeBy: sum
+		sourceColumn: Fiscal Year
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Fiscal year number. Proposed – pending Loro Piana validation on fiscal calendar definition."
+
+		annotation Synonyms = "Fiscal Year, Financial Year"
+
+		annotation DisplayFolder = "Fiscal Calendar"
+
+	column FiscalWeek
+		dataType: double
+		lineageTag: e45522de-e68a-4e77-a667-4239518a3e31
+		summarizeBy: sum
+		sourceColumn: Fiscal Week
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Fiscal week number (1–52). Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Fiscal Week, Financial Week"
+
+		annotation DisplayFolder = "Fiscal Calendar"
+
+	column FiscalMonth
+		dataType: double
+		lineageTag: 6ba05a4c-24ed-413e-b100-743542ad360e
+		summarizeBy: sum
+		sourceColumn: Fiscal Month
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+		annotation Description = "Fiscal month number (1–12). Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Fiscal Month, Financial Month"
+
+		annotation DisplayFolder = "Fiscal Calendar"
+
+	column YearMonthWeekFiscalCode = CALENDARIO[Fiscal Year] & "-" & RIGHT("0" & CALENDARIO[Fiscal Month],2) & "-" & RIGHT("0" & CALENDARIO[Fiscal Week],2)
+		dataType: string
+		lineageTag: 847680f6-bce8-4fde-a43c-0a64edb1dd07
+		summarizeBy: none
+		sortByColumn: YearMonthWeekFiscalSortOrder
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Fiscal year-month-week composite key (e.g., '2024-01-01'). Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Fiscal Period Code, YMW Code"
+
+		annotation DisplayFolder = "Fiscal Calendar"
+
+	column YearMonthWeekFiscalSortOrder = CALENDARIO[Date] - IF( CALENDARIO[DAY_OF_WEEK_COD] = "1" , 7, CALENDARIO[DAY_OF_WEEK_COD] -1 ) + 1
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 4c2af4fe-411a-4ed8-93e8-6d3312d0fdba
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Technical sort order for fiscal week combinations. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Fiscal Sort Order"
+
+		annotation DisplayFolder = "Fiscal Calendar"
+
+	column YearMonthDayCode = CALENDARIO[ANNO_MESE_COD] & "-" & DAY(CALENDARIO[Date])
+		dataType: string
+		lineageTag: 92238267-17ca-4e5a-b03e-0ce47d1f7183
+		summarizeBy: none
+		sortByColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Composite key of year-month-day (e.g., '202401-01'). Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Date Code, YMD Code"
+
+		annotation DisplayFolder = "Date Attributes"
+
+	column MonthNumber = MONTH(CALENDARIO[Date])
+		dataType: int64
+		formatString: 0
+		lineageTag: 6741561e-38e1-494b-866c-0d631dba5f8e
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Month number (1–12). Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Month, Month Index"
+
+		annotation DisplayFolder = "Date Attributes"
+
+	column YearMonthDescription
+		dataType: string
+		lineageTag: 4e7808be-7928-46ef-99e5-a1fb9f0a14ef
+		summarizeBy: none
+		sourceColumn: ANNO_MESE_DESC
+		sortByColumn: YearMonthCode
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Year-month description (e.g., 'Jan 24'). Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Month-Year Label, Period Label"
+
+		annotation DisplayFolder = "Date Attributes"
+
+	column YearWeekFiscalCode = CALENDARIO[Fiscal Year] & "-" & RIGHT("0" & CALENDARIO[Fiscal Week],2)
+		dataType: string
+		lineageTag: 7be7f097-c8b4-4b82-ad57-9404a20f40e8
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Fiscal year-week composite key (e.g., '2024-01'). Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Fiscal Week Code, YW Code"
+
+		annotation DisplayFolder = "Fiscal Calendar"
+
+	column DateLastYear = IF(CALENDARIO[COD_AGO_DTA]=BLANK(), DATE(YEAR(CALENDARIO[Date])-1, MONTH(CALENDARIO[Date]),DAY(CALENDARIO[Date])-1), CALENDARIO[COD_AGO_DTA])
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 77c70028-f496-4d18-85dd-52b6bd0d4fff
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Date shifted by one year (same calendar day, month). Uses COD_AGO_DTA if available, otherwise calculates by subtracting one year. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "LY Date, Same Day Last Year"
+
+		annotation DisplayFolder = "Date Shifts"
+
+	partition CALENDARIO = m
+		mode: import
+		source =
+				let
+				        Origine = PowerPlatform.Dataflows(null),
+				        Workspaces = Origine{[Id="Workspaces"]}[Data],
+				        WS = Workspaces{[workspaceId="63075e43-ec19-4090-b204-854337b4b0d5"]}[Data],
+				        DF = WS{[dataflowId="e0866c2a-0125-4d05-9009-d7f935901d88"]}[Data],
+				        DIM_TIME_ANG1 = DF{[entity="DIM_TIME_ANG"]}[Data],
+				        #"Removed Other Columns" = Table.SelectColumns(DIM_TIME_ANG1,{"Date", "ANNO_MESE_COD", "WEEK_COD", "MESE_DES", "ANNO_COD", "END_MONTH_DTA", "DAY_OF_WEEK_COD", "COD_AGO_DTA", "ANNO_AGO_COD", "ANNO_MESE_AGO_COD", "DATA_2AGO_DTA", "ANNO_2AGO_COD", "ANNO_MESE_2AGO_COD", "COD_3AGO_DTA", "ANNO_3AGO_COD", "ANNO_MESE_3AGO_COD", "DATA_WAGO_DTA", "DATA_2WAGO_DTA", "DAAT_3WAGO_DTA", "Fiscal Year", "Fiscal Week", "Fiscal Month"}),
+				        #"Filtered Rows" = Table.SelectRows(#"Removed Other Columns", each [Date] >= #datetime(2021, 1, 1, 0, 0, 0)),
+				        #"Added Custom Column" = Table.AddColumn(#"Filtered Rows", "ANNO_MESE_DESC", each let splitMESEDES = List.Reverse(Splitter.SplitTextByDelimiter(" ", QuoteStyle.None)([MESE_DES])) in Text.Combine({Text.Start([MESE_DES], 3), Text.Middle(splitMESEDES{0}?, 3, 1), " ", Text.Middle(Date.ToText(Date.From([ANNO_COD]), "yyyy"), 2)}), type text)
+				in
+				        #"Added Custom Column"
+
+		annotation Description = "Import partition for Calendar dimension. Data filtered to dates >= 2021-01-01. Verify if full historical range is required. Proposed – pending Loro Piana validation on date range."
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation Description = "Date and time dimension table. Contains calendar attributes, fiscal periods, and pre-calculated date shifts for year-over-year and period comparisons. Grain: one row per calendar date. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "Date, Calendar, Time, Fiscal Calendar"
+
+	annotation DisplayFolder = "Time"
+
+	annotation RefreshPolicy = "Weekly on Sundays at 00:00 UTC; data latency ≤ 48 hours. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana Data Governance Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-06 (pending business sign-off)."

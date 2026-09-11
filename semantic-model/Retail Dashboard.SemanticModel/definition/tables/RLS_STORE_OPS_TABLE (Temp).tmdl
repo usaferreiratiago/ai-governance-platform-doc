@@ -1,0 +1,60 @@
+table 'RLS_STORE_OPS_TABLE (Temp)'
+	isHidden
+	lineageTag: f0075c90-fbb4-44f0-bef3-a2557be733b2
+
+	column StoreAreaCode
+		dataType: string
+		isHidden
+		lineageTag: 2383b024-55a4-40ec-b717-5c0da16b50a6
+		summarizeBy: none
+		sourceColumn: NEGOZI.COD_AREA
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Area code that the operations team has permission to access (e.g., 'IT', 'FR', 'US'). This value is used by RLS filters to restrict data visibility at the area level. Proposed – pending Loro Piana validation on area code format and allowed values."
+
+		annotation Synonyms = "Area Code, Area ID, Accessible Area, Permitted Area, Geographic Area"
+
+		annotation DisplayFolder = "Area Access"
+
+		annotation 'Example Values' = "IT, FR, US, UK, JP"
+
+		annotation 'Common Questions' = "What areas can operations staff access? How do I add a new area to operations access? Which areas are visible in this role?"
+
+		annotation 'Related Objects' = "GERARCHIA_AREA.'Area Code', NEGOZI.'Area Code'"
+
+	partition 'Store Operations RLS Access' = m
+		mode: import
+		source =
+				let
+				        Origine = RLS_STORE_OPS_TABLE,
+				        // Select only the area code column
+				        #"Removed Other Columns" = Table.SelectColumns(Origine,{"NEGOZI.COD_AREA"}),
+				        // Remove duplicate area codes
+				        #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns")
+				in
+				        #"Removed Duplicates"
+
+		annotation Description = "Import partition for store operations RLS access control data. Loads distinct area codes from the RLS_STORE_OPS_TABLE source. These codes are used for Row-Level Security filtering to control area visibility for operations teams."
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation Description = "Row-Level Security (RLS) dimension table defining area-level access permissions for store operations teams. Contains the list of area codes that store operations personnel have permission to view and analyze. Used in conjunction with RLS roles to filter data at the area level, ensuring operations staff only see data for their assigned areas. Grain: one row per area code. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "RLS Area Access, Store Operations Permissions, Area Security, Access Control, Area Filter"
+
+	annotation DisplayFolder = "Security"
+
+	annotation RefreshPolicy = "Refreshed with user access changes. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana Security Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "IT, FR, US, UK, JP"
+
+	annotation 'Common Questions' = "Which areas can operations staff access? How is area-level security implemented? What areas are visible to operations teams? How do I add a new area to operations access?"
+
+	annotation 'Related Objects' = "STORES, NEGOZI, GERARCHIA_AREA, SCONTRINI, RLS roles"

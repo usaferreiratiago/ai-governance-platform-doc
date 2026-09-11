@@ -1,0 +1,119 @@
+table NAZIONI
+	lineageTag: 50a9fd96-c0e7-4dbe-9e07-ddd768369e3f
+
+	column CountryCode
+		dataType: string
+		lineageTag: 7f863510-229d-48c5-a912-aa99e2360c0b
+		summarizeBy: none
+		sourceColumn: Country Code
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "ISO country code (e.g., 'IT' for Italy, 'FR' for France, 'US' for United States). Used as the primary key for country-based analysis and relationships. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Country Code, ISO Code, Country ID, Nation Code"
+
+		annotation DisplayFolder = "Country Details"
+
+		annotation 'Example Values' = "IT, FR, US, UK, JP, CN, DE, ES, CH"
+
+		annotation 'Common Questions' = "What is the country code for Italy? Which countries are in our store network? How many stores in each country?"
+
+		annotation 'Related Objects' = "STORES.'Country Code'"
+
+	column CountryDescription
+		dataType: string
+		lineageTag: bdc7dfa5-fa7f-4ed5-b1d7-994d9240b1a8
+		summarizeBy: none
+		sourceColumn: Country Description
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Business-friendly name of the country (e.g., 'Italy', 'France', 'United States'). Use this field for labels and reporting. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Country Name, Country, Nation Name"
+
+		annotation DisplayFolder = "Country Details"
+
+		annotation 'Example Values' = "Italy, France, United States, United Kingdom, Japan"
+
+		annotation 'Common Questions' = "What is the country name for code IT? Which countries have the highest sales? How do countries perform?"
+
+		annotation 'Related Objects' = "STORES.'Country Code'"
+
+	column GeographicArea
+		dataType: string
+		lineageTag: b494315a-d020-4b09-ae9b-c6bc999a9b8d
+		summarizeBy: none
+		sourceColumn: Area Geo Description
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Geographic area grouping for countries (e.g., 'Europe', 'Americas', 'Asia-Pacific'). Used for regional reporting and macro-level analysis. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Geographic Area, Geo Region, Macro Region, Continent"
+
+		annotation DisplayFolder = "Regional Grouping"
+
+		annotation 'Example Values' = "Europe, Americas, Asia-Pacific, Middle East, Africa"
+
+		annotation 'Common Questions' = "What countries are in Europe? How do regions compare in sales? What is the geographic distribution of stores?"
+
+		annotation 'Related Objects' = "STORES, SCONTRINI"
+
+	column DistributionArea
+		dataType: string
+		lineageTag: ac0813f7-0d49-47db-a9e9-5208784fd053
+		summarizeBy: none
+		sourceColumn: Area Distr Description
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation Description = "Distribution area grouping for countries (e.g., 'EMEA', 'Americas', 'APAC'). Used for sales distribution analysis and territory management. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Distribution Area, Distr Area, Sales Territory, Distribution Region"
+
+		annotation DisplayFolder = "Regional Grouping"
+
+		annotation 'Example Values' = "EMEA, Americas, APAC, LATAM"
+
+		annotation 'Common Questions' = "What countries are in EMEA? How do distribution areas compare? What is the sales distribution by territory?"
+
+		annotation 'Related Objects' = "STORES, TARGET"
+
+	partition NAZIONI = m
+		mode: import
+		source =
+				let
+				        Origine = PowerPlatform.Dataflows(null),
+				        Workspaces = Origine{[Id="Workspaces"]}[Data],
+				        WS = Workspaces{[workspaceId="63075e43-ec19-4090-b204-854337b4b0d5"]}[Data],
+				        DF = WS{[dataflowId="9e62577e-6b91-4666-b6c3-868d086245db"]}[Data],
+				        NAZIONI1 = DF{[entity="NAZIONI"]}[Data],
+				        #"Removed Other Columns" = Table.SelectColumns(NAZIONI1,{"Country Code", "Country Description", "Area Geo Description", "Area Distr Description"})
+				in
+				        #"Removed Other Columns"
+
+		annotation Description = "Import partition for country geography master data. Loads all country and regional grouping data without date filtering."
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation Description = "Country geography dimension for the luxury retail model. Defines country and regional hierarchies for geographic analysis. Includes country-level codes and descriptions, plus geographic and distribution area groupings for regional reporting and analysis. Links to stores, customers, and sales for geographic performance analysis. Grain: one row per country. Proposed – pending Loro Piana validation."
+
+	annotation Synonyms = "Country, Geography, Nations, Countries, Geographic Area, Sales Region"
+
+	annotation DisplayFolder = "Store Master"
+
+	annotation RefreshPolicy = "Weekly on Sundays at 00:00 UTC; data latency ≤ 48 hours. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana Retail Operations Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "IT: Italy, FR: France, US: United States, UK: United Kingdom, JP: Japan"
+
+	annotation 'Common Questions' = "What countries are in our store network? How do sales compare by country? What is the geographic distribution of stores? Which region has the highest sales? How do countries group into geographic areas?"
+
+	annotation 'Related Objects' = "STORES, SCONTRINI, TARGET, BUDGET, AREA_MANAGER, GERARCHIA_AREA"

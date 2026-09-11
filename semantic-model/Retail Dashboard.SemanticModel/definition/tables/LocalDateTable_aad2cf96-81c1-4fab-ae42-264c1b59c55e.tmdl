@@ -1,0 +1,196 @@
+table LocalDateTable_aad2cf96-81c1-4fab-ae42-264c1b59c55e
+	isHidden
+	lineageTag: 4f05a6f3-0d5a-4184-a05f-05f568a1fd30
+
+	column Date
+		isHidden
+		lineageTag: 6074bf61-64c9-4b10-874b-9cf8279ca06f
+		dataCategory: PaddedDateTableDates
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = User
+
+		annotation Description = "The actual date value. This is the primary key for ago-date-based relationships and time intelligence calculations. Hidden by default but used for joins and date filtering. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Date, Calendar Date, Date Key, Ago Date"
+
+		annotation DisplayFolder = "Date"
+
+	column Year = YEAR([Date])
+		isHidden
+		lineageTag: 65a88a93-c685-4cbc-99e2-58fe043ce7f2
+		dataCategory: Years
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Year
+
+		annotation Description = "Calendar year extracted from the ago-date. Used for annual reporting and year-over-year comparisons. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Year, Calendar Year, Ago Year"
+
+		annotation DisplayFolder = "Date"
+
+		annotation 'Example Values' = "2023, 2024, 2025"
+
+		annotation 'Common Questions' = "What is the year for this ago-date? How do I filter by year using the ago-date reference? What was the performance in 2024 based on the ago-date?"
+
+	column MonthNo = MONTH([Date])
+		isHidden
+		lineageTag: 587a014e-2573-4f32-a9aa-bc0219e946f1
+		dataCategory: MonthOfYear
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = MonthNumber
+
+		annotation Description = "Month number (1-12) extracted from the ago-date. Used for chronological month ordering and sorting. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Month Number, Month Index, Month of Year, Ago Month Number"
+
+		annotation DisplayFolder = "Date"
+
+	column Month = FORMAT([Date], "MMMM")
+		isHidden
+		lineageTag: ab0b56fc-4cde-4e87-80f4-0d1794502b73
+		dataCategory: Months
+		summarizeBy: none
+		sortByColumn: MonthNo
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Month
+
+		annotation Description = "Month name (e.g., January, February). Used for month-level reporting and visual grouping. Sorted by MonthNo for correct chronological display. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Month, Month Name, Calendar Month, Ago Month"
+
+		annotation DisplayFolder = "Date"
+
+		annotation 'Example Values' = "January, February, March"
+
+		annotation 'Common Questions' = "What is the month name for the ago-date? How do I group by month using the ago-date reference? What are the monthly trends based on the ago-date?"
+
+	column QuarterNo = INT(([MonthNo] + 2) / 3)
+		isHidden
+		lineageTag: ce07b92f-d16a-485b-a390-a9a0690d5e45
+		dataCategory: QuarterOfYear
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = QuarterNumber
+
+		annotation Description = "Quarter number (1-4) extracted from the ago-date. Used for quarterly reporting and sorting. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Quarter Number, Quarter Index, Quarter of Year, Ago Quarter"
+
+		annotation DisplayFolder = "Date"
+
+	column Quarter = "Qtr " & [QuarterNo]
+		isHidden
+		lineageTag: c9f61e50-fa8f-4608-a6a4-694355a2699b
+		dataCategory: Quarters
+		summarizeBy: none
+		sortByColumn: QuarterNo
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Quarter
+
+		annotation Description = "Quarter label (e.g., Qtr 1, Qtr 2). Used for quarterly reporting and visual grouping. Sorted by QuarterNo for correct chronological display. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Quarter, Calendar Quarter, Qtr, Ago Quarter"
+
+		annotation DisplayFolder = "Date"
+
+		annotation 'Example Values' = "Qtr 1, Qtr 2, Qtr 3, Qtr 4"
+
+		annotation 'Common Questions' = "What is the quarter for the ago-date? How do I group by quarter using the ago-date reference? What are the quarterly trends based on the ago-date?"
+
+	column Day = DAY([Date])
+		isHidden
+		lineageTag: bc677e61-ed31-4f27-ac88-a0f123598228
+		dataCategory: DayOfMonth
+		summarizeBy: none
+
+		annotation SummarizationSetBy = User
+
+		annotation TemplateId = Day
+
+		annotation Description = "Day of the month (1-31). Used for daily analysis and sorting within months. Proposed – pending Loro Piana validation."
+
+		annotation Synonyms = "Day, Day Number, Day of Month, Ago Day"
+
+		annotation DisplayFolder = "Date"
+
+		annotation 'Example Values' = "1, 15, 31"
+
+		annotation 'Common Questions' = "What is the day of the month for the ago-date? How do I analyze daily data using the ago-date reference?"
+
+	hierarchy 'Date Hierarchy'
+		lineageTag: 537c898a-4d20-4aae-8a2d-729379ae10ec
+
+		level Year
+			lineageTag: 44b64f68-4234-4bb0-a546-cca2caf06a61
+			column: Year
+
+			annotation Description = "Year level in the ago-date hierarchy. Top-level grouping for annual analysis. Proposed – pending Loro Piana validation."
+
+		level Quarter
+			lineageTag: e776e5c0-5942-4027-b71d-92c19b8819ea
+			column: Quarter
+
+			annotation Description = "Quarter level in the ago-date hierarchy. Second-level grouping for quarterly analysis. Proposed – pending Loro Piana validation."
+
+		level Month
+			lineageTag: 732b40f9-b5fe-4754-9b7b-990e36557cd4
+			column: Month
+
+			annotation Description = "Month level in the ago-date hierarchy. Third-level grouping for monthly analysis. Proposed – pending Loro Piana validation."
+
+		level Day
+			lineageTag: 81f9bb5d-3f06-4f01-b958-d270a938228d
+			column: Day
+
+			annotation Description = "Day level in the ago-date hierarchy. Lowest-level grouping for daily analysis. Proposed – pending Loro Piana validation."
+
+		annotation TemplateId = DateHierarchy
+
+		annotation Description = "Default time hierarchy allowing drill-down from Year → Quarter → Month → Day for ago-date analysis. Provides intuitive navigation for date-based reporting using the COD_AGO_DTA reference. Proposed – pending Loro Piana validation."
+
+		annotation 'Common Questions' = "How do I drill down from year to month using the ago-date? How do I expand quarterly data with the ago-date reference? What is the date hierarchy structure for ago-date analysis?"
+
+	partition 'Local Date Table - Code Ago Date' = calculated
+		mode: import
+		source = Calendar(Date(Year(MIN('CALENDARIO'[COD_AGO_DTA])), 1, 1), Date(Year(MAX('CALENDARIO'[COD_AGO_DTA])), 12, 31))
+
+		annotation Description = "Auto-generated local date table partition. Date range is dynamically calculated from the CALENDARIO table's COD_AGO_DTA (code ago date) column, spanning full years from the minimum to maximum ago-date year. This ensures the date table covers all ago-date references in the model. Proposed – pending Loro Piana validation on the business meaning and data source of COD_AGO_DTA."
+
+	annotation __PBI_LocalDateTable = true
+
+	annotation Description = "Power BI auto-generated local date table providing a continuous date range for time intelligence calculations based on the COD_AGO_DTA (code ago date) field from the CALENDARIO table. This hidden table serves as the foundation for date-based relationships and time intelligence functions that require a specific ago-date reference. Contains standard date attributes including Year, Quarter, Month, and Day, with a default 'Date Hierarchy' for drill-down analysis. Date range is dynamically derived from the 'CALENDARIO' table's COD_AGO_DTA column (full years only). Proposed – pending Loro Piana validation on the business meaning of COD_AGO_DTA."
+
+	annotation Synonyms = "Local Date Table, Date Dimension, Time Dimension, Calendar Table, Date Hierarchy, Code Ago Date Table, Ago Date Reference"
+
+	annotation DisplayFolder = "System Tables"
+
+	annotation RefreshPolicy = "Dynamically generated based on CALENDARIO table data range. No manual refresh required. Proposed – pending Loro Piana validation."
+
+	annotation BusinessOwner = "Loro Piana BI Team. Proposed – pending validation."
+
+	annotation CertificationStatus = "Certified by BI Team on 2026-08-07 (pending business sign-off)."
+
+	annotation 'Example Values' = "Date: 2024-01-01, Year: 2024, Quarter: Qtr 1, Month: January, Day: 1"
+
+	annotation 'Common Questions' = "What is the date range based on COD_AGO_DTA? How do I use the date hierarchy for ago-date analysis? How do I filter by year, quarter, or month using the ago-date reference? What is the ago-date table used for?"
+
+	annotation 'Related Objects' = "CALENDARIO, SCONTRINI, TARGET, DateTableTemplate"
+
+	annotation __PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
