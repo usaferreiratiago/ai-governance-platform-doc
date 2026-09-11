@@ -1,0 +1,41 @@
+{
+  "dataset": "Enterprise Sales Model",
+  "extracted_at": "2026-07-29T09:51:58.822492",
+  "tables": [
+    {
+      "name": "Sales",
+      "description": "Sales fact table",
+      "columns": [
+        "DateKey",
+        "RegionKey",
+        "CountryKey",
+        "Net Revenue Amount",
+        "Units Sold"
+      ],
+      "measures": [
+        "Net Revenue",
+        "Gross Margin",
+        "Growth %"
+      ]
+    },
+    {
+      "name": "Calendar",
+      "description": "Date dimension",
+      "columns": [
+        "Date",
+        "Year",
+        "Quarter",
+        "Month"
+      ],
+      "measures": []
+    }
+  ],
+  "relationships": [
+    {
+      "from_table": "Sales",
+      "from_column": "DateKey",
+      "to_table": "Calendar",
+      "to_column": "Date"
+    }
+  ]
+}

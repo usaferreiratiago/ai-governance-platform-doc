@@ -1,0 +1,29 @@
+[
+  {
+    "name": "Sales",
+    "description": "Sales fact table",
+    "columns": [
+      "DateKey",
+      "RegionKey",
+      "CountryKey",
+      "Net Revenue Amount",
+      "Units Sold"
+    ],
+    "measures": [
+      "Net Revenue",
+      "Gross Margin",
+      "Growth %"
+    ]
+  },
+  {
+    "name": "Calendar",
+    "description": "Date dimension",
+    "columns": [
+      "Date",
+      "Year",
+      "Quarter",
+      "Month"
+    ],
+    "measures": []
+  }
+]
