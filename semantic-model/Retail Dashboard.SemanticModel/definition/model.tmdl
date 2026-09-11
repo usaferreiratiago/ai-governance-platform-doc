@@ -1,0 +1,124 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: it-IT
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+queryGroup 'Store MD 1'
+
+	annotation PBI_QueryGroupOrder = 0
+
+queryGroup 'Prod MD 1'
+
+	annotation PBI_QueryGroupOrder = 1
+
+queryGroup 'Prod Col MD 1'
+
+	annotation PBI_QueryGroupOrder = 2
+
+queryGroup 'Prod Col MD 2'
+
+	annotation PBI_QueryGroupOrder = 3
+
+queryGroup 'Generic MD 1'
+
+	annotation PBI_QueryGroupOrder = 4
+
+queryGroup 'CRM MD 1'
+
+	annotation PBI_QueryGroupOrder = 5
+
+queryGroup RLS
+
+	annotation PBI_QueryGroupOrder = 6
+
+annotation PBI_QueryOrder = ["_measure","SCONTRINI","TRAFFICO_CLIE_NEG","AREA_MANAGER","ARTICOLI","ARTICOLI_COLORE","BUSINESS","CLASSE_PRODOTTO","CALENDARIO","EVENTI_SPONSOR","FAMIGLIA_COMMERCIALE","GERARCHIA_AREA","LOGICA_ACQUISTO","LOGICA_VENDITA","MARKETING_TYPE","NAZIONI","NEGOZI","OPERATORI_NEGOZI","SALES_CATEGORY","SOTTO_CLASSE_PRODOTTO","STAGIONALITA","DIPENDENTI_NEGOZIO_STR","CUSTOMER","ACTIVE_CUSTOMER_MONTH","LOG_ESECUZIONI_DWH","RLS_STORE_OPS_TABLE","RLS_STORE_OPS_TABLE (Temp)","RLS_STORE_MAN_TABLE","SALES EXCHANGE CURRENT","SALES EXCHANGE CURR SAME DATE","TARGET","TARGET EXCHANGE","CALENDARIO (2)","OFFER","MACRO COLLECTION","STAGE OF LIFE","GENERE PRODOTTO","RLS_STORE_MAN_TABLE (Temp)","Store_Selection_Table","Currency Selector","Filter Markdown-FullPrice","Period Selector","KPI Selector","calendario_temp"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation __BNorm = 1
+
+annotation __TEdtr = 1
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table SCONTRINI
+ref table DateTableTemplate_bb6848b0-23ae-4019-9af6-8155299143f7
+ref table LocalDateTable_acb2b819-e270-4c4f-bc24-78f1b4d2d984
+ref table TRAFFICO_CLIE_NEG
+ref table AREA_MANAGER
+ref table ARTICOLI
+ref table ARTICOLI_COLORE
+ref table BUSINESS
+ref table CLASSE_PRODOTTO
+ref table CALENDARIO
+ref table LocalDateTable_696c62ba-69c3-4a71-882a-01fad5871c43
+ref table LocalDateTable_63b15a5b-44d7-4ed2-a33a-ab7d6588ae9b
+ref table LocalDateTable_aad2cf96-81c1-4fab-ae42-264c1b59c55e
+ref table LocalDateTable_5257034b-f06d-4206-be52-59bc07b33588
+ref table LocalDateTable_ecfa9992-c188-42c7-8979-5ee128f19f1a
+ref table LocalDateTable_67bef98d-d5fa-4db6-a01d-6b9678813c68
+ref table LocalDateTable_6ebbf77f-cf5e-4c21-baba-a292cbbb8b3c
+ref table LocalDateTable_24820280-bb68-4dcd-b6fe-6a26b4ba0920
+ref table EVENTI_SPONSOR
+ref table FAMIGLIA_COMMERCIALE
+ref table GERARCHIA_AREA
+ref table LOGICA_ACQUISTO
+ref table LOGICA_VENDITA
+ref table MARKETING_TYPE
+ref table NAZIONI
+ref table NEGOZI
+ref table OPERATORI_NEGOZI
+ref table SALES_CATEGORY
+ref table SOTTO_CLASSE_PRODOTTO
+ref table STAGIONALITA
+ref table _measure
+ref table DIPENDENTI_NEGOZIO_STR
+ref table CUSTOMER
+ref table ACTIVE_CUSTOMER_MONTH
+ref table SCONTRINI_TEMP
+ref table SCONTRINI_SALES_ASS_TEMP
+ref table LocalDateTable_257cf083-9ead-4388-b08c-8387bf4ce7ef
+ref table LocalDateTable_a2c558fe-e6c1-48e5-8815-388e0d4eb50e
+ref table LOG_ESECUZIONI_DWH
+ref table RLS_STORE_OPS_TABLE
+ref table 'RLS_STORE_OPS_TABLE (Temp)'
+ref table LocalDateTable_88d58246-507d-443f-8b5c-f8d6bdf24dee
+ref table 'Scontrini e Category'
+ref table Parameter
+ref table 'KPI Selector'
+ref table 'Period Selector'
+ref table SCONTRINI_HIGHVALUE
+ref table 'SALES EXCHANGE CURRENT'
+ref table 'SALES EXCHANGE CURR SAME DATE'
+ref table 'Currency Selector'
+ref table Drill
+ref table 'Selettore Temporale'
+ref table 'Category or Family'
+ref table LocalDateTable_93e5115c-a2ac-4f1c-bf4d-df37c17d5d07
+ref table TARGET
+ref table 'TARGET EXCHANGE'
+ref table 'Filter Markdown-FullPrice'
+ref table LocalDateTable_f17cd21a-04a3-4d23-90be-80c89ec6b9b5
+ref table Xaxis
+ref table OFFER
+ref table 'MACRO COLLECTION'
+ref table 'STAGE OF LIFE'
+ref table 'GENERE PRODOTTO'
+ref table 'RLS_STORE_MAN_TABLE (Temp)'
+ref table RLS_STORE_MAN_TABLE
+ref table 'Scontrini e Macro Category'
+ref table LocalDateTable_feb346b4-23d8-4ba1-896e-401992cb5d39
+ref table Store_Selection_Table
+ref table LocalDateTable_69846e10-17ea-429b-ab34-f1f3bd51de5e
+ref table LocalDateTable_9b4fbd9f-06c9-4a8d-ac24-1436fb2bfa89
+ref table LocalDateTable_93079be8-81cd-4773-bb74-4a25d8f39955
+
+ref role All
+ref role 'Store Operation'
+ref role 'Store Manager'
+
+ref cultureInfo en-US
+

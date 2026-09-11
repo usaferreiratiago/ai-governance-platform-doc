@@ -1,0 +1,30 @@
+expression calendario_temp =
+		let
+		    Origine = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WMjbUNzTSN7K0tFTSUYpMLS5JLUpJrFSKjQUA", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Date = _t, #"Date - Stringa" = _t]),
+		    #"Modificato tipo" = Table.TransformColumnTypes(Origine,{{"Date", type text}, {"Date - Stringa", type text}}),
+		    #"Modificato tipo1" = Table.TransformColumnTypes(#"Modificato tipo",{{"Date", type date}}),
+		    #"Rimosse altre colonne" = Table.SelectColumns(#"Modificato tipo1",{"Date", "Date - Stringa"})
+		in
+		    #"Rimosse altre colonne"
+	lineageTag: 570c6ea8-726d-4ae9-ad1a-e8be25902400
+
+	annotation PBI_NavigationStepName = Navigazione
+
+expression 'CALENDARIO (2)' =
+		let
+		    Origine = PowerPlatform.Dataflows(null),
+		    Workspaces = Origine{[Id="Workspaces"]}[Data],
+		    WS = Workspaces{[workspaceId="63075e43-ec19-4090-b204-854337b4b0d5"]}[Data],
+		    DF = WS{[dataflowId="e0866c2a-0125-4d05-9009-d7f935901d88"]}[Data],
+		    DIM_TIME_ANG1 = DF{[entity="DIM_TIME_ANG"]}[Data],
+		    #"Rimosse altre colonne" = Table.SelectColumns(DIM_TIME_ANG1,{"Date", "Fiscal Year"}),
+		    #"Filtrate righe" = Table.SelectRows(#"Rimosse altre colonne", each [Date] >= #datetime(2021, 1, 1, 0, 0, 0))
+		in
+		    #"Filtrate righe"
+	lineageTag: 73882f15-34af-4b7b-9645-d5a044c0a9f7
+	queryGroup: 'Generic MD 1'
+
+	annotation PBI_NavigationStepName = Navigazione
+
+	annotation PBI_ResultType = Table
+

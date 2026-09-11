@@ -1,0 +1,301 @@
+relationship d7abbb6a-c1b6-45d3-8186-6041b6a63bcd
+	joinOnDateBehavior: datePartOnly
+	fromColumn: SCONTRINI.DATA_VARIAZ
+	toColumn: LocalDateTable_acb2b819-e270-4c4f-bc24-78f1b4d2d984.Date
+
+relationship debd66e4-e1ed-4f49-9851-f0d2473213a2
+	joinOnDateBehavior: datePartOnly
+	fromColumn: CALENDARIO.Date
+	toColumn: LocalDateTable_696c62ba-69c3-4a71-882a-01fad5871c43.Date
+
+relationship d4cb0a16-35e0-4fb4-a225-08889bc2e5a4
+	joinOnDateBehavior: datePartOnly
+	fromColumn: CALENDARIO.END_MONTH_DTA
+	toColumn: LocalDateTable_63b15a5b-44d7-4ed2-a33a-ab7d6588ae9b.Date
+
+relationship ffc3fae6-07ab-4c60-8c18-e3ef24f2d30b
+	joinOnDateBehavior: datePartOnly
+	fromColumn: CALENDARIO.COD_AGO_DTA
+	toColumn: LocalDateTable_aad2cf96-81c1-4fab-ae42-264c1b59c55e.Date
+
+relationship 76678ee6-df53-4a7b-97c5-72dc31d311e3
+	joinOnDateBehavior: datePartOnly
+	fromColumn: CALENDARIO.DATA_2AGO_DTA
+	toColumn: LocalDateTable_5257034b-f06d-4206-be52-59bc07b33588.Date
+
+relationship f4feefe3-52c1-492c-9cbb-36411938ec1b
+	joinOnDateBehavior: datePartOnly
+	fromColumn: CALENDARIO.COD_3AGO_DTA
+	toColumn: LocalDateTable_ecfa9992-c188-42c7-8979-5ee128f19f1a.Date
+
+relationship 7f4cd595-0bb3-4cd5-94fd-eda1b891a945
+	joinOnDateBehavior: datePartOnly
+	fromColumn: CALENDARIO.DATA_WAGO_DTA
+	toColumn: LocalDateTable_67bef98d-d5fa-4db6-a01d-6b9678813c68.Date
+
+relationship 0f172bd6-2dd1-4640-87b2-4c0b92d29e0b
+	joinOnDateBehavior: datePartOnly
+	fromColumn: CALENDARIO.DATA_2WAGO_DTA
+	toColumn: LocalDateTable_6ebbf77f-cf5e-4c21-baba-a292cbbb8b3c.Date
+
+relationship 4330f24d-25a7-4584-b610-855eed23db0a
+	joinOnDateBehavior: datePartOnly
+	fromColumn: CALENDARIO.DAAT_3WAGO_DTA
+	toColumn: LocalDateTable_24820280-bb68-4dcd-b6fe-6a26b4ba0920.Date
+
+relationship d52f8a98-9f04-49c2-aa4e-46361a63056a
+	fromColumn: SCONTRINI.'Store Code'
+	toColumn: NEGOZI.'Store Code'
+
+relationship 852e6422-3b6c-4fdb-87df-d4488e5b91a7
+	fromColumn: SCONTRINI.'Item Code'
+	toColumn: ARTICOLI.'Item Code'
+
+relationship 72f733b7-233c-4da2-8117-7b9da3e047a8
+	fromColumn: ARTICOLI.'Category Code'
+	toColumn: CLASSE_PRODOTTO.'Category Code'
+
+relationship 7265fb01-d38b-4943-a89e-b8df85ca8049
+	fromColumn: SCONTRINI.'Buying Logic Code'
+	toColumn: LOGICA_ACQUISTO.'Buying Logic Code'
+
+relationship 1d4ef432-2a0c-4c8a-baf6-60ac312439c2
+	fromColumn: ARTICOLI_COLORE.'Buying Logic Code'
+	toColumn: LOGICA_ACQUISTO.'Buying Logic Code'
+
+relationship 40ac9af4-4885-4a51-83f1-ea36b0127c2e
+	fromColumn: ARTICOLI_COLORE.'Marketing Type Code'
+	toColumn: MARKETING_TYPE.'Marketing Type Code'
+
+relationship 7bd61ee4-bf86-4086-bdc8-f86680ceb3f4
+	fromColumn: TRAFFICO_CLIE_NEG.'Store Code DWH'
+	toColumn: NEGOZI.'Store Code DWH'
+
+relationship 20c0a4a2-42da-40fc-8cd1-efdf85875708
+	fromColumn: ARTICOLI.'Business Code'
+	toColumn: BUSINESS.'Business Code'
+
+relationship e47af733-5d62-4c75-ae33-75872b5c4385
+	fromColumn: ARTICOLI.'Sub Category Code'
+	toColumn: SOTTO_CLASSE_PRODOTTO.'Sub Category Code'
+
+relationship c02c3b20-d818-4a52-ad48-1e6c8d8dd75c
+	fromColumn: ARTICOLI.'Sales Category Code'
+	toColumn: SALES_CATEGORY.'Sales Category Code'
+
+relationship 64f472be-989c-469a-b404-512c87a42c08
+	fromColumn: ARTICOLI_COLORE.'Selling Logic Code'
+	toColumn: LOGICA_VENDITA.'Selling Logic Code'
+
+relationship 77eff1c4-0322-4781-97de-11b4b6e88fbd
+	fromColumn: ARTICOLI_COLORE.'Sponsor Event Code'
+	toColumn: EVENTI_SPONSOR.'Sponsor Event Code'
+
+relationship d99ad375-814d-41f8-8027-081bd32c49c5
+	fromColumn: NEGOZI.'Country Code'
+	toColumn: NAZIONI.'Country Code'
+
+relationship 6df82e4b-2b81-43aa-981c-294f4829b3d1
+	fromColumn: NEGOZI.'Area Code'
+	toColumn: GERARCHIA_AREA.'Area Code'
+
+relationship 935f649b-c438-46b4-9b31-0da16dd37db3
+	fromColumn: SCONTRINI.Date
+	toColumn: CALENDARIO.Date
+
+relationship d759bea9-c577-468e-915d-9acfec7925c2
+	fromColumn: TRAFFICO_CLIE_NEG.'Traffic Date'
+	toColumn: CALENDARIO.Date
+
+relationship 08d9df67-5df3-4a01-8629-7d17592e8e67
+	fromColumn: NEGOZI.'Area Manager Code'
+	toColumn: AREA_MANAGER.'Area Manager Code'
+
+relationship 4064ad40-ccf7-4ac0-a3af-0331c4efdf77
+	isActive: false
+	fromColumn: SCONTRINI.KEY_ART_COL
+	toColumn: ARTICOLI_COLORE.KEY_ART_COL
+
+relationship f2fd09af-5514-403d-9ae7-bc694abc65ca
+	fromColumn: SCONTRINI.'Customer Code'
+	toColumn: CUSTOMER.'Customer Code'
+
+relationship bf5f04aa-fc29-4c87-90c6-dc10941d84e8
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: CUSTOMER.KEY_ANNO_MESE_NEGZ
+	toColumn: DIPENDENTI_NEGOZIO_STR.KEY_ANNO_MESE_NEGZ
+
+relationship acec9356-02ef-493d-9559-0aa4c9a88f60
+	joinOnDateBehavior: datePartOnly
+	fromColumn: ARTICOLI_COLORE.'Delivery Date From'
+	toColumn: LocalDateTable_257cf083-9ead-4388-b08c-8387bf4ce7ef.Date
+
+relationship f11884b3-5c0f-4ea0-9538-31a467705297
+	joinOnDateBehavior: datePartOnly
+	fromColumn: ARTICOLI_COLORE.'Delivery Date To'
+	toColumn: LocalDateTable_a2c558fe-e6c1-48e5-8815-388e0d4eb50e.Date
+
+relationship 86a4e23f-d0df-4e1f-800f-deed11767a68
+	toCardinality: many
+	fromColumn: CUSTOMER.'Customer Code'
+	toColumn: ACTIVE_CUSTOMER_MONTH.CLI_DWH_KEY
+
+relationship dbc5be5c-910c-4210-9a5f-b4e49f509865
+	fromColumn: DIPENDENTI_NEGOZIO_STR.COD_NEGZ
+	toColumn: NEGOZI.'Store Code'
+
+relationship 345d684c-87c8-40bf-9940-c04993bfea29
+	crossFilteringBehavior: bothDirections
+	securityFilteringBehavior: bothDirections
+	fromColumn: RLS_STORE_OPS_TABLE.'NEGOZI.COD_AREA'
+	toColumn: 'RLS_STORE_OPS_TABLE (Temp)'.'NEGOZI.COD_AREA'
+
+relationship e50f2c94-8556-4ec4-9926-98efceb5ab10
+	fromColumn: NEGOZI.'Area Code'
+	toColumn: 'RLS_STORE_OPS_TABLE (Temp)'.'NEGOZI.COD_AREA'
+
+relationship d91800ee-3623-4e09-b71a-ac2135ad81a7
+	joinOnDateBehavior: datePartOnly
+	fromColumn: CUSTOMER.'Data Iscrizione'
+	toColumn: LocalDateTable_88d58246-507d-443f-8b5c-f8d6bdf24dee.Date
+
+relationship 258d0904-6542-4ba3-9a6d-a671689147f4
+	fromColumn: ARTICOLI.'Commercial Family Code'
+	toColumn: FAMIGLIA_COMMERCIALE.'Commercial Family Code'
+
+relationship 31b88424-0711-4fe3-8e4c-f10831c7c8f7
+	fromColumn: ARTICOLI_COLORE.'Sub Seasonality Code'
+	toColumn: STAGIONALITA.'Sub Seasonality Code'
+
+relationship 50ac3ceb-0e6d-42b8-bb9e-6e16fc377fdc
+	fromColumn: SCONTRINI.'Key Anno Currency'
+	toColumn: 'SALES EXCHANGE CURR SAME DATE'.KEY_ANNO_CURR
+
+relationship beac2346-0dd4-4629-abd2-ace4809ac241
+	fromColumn: SCONTRINI.'Key Anno Currency'
+	toColumn: 'SALES EXCHANGE CURRENT'.KEY_ANNO_CURR
+
+relationship 6cd35db0-4b8f-8239-9955-78770e2f64c4
+	isActive: false
+	fromColumn: SCONTRINI.'Key Anno Currency'
+	toColumn: 'SALES EXCHANGE CURR SAME DATE'.KEY_ANNO1_CURR
+
+relationship c9764ca9-6053-4b32-9a35-f5dab21d5d59
+	isActive: false
+	fromColumn: SCONTRINI.KEY_ANNOFISC_CURR
+	toColumn: 'SALES EXCHANGE CURR SAME DATE'.KEY_ANNO_CURR
+
+relationship f0bbd0ab-3fcc-4d8b-a9c4-a1750955244b
+	isActive: false
+	fromColumn: SCONTRINI.KEY_ANNOFISC_CURR
+	toColumn: 'SALES EXCHANGE CURR SAME DATE'.KEY_ANNO1_CURR
+
+relationship d58a3313-e8ab-456c-a859-62d637659e5c
+	isActive: false
+	fromColumn: SCONTRINI.KEY_ANNOFISC_CURR
+	toColumn: 'SALES EXCHANGE CURRENT'.KEY_ANNO_CURR
+
+relationship 9d5ea5a9-d669-40ba-969d-7a3bdc1ea96a
+	joinOnDateBehavior: datePartOnly
+	fromColumn: NEGOZI.DATA_CHIUSURA
+	toColumn: LocalDateTable_93e5115c-a2ac-4f1c-bf4d-df37c17d5d07.Date
+
+relationship 27ba5020-afd9-4c71-9819-c5191ec4c81b
+	fromColumn: TARGET.'Store Code'
+	toColumn: NEGOZI.'Store Code'
+
+relationship 2e123b3e-090e-415b-ab4b-cf3d2b2e0aa3
+	fromColumn: TARGET.'Target Date'
+	toColumn: CALENDARIO.Date
+
+relationship b9201d74-57e8-4dfc-ab8a-271d080e0a80
+	fromColumn: TARGET.KEY_ANNO_CURR
+	toColumn: 'TARGET EXCHANGE'.KEY_ANNO_CURR
+
+relationship 32c50c32-66e9-4e88-9f5e-6cc4fe03b76a
+	fromColumn: SCONTRINI.'Key Anno Currency'
+	toColumn: 'TARGET EXCHANGE'.KEY_ANNO_CURR
+
+relationship aa61eb35-5322-4371-9986-ff074bc9ff41
+	isActive: false
+	fromColumn: SCONTRINI.KEY_ANNOFISC_CURR
+	toColumn: 'TARGET EXCHANGE'.KEY_ANNO_CURR
+
+relationship 6564e803-78fb-4508-8e73-a43ec1a6004c
+	fromColumn: SCONTRINI.'Flag Sale'
+	toColumn: 'Filter Markdown-FullPrice'.'Flag Sale'
+
+relationship 479d9d4a-f978-4613-8c04-cd65422f0d17
+	isActive: false
+	fromColumn: TARGET.KEY_ANNOFISC_CURR
+	toColumn: 'TARGET EXCHANGE'.KEY_ANNO_CURR
+
+relationship b35d66f1-8206-49e7-ac10-f316afdb7493
+	joinOnDateBehavior: datePartOnly
+	fromColumn: CALENDARIO.year_month_week_fiscal_ord
+	toColumn: LocalDateTable_f17cd21a-04a3-4d23-90be-80c89ec6b9b5.Date
+
+relationship 647b97f6-ce3e-4e8c-9298-27e46839d8d9
+	fromColumn: SCONTRINI.'Offer Code'
+	toColumn: OFFER.'Offer Code'
+
+relationship ccc45585-e324-483c-8c01-e3744f4fc2b7
+	fromColumn: SCONTRINI.'Macro Collection Code'
+	toColumn: 'MACRO COLLECTION'.'Macro Collection Code'
+
+relationship 5d301bfa-d07a-49b4-9fe5-f8816a40eb7a
+	fromColumn: ARTICOLI.'Gender Code'
+	toColumn: 'GENERE PRODOTTO'.'Gender Code'
+
+relationship eefee0a8-c93e-4fbe-adba-b698199e1b07
+	fromColumn: ARTICOLI.'Stage of Life Code'
+	toColumn: 'STAGE OF LIFE'.'Stage of Life Code'
+
+relationship 82304385-89f1-4ea3-96dd-0ad5ea4a2217
+	fromColumn: SCONTRINI_HIGHVALUE.Date
+	toColumn: CALENDARIO.Date
+
+relationship d29fc180-e727-43b3-962b-c318528c7178
+	fromColumn: SCONTRINI_HIGHVALUE.'Store Code'
+	toColumn: NEGOZI.'Store Code'
+
+relationship a7d6bc2d-d9f4-4a0a-9fc0-ba6b594d3190
+	crossFilteringBehavior: bothDirections
+	securityFilteringBehavior: bothDirections
+	fromColumn: RLS_STORE_MAN_TABLE.'Store Code'
+	toColumn: 'RLS_STORE_MAN_TABLE (Temp)'.'Store Code'
+
+relationship f3365fb6-065e-46d7-9ab1-052e66152660
+	fromColumn: NEGOZI.'Store Code'
+	toColumn: 'RLS_STORE_MAN_TABLE (Temp)'.'Store Code'
+
+relationship b51d667b-c372-4e37-8939-bfdac7825ca7
+	fromColumn: SCONTRINI.'Ticket ID'
+	toColumn: 'Scontrini e Macro Category'.'Ticket ID'
+
+relationship 201fb854-7b6c-4c5a-935b-4b76467bb2c1
+	fromColumn: SCONTRINI.'Ticket ID'
+	toColumn: 'Scontrini e Category'.'Ticket ID'
+
+relationship 666b93b9-74e4-4b88-9c49-386f66c4db4a
+	joinOnDateBehavior: datePartOnly
+	fromColumn: CALENDARIO.'Date LY'
+	toColumn: LocalDateTable_feb346b4-23d8-4ba1-896e-401992cb5d39.Date
+
+relationship ab31635c-ada3-46b3-86b1-40becf338c99
+	joinOnDateBehavior: datePartOnly
+	fromColumn: SCONTRINI_SALES_ASS_TEMP.Date
+	toColumn: LocalDateTable_69846e10-17ea-429b-ab34-f1f3bd51de5e.Date
+
+relationship 4c445ccd-4a2a-47a9-a69e-bc57022b713d
+	joinOnDateBehavior: datePartOnly
+	fromColumn: SCONTRINI_TEMP.Date
+	toColumn: LocalDateTable_9b4fbd9f-06c9-4a8d-ac24-1436fb2bfa89.Date
+
+relationship d7269255-1617-4185-b49d-09dfa6c04655
+	joinOnDateBehavior: datePartOnly
+	fromColumn: LOG_ESECUZIONI_DWH.MAX_END_DATE
+	toColumn: LocalDateTable_93079be8-81cd-4773-bb74-4a25d8f39955.Date
+
