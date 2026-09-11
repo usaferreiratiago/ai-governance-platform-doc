@@ -1,0 +1,15 @@
+powerbi:
+  tenant_id: ${PBI_TENANT_ID}
+  client_id: ${PBI_CLIENT_ID}
+  client_secret: ${PBI_CLIENT_SECRET}
+  workspace_id: ${PBI_WORKSPACE_ID}
+  dataset_id: ${PBI_DATASET_ID}
+  api_base_url: https://api.powerbi.com/v1.0/myorg
+
+cache:
+  enabled: true
+  ttl_seconds: 300
+
+llm:
+  model: gpt-4.1-mini
+  temperature: 0.0
