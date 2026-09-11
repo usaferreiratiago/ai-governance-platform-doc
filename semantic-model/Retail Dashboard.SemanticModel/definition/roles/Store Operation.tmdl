@@ -1,0 +1,7 @@
+role 'Store Operation'
+	modelPermission: read
+
+	tablePermission RLS_STORE_OPS_TABLE = [Email] = USERPRINCIPALNAME()
+
+	annotation PBI_Id = 6f5c61cb03be421690cde3b127e5eb2d
+

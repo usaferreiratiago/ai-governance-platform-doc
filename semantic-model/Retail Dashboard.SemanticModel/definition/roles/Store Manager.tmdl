@@ -1,0 +1,7 @@
+role 'Store Manager'
+	modelPermission: read
+
+	tablePermission RLS_STORE_MAN_TABLE = [Email] = USERPRINCIPALNAME()
+
+	annotation PBI_Id = 8d6df69a366c4aa587ea326e038e5bac
+
