@@ -1,0 +1,5 @@
+workspace: Finance-Prod
+dataset: Enterprise Sales Model
+tenant_id: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+client_id: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+xmla_endpoint: powerbi://api.powerbi.com/v1.0/myorg/Finance-Prod
