@@ -1,0 +1,53 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8502:8501"
+    env_file:
+      - .env                         # loads variables from .env file
+    volumes:
+      - .:/app
+    environment:
+      # ------------------------------------------------------------
+      # Core semantic router – path to your TMDL definition files
+      # ------------------------------------------------------------
+      - TMDL_DEFINITION_DIR=/app/semantic-model/Retail Dashboard.SemanticModel/definition/tables
+
+      # ------------------------------------------------------------
+      # Gemini API settings
+      # ------------------------------------------------------------
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - GEMINI_MODEL=${GEMINI_MODEL:-gemini-3.6-flash}      # fallback to a recent stable model
+      - GEMINI_TIMEOUT_SECONDS=${GEMINI_TIMEOUT_SECONDS:-45} # increase timeout to avoid timeouts
+
+      # ------------------------------------------------------------
+      # Mode selection
+      # ------------------------------------------------------------
+      - MCP_MOCK_MODE=${MCP_MOCK_MODE:-true}                # set 'false' for real Gemini/Power BI
+      - PRODUCTION_MODE=${PRODUCTION_MODE:-false}           # set 'true' to enforce real credentials
+
+      # ------------------------------------------------------------
+      # Power BI (optional – only needed if PRODUCTION_MODE=true or MCP_MOCK_MODE=false)
+      # ------------------------------------------------------------
+      - PBI_TENANT_ID=${PBI_TENANT_ID}
+      - PBI_CLIENT_ID=${PBI_CLIENT_ID}
+      - PBI_CLIENT_SECRET=${PBI_CLIENT_SECRET}
+      - PBI_DATASET_ID=${PBI_DATASET_ID}
+      - PBI_API_BASE_URL=${PBI_API_BASE_URL:-https://api.powerbi.com/v1.0/myorg}
+
+      # ------------------------------------------------------------
+      # Context memory & logging
+      # ------------------------------------------------------------
+      - MCP_CONTEXT_MEMORY=${MCP_CONTEXT_MEMORY:-true}
+      - MCP_CONTEXT_HISTORY=${MCP_CONTEXT_HISTORY:-5}
+      - MCP_CONTEXT_DAYS=${MCP_CONTEXT_DAYS:-7}
+      - PYTHONUNBUFFERED=1
+
+    command: streamlit run streamlit_app/app.py --server.port 8501 --server.address 0.0.0.0 --server.enableCORS false --server.enableXsrfProtection false
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501/_stcore/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
