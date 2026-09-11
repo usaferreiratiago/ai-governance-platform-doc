@@ -1,0 +1,306 @@
+{
+  "model_name": "Retail Semantic Model",
+  "model_display_name": "Retail & E-commerce Semantic Model",
+  "version": "1.0.0",
+  "source": "Power BI Semantic Model",
+  "environment": "MVP",
+  "status": "Approved",
+  "last_updated": "2026-07-30",
+  "description": "Approved semantic model for retail and e-commerce analytics, containing certified measures and governed tables for enterprise reporting.",
+  
+  "tables": [
+    {
+      "name": "Sales",
+      "description": "Sales transaction data including revenue, units sold, and customer purchases",
+      "type": "Fact",
+      "row_count_estimate": 1000000,
+      "refresh_frequency": "Daily"
+    },
+    {
+      "name": "Customer",
+      "description": "Customer master data including demographics, segments, and contact information",
+      "type": "Dimension",
+      "row_count_estimate": 50000,
+      "refresh_frequency": "Weekly",
+      "contains_pii": true
+    },
+    {
+      "name": "Product",
+      "description": "Product master data including categories, pricing, and attributes",
+      "type": "Dimension",
+      "row_count_estimate": 10000,
+      "refresh_frequency": "Weekly"
+    },
+    {
+      "name": "Date",
+      "description": "Date dimension table with fiscal and calendar hierarchies",
+      "type": "Dimension",
+      "row_count_estimate": 3650,
+      "refresh_frequency": "Monthly"
+    },
+    {
+      "name": "Inventory",
+      "description": "Inventory data including stock levels and warehouse information",
+      "type": "Fact",
+      "row_count_estimate": 500000,
+      "refresh_frequency": "Daily"
+    }
+  ],
+  
+  "certified_measures": [
+    {
+      "name": "Net Revenue",
+      "description": "Total net sales amount after discounts and returns",
+      "table": "Sales",
+      "category": "Financial",
+      "certified": true,
+      "certification_date": "2026-07-01"
+    },
+    {
+      "name": "Gross Margin %",
+      "description": "Gross profit percentage over net revenue",
+      "table": "Sales",
+      "category": "Financial",
+      "certified": true,
+      "certification_date": "2026-07-01"
+    },
+    {
+      "name": "Average Unit Price",
+      "description": "Average selling price per unit sold",
+      "table": "Sales",
+      "category": "Commercial",
+      "certified": true,
+      "certification_date": "2026-07-01"
+    },
+    {
+      "name": "Inventory Value",
+      "description": "Total inventory value available in stock",
+      "table": "Product",
+      "category": "Inventory",
+      "certified": true,
+      "certification_date": "2026-07-01"
+    },
+    {
+      "name": "Return Rate",
+      "description": "Percentage of sold units returned by customers",
+      "table": "Sales",
+      "category": "Operational",
+      "certified": true,
+      "certification_date": "2026-07-01"
+    }
+  ],
+  
+  "governance": {
+    "owner": "Retail Analytics",
+    "owner_email": "retail-analytics@company.com",
+    "approval_required": true,
+    "llm_access": "curated_only",
+    "data_classification": "Internal",
+    "governance_level": "Enterprise",
+    "review_cadence": "Quarterly",
+    "last_reviewed": "2026-07-30",
+    "next_review": "2026-10-30",
+    "stewards": [
+      {
+        "name": "John Doe",
+        "role": "Data Steward",
+        "email": "john.doe@company.com"
+      },
+      {
+        "name": "Jane Smith",
+        "role": "Business Owner",
+        "email": "jane.smith@company.com"
+      }
+    ],
+    "approval_workflow": {
+      "step_1": "Data Engineering Review",
+      "step_2": "Business Owner Approval",
+      "step_3": "Data Governance Board Approval"
+    }
+  },
+  
+  "access_control": {
+    "default_access": "Read Only",
+    "restricted_tables": [],
+    "restricted_measures": [],
+    "pii_tables": ["Customer"]
+  },
+  
+  "security": {
+    "row_level_security": false,
+    "object_level_security": true,
+    "encryption_at_rest": true,
+    "encryption_in_transit": true,
+    "audit_enabled": true
+  },
+  
+  "data_lineage": {
+    "source_systems": [
+      {
+        "system": "ERP",
+        "tables": ["SalesTransactions", "ProductMaster"],
+        "update_frequency": "Daily"
+      },
+      {
+        "system": "CRM",
+        "tables": ["CustomerMaster", "CustomerTransactions"],
+        "update_frequency": "Daily"
+      },
+      {
+        "system": "Data Warehouse",
+        "tables": ["DW_Sales", "DW_Inventory"],
+        "update_frequency": "Daily"
+      }
+    ],
+    "etl_jobs": [
+      "ETL_Sales_Load",
+      "ETL_Product_Load",
+      "ETL_Customer_Load",
+      "ETL_Date_Load",
+      "ETL_Inventory_Load"
+    ]
+  },
+  
+  "quality_metrics": {
+    "data_completeness": 99.5,
+    "data_accuracy": 98.7,
+    "data_timeliness": "24 hours",
+    "data_consistency": 97.2,
+    "validation_checks": [
+      {
+        "name": "No Null Revenue",
+        "description": "Sales transactions must have non-null Net Revenue",
+        "status": "Passed"
+      },
+      {
+        "name": "Valid Date Keys",
+        "description": "All sales must have valid DateKey references",
+        "status": "Passed"
+      },
+      {
+        "name": "Product Key Exists",
+        "description": "All sales must reference existing products",
+        "status": "Passed"
+      }
+    ]
+  },
+  
+  "performance": {
+    "refresh_time_minutes": 15,
+    "query_performance_avg_ms": 250,
+    "data_volume_gb": 2.5,
+    "compression_ratio": 0.35,
+    "partitioning": "Monthly",
+    "indices": [
+      "Sales_DateKey_Index",
+      "Sales_ProductKey_Index",
+      "Sales_CustomerKey_Index"
+    ]
+  },
+  
+  "dependencies": {
+    "upstream_dependencies": [
+      {
+        "system": "ERP System",
+        "impact": "Critical - No data can be loaded without ERP"
+      },
+      {
+        "system": "Data Warehouse",
+        "impact": "High - Primary data source"
+      }
+    ],
+    "downstream_dependencies": [
+      {
+        "system": "Power BI Reports",
+        "impact": "All reports depend on this model"
+      },
+      {
+        "system": "AI Governance Platform",
+        "impact": "LLM queries depend on this model"
+      }
+    ]
+  },
+  
+  "usage_statistics": {
+    "total_queries_last_30_days": 12500,
+    "top_measures": [
+      "Net Revenue",
+      "Gross Margin %",
+      "Sales"
+    ],
+    "top_users": [
+      "analytics_team",
+      "finance_team",
+      "operations_team"
+    ],
+    "avg_query_response_time_ms": 180
+  },
+  
+  "deployment": {
+    "environment": "Production",
+    "deployment_date": "2026-07-15",
+    "last_deployment": "2026-07-30",
+    "deployment_frequency": "Monthly",
+    "rollback_strategy": "Version rollback with approval",
+    "backup_frequency": "Daily"
+  },
+  
+  "maintenance": {
+    "scheduled_maintenance": "Sunday 02:00-06:00 UTC",
+    "maintenance_window": "4 hours",
+    "notification_recipients": [
+      "data-engineering@company.com",
+      "analytics-team@company.com"
+    ]
+  },
+  
+  "compliance": {
+    "gdpr_compliant": true,
+    "data_retention_days": 1825,
+    "data_retention_policy": "5 years",
+    "audit_trail_retention_days": 365,
+    "pii_handling": "Anonymized after 90 days of inactivity",
+    "cross_border_transfer": "Restricted - EU data stays in EU"
+  },
+  
+  "metadata": {
+    "created_by": "Data Governance Team",
+    "created_date": "2026-06-01",
+    "updated_by": "Data Engineering Team",
+    "updated_date": "2026-07-30",
+    "version_history": [
+      {
+        "version": "0.1.0",
+        "date": "2026-06-01",
+        "changes": "Initial draft",
+        "status": "Draft"
+      },
+      {
+        "version": "0.5.0",
+        "date": "2026-06-15",
+        "changes": "Added certified measures",
+        "status": "Review"
+      },
+      {
+        "version": "1.0.0",
+        "date": "2026-07-30",
+        "changes": "Production ready - approved",
+        "status": "Approved"
+      }
+    ]
+  },
+  
+  "contact": {
+    "governance_team": "governance@company.com",
+    "data_engineering": "data-engineering@company.com",
+    "analytics_support": "analytics-support@company.com",
+    "emergency_contact": "on-call-dba@company.com"
+  },
+  
+  "documentation": {
+    "wiki_url": "https://wiki.company.com/semantic-model",
+    "release_notes": "https://wiki.company.com/release-notes",
+    "issue_tracker": "https://jira.company.com/projects/DATA",
+    "training_materials": "https://learning.company.com/semantic-model"
+  }
+}

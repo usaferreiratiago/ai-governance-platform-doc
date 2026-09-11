@@ -1,0 +1,1578 @@
+# =====================================================================
+# Curated Tables - Semantic Model
+# =====================================================================
+# This file defines all approved and governed tables in the semantic model.
+# Tables must be reviewed and approved by the Data Governance Team.
+# =====================================================================
+
+version: 1.0.0
+last_updated: 2026-08-13
+status: Approved
+domain: Retail & E-commerce
+
+# =====================================================================
+# Table Definitions
+# =====================================================================
+tables:
+  # -----------------------------------------------------------------
+  # Fact Tables
+  # -----------------------------------------------------------------
+  - name: Sales
+    business_name: Retail Sales
+    description: |
+      Sales transactions used for revenue, margin, and profitability analysis.
+      Contains detailed transaction-level data including quantity, price, discounts,
+      and customer information.
+    table_type: Fact
+    schema: dbo
+    owner: Retail Analytics
+    owner_email: retail-analytics@company.com
+    certified: true
+    certification_date: 2026-07-01
+    certified_by: Data Governance Team
+    hidden: false
+    sensitive: false
+    contains_pii: false
+    row_count_estimate: 1000000
+    refresh_frequency: Daily
+    refresh_time: 02:00 UTC
+    granularity: Transaction
+    primary_key: SalesOrderNumber
+    foreign_keys:
+      - ProductKey
+      - CustomerKey
+      - DateKey
+      - AreaManagerCode
+      - ItemCode
+      - BusinessCode
+    columns:
+      - name: SalesOrderNumber
+        data_type: string
+        description: Unique identifier for each sales transaction
+        is_primary_key: true
+        nullable: false
+      - name: ProductKey
+        data_type: integer
+        description: Foreign key to Product table
+        nullable: false
+      - name: CustomerKey
+        data_type: integer
+        description: Foreign key to Customer table
+        nullable: false
+      - name: DateKey
+        data_type: integer
+        description: Foreign key to Date table (YYYYMMDD format)
+        nullable: false
+      - name: AreaManagerCode
+        data_type: integer
+        description: Foreign key to Area Manager table
+        nullable: true
+      - name: ItemCode
+        data_type: string
+        description: Foreign key to ARTICOLI table (product master)
+        nullable: true
+      - name: BusinessCode
+        data_type: string
+        description: Foreign key to BUSINESS table (business classification)
+        nullable: true
+      - name: NetAmount
+        data_type: decimal(18,2)
+        description: Net sales amount after discounts and returns
+        nullable: false
+      - name: Quantity
+        data_type: integer
+        description: Number of units sold
+        nullable: false
+      - name: UnitPrice
+        data_type: decimal(18,2)
+        description: Price per unit before discounts
+        nullable: false
+      - name: DiscountAmount
+        data_type: decimal(18,2)
+        description: Total discount applied to the transaction
+        nullable: true
+      - name: ReturnIndicator
+        data_type: boolean
+        description: Indicates if the transaction was a return
+        nullable: false
+        default: false
+    usage_guidance: |
+      This is the primary fact table for all sales analytics.
+      Always join to Date, Product, and Customer dimensions for complete analysis.
+      Use with certified measures for revenue, margin, and volume analysis.
+    examples:
+      - "Sales by Product Category for Q2 2026"
+      - "Top 10 Customers by Revenue"
+      - "Monthly Sales Trend with YoY Growth"
+      - "Sales by Area Manager"
+      - "Sales by Color"
+      - "Sales by Collection"
+      - "Sales by Category"
+      - "Sales by Gender"
+      - "Sales by Business"
+      - "Sales by Macro Business"
+    tags:
+      - fact
+      - sales
+      - revenue
+      - core
+    related_tables:
+      - Product
+      - Customer
+      - Date
+      - AREA_MANAGER
+      - ARTICOLI_COLORE
+      - ARTICOLI
+      - BUSINESS
+      - CALENDARIO
+    mandatory_filters:
+      - Date
+    security:
+      row_level_security: false
+      object_level_security: false
+      access_level: Standard
+    data_quality_rules:
+      - rule: No_Null_NetAmount
+        description: NetAmount must never be null
+        severity: Critical
+      - rule: Quantity_Positive
+        description: Quantity must be greater than zero for sales (non-returns)
+        severity: High
+      - rule: Valid_DateKey
+        description: DateKey must exist in Date table
+        severity: Critical
+
+  # -----------------------------------------------------------------
+  # Dimension Tables
+  # -----------------------------------------------------------------
+  - name: Customer
+    business_name: Customer
+    description: |
+      Customer master data used for segmentation, analytics, and customer 360 views.
+      Contains demographic information, customer segments, and contact details.
+    table_type: Dimension
+    schema: dbo
+    owner: CRM Analytics
+    owner_email: crm-analytics@company.com
+    certified: true
+    certification_date: 2026-07-01
+    certified_by: Data Governance Team
+    hidden: false
+    sensitive: true
+    contains_pii: true
+    row_count_estimate: 50000
+    refresh_frequency: Weekly
+    refresh_time: 04:00 UTC
+    granularity: Customer
+    primary_key: CustomerKey
+    foreign_keys: []
+    columns:
+      - name: CustomerKey
+        data_type: integer
+        description: Unique identifier for each customer
+        is_primary_key: true
+        nullable: false
+      - name: CustomerName
+        data_type: string
+        description: Full name of the customer
+        nullable: false
+        pii: true
+      - name: Email
+        data_type: string
+        description: Customer email address
+        nullable: true
+        pii: true
+      - name: Phone
+        data_type: string
+        description: Customer phone number
+        nullable: true
+        pii: true
+      - name: Region
+        data_type: string
+        description: Geographic region where customer is located
+        nullable: false
+      - name: Segment
+        data_type: string
+        description: Customer segment (e.g., Premium, Standard, Enterprise)
+        nullable: false
+      - name: CustomerType
+        data_type: string
+        description: Type of customer (e.g., Individual, Corporate, Partner)
+        nullable: false
+      - name: CreatedDate
+        data_type: date
+        description: Date when customer was first created
+        nullable: false
+      - name: Active
+        data_type: boolean
+        description: Indicates if customer is currently active
+        nullable: false
+        default: true
+    usage_guidance: |
+      Use this table for customer segmentation, retention analysis, and customer lifetime value calculations.
+      Contains PII - handle with care and follow data privacy regulations.
+      Always ensure customer data is aggregated before sharing externally.
+    examples:
+      - "Customer Count by Segment"
+      - "Top 10 Customers by Revenue"
+      - "Customer Retention Rate by Month"
+    tags:
+      - dimension
+      - customer
+      - crm
+      - master_data
+    related_tables:
+      - Sales
+    mandatory_filters:
+      - Date (via Sales)
+    security:
+      row_level_security: true
+      object_level_security: true
+      access_level: Restricted
+      pii_handling: Anonymized after 90 days of inactivity
+    data_quality_rules:
+      - rule: Unique_Email
+        description: Email addresses must be unique across customers
+        severity: High
+      - rule: Not_Null_Key
+        description: CustomerKey must never be null
+        severity: Critical
+      - rule: Valid_Region
+        description: Region must be one of the approved regions
+        severity: Medium
+
+  - name: Product
+    business_name: Product
+    description: |
+      Product catalog and product hierarchy used for product performance analysis.
+      Includes product categories, subcategories, pricing, and supplier information.
+    table_type: Dimension
+    schema: dbo
+    owner: Product Analytics
+    owner_email: product-analytics@company.com
+    certified: true
+    certification_date: 2026-07-01
+    certified_by: Data Governance Team
+    hidden: false
+    sensitive: false
+    contains_pii: false
+    row_count_estimate: 10000
+    refresh_frequency: Weekly
+    refresh_time: 03:00 UTC
+    granularity: Product
+    primary_key: ProductKey
+    foreign_keys: []
+    columns:
+      - name: ProductKey
+        data_type: integer
+        description: Unique identifier for each product
+        is_primary_key: true
+        nullable: false
+      - name: ProductName
+        data_type: string
+        description: Full name of the product
+        nullable: false
+      - name: ProductCategory
+        data_type: string
+        description: High-level product category
+        nullable: false
+      - name: ProductSubcategory
+        data_type: string
+        description: Detailed product subcategory
+        nullable: false
+      - name: UnitPrice
+        data_type: decimal(18,2)
+        description: Standard selling price of the product
+        nullable: false
+      - name: CostPrice
+        data_type: decimal(18,2)
+        description: Standard cost of the product
+        nullable: false
+      - name: SupplierName
+        data_type: string
+        description: Name of the primary supplier for the product
+        nullable: true
+      - name: ProductStatus
+        data_type: string
+        description: Current status (Active, Discontinued, Seasonal, etc.)
+        nullable: false
+        default: Active
+      - name: LaunchDate
+        data_type: date
+        description: Date when the product was launched
+        nullable: true
+      - name: DiscontinuedDate
+        data_type: date
+        description: Date when the product was discontinued
+        nullable: true
+    usage_guidance: |
+      Use this table for product performance analysis, category trends, and pricing analysis.
+      Supports product hierarchy drill-down from Category → Subcategory → Product.
+    examples:
+      - "Sales by Product Category"
+      - "Top 10 Products by Revenue"
+      - "Product Margin Analysis"
+    tags:
+      - dimension
+      - product
+      - catalog
+      - master_data
+    related_tables:
+      - Sales
+    mandatory_filters:
+      - Date (via Sales)
+    security:
+      row_level_security: false
+      object_level_security: false
+      access_level: Standard
+    data_quality_rules:
+      - rule: Not_Null_Key
+        description: ProductKey must never be null
+        severity: Critical
+      - rule: UnitPrice_Positive
+        description: UnitPrice must be greater than zero
+        severity: High
+      - rule: Unique_Product
+        description: ProductName must be unique
+        severity: Medium
+
+  - name: Date
+    business_name: Calendar
+    description: |
+      Corporate calendar table used for time intelligence, time-based comparisons,
+      and date-based filtering across all fact tables.
+      Includes both fiscal and calendar year hierarchies.
+    table_type: Dimension
+    schema: dbo
+    owner: BI Platform
+    owner_email: bi-platform@company.com
+    certified: true
+    certification_date: 2026-07-01
+    certified_by: Data Governance Team
+    hidden: false
+    sensitive: false
+    contains_pii: false
+    row_count_estimate: 3650
+    refresh_frequency: Monthly
+    refresh_time: 01:00 UTC (first of month)
+    granularity: Day
+    primary_key: DateKey
+    foreign_keys: []
+    columns:
+      - name: DateKey
+        data_type: integer
+        description: Unique date identifier in YYYYMMDD format (e.g., 20260730)
+        is_primary_key: true
+        nullable: false
+      - name: CalendarDate
+        data_type: date
+        description: Full date value (YYYY-MM-DD)
+        nullable: false
+      - name: CalendarYear
+        data_type: integer
+        description: Calendar year (e.g., 2026)
+        nullable: false
+      - name: CalendarMonth
+        data_type: integer
+        description: Calendar month number (1-12)
+        nullable: false
+      - name: CalendarMonthName
+        data_type: string
+        description: Full month name (e.g., July)
+        nullable: false
+      - name: CalendarQuarter
+        data_type: integer
+        description: Calendar quarter number (1-4)
+        nullable: false
+      - name: CalendarWeek
+        data_type: integer
+        description: Week number within the year (1-52)
+        nullable: false
+      - name: FiscalYear
+        data_type: integer
+        description: Fiscal year (e.g., 2026)
+        nullable: false
+      - name: FiscalQuarter
+        data_type: integer
+        description: Fiscal quarter number (1-4)
+        nullable: false
+      - name: DayOfWeek
+        data_type: integer
+        description: Day of week number (1-7, Monday=1)
+        nullable: false
+      - name: DayName
+        data_type: string
+        description: Full name of the day (e.g., Monday)
+        nullable: false
+      - name: IsWeekend
+        data_type: boolean
+        description: Indicates if the day is a weekend
+        nullable: false
+        default: false
+      - name: IsHoliday
+        data_type: boolean
+        description: Indicates if the day is a corporate holiday
+        nullable: false
+        default: false
+    usage_guidance: |
+      This table must be joined to all fact tables for time-based analysis.
+      Supports both calendar and fiscal year hierarchies.
+      Use for YoY, QoQ, MoM comparisons and trend analysis.
+      Always filter by DateKey or CalendarDate.
+    examples:
+      - "Sales by Month"
+      - "Year-over-Year Growth"
+      - "Seasonal Sales Patterns"
+    tags:
+      - dimension
+      - date
+      - time
+      - calendar
+    related_tables:
+      - Sales
+    mandatory_filters:
+      - DateKey
+    security:
+      row_level_security: false
+      object_level_security: false
+      access_level: Standard
+    data_quality_rules:
+      - rule: Unique_Dates
+        description: DateKey must be unique and represent a valid date
+        severity: Critical
+      - rule: Continuous_Dates
+        description: No gaps in date sequence (daily continuity)
+        severity: High
+      - rule: Valid_Range
+        description: Dates must be between 2010-01-01 and 2030-12-31
+        severity: High
+
+  - name: ACTIVE_CUSTOMER_MONTH
+    business_name: Active Customer Month
+    description: |
+      Customer activity tracking by month and year.
+      Contains customer tier information and activity metrics for active customer analysis.
+      Tracks customer retention and tier progression over time.
+    table_type: Dimension
+    schema: dbo
+    owner: CRM Analytics
+    owner_email: crm-analytics@company.com
+    certified: true
+    certification_date: 2026-08-12
+    certified_by: Data Governance Team
+    hidden: false
+    sensitive: false
+    contains_pii: false
+    row_count_estimate: 50000
+    refresh_frequency: Daily
+    refresh_time: 02:00 UTC
+    granularity: Customer-Month
+    primary_key: CLI_DWH_KEY
+    foreign_keys: []
+    columns:
+      - name: ANNO_COD
+        business_name: Year Code
+        data_type: string
+        description: Year code for the customer activity (e.g., 2022, 2023)
+        nullable: false
+        is_primary_key: false
+      - name: MESE_COD
+        business_name: Month Code
+        data_type: string
+        description: Month code for the customer activity (e.g., 01, 02)
+        nullable: false
+        is_primary_key: false
+      - name: YEAR_CUST_TYPE_DES
+        business_name: Year Customer Type
+        data_type: string
+        description: Customer type description by year
+        nullable: true
+        is_primary_key: false
+      - name: CLI_DWH_KEY
+        business_name: Customer DWH Key
+        data_type: double
+        description: Customer data warehouse key - unique identifier for each customer
+        nullable: false
+        is_primary_key: true
+      - name: TIER_YTD_COD
+        business_name: Tier YTD Code
+        data_type: string
+        description: Customer tier code year-to-date (e.g., GOLD, SILVER, BRONZE)
+        nullable: true
+        is_primary_key: false
+      - name: Tier Label
+        business_name: Tier Label
+        data_type: string
+        description: Customer tier label with year-over-year comparison indicator (Δ vs LY)
+        nullable: true
+        is_primary_key: false
+    usage_guidance: |
+      Use this table for customer activity analysis, tier progression tracking, and retention analysis.
+      Track customer tier changes over time using ANNO_COD (Year) and MESE_COD (Month).
+      The Tier Label column includes Δ vs LY to show year-over-year tier changes.
+    examples:
+      - "Show active customers by tier"
+      - "Customer tier progression over months"
+      - "Active customer count by year-month"
+      - "Show customers who upgraded tiers"
+    tags:
+      - dimension
+      - customer
+      - activity
+      - tier
+      - retention
+    related_tables:
+      - Customer
+    mandatory_filters:
+      - Date
+      - Organization
+    security:
+      row_level_security: false
+      object_level_security: false
+      access_level: Standard
+    data_quality_rules:
+      - rule: Not_Null_Key
+        description: CLI_DWH_KEY must never be null
+        severity: Critical
+      - rule: Valid_Year
+        description: ANNO_COD must be a valid year (e.g., 2022, 2023, 2024)
+        severity: High
+      - rule: Valid_Month
+        description: MESE_COD must be between 01 and 12
+        severity: High
+
+  - name: AREA_MANAGER
+    business_name: Area Manager
+    description: |
+      Area manager master data used for sales territory management and performance tracking.
+      Contains area manager codes and descriptions for regional sales analysis.
+      Links to Sales table for area manager performance reporting.
+    table_type: Dimension
+    schema: dbo
+    owner: Sales Operations
+    owner_email: sales-ops@company.com
+    certified: true
+    certification_date: 2026-08-12
+    certified_by: Data Governance Team
+    hidden: false
+    sensitive: false
+    contains_pii: false
+    row_count_estimate: 50
+    refresh_frequency: Weekly
+    refresh_time: 05:00 UTC
+    granularity: Area Manager
+    primary_key: AreaManagerCode
+    foreign_keys: []
+    columns:
+      - name: AreaManagerCode
+        business_name: Area Manager Code
+        data_type: integer
+        description: Unique identifier for each area manager
+        nullable: false
+        is_primary_key: true
+      - name: AreaManagerDescription
+        business_name: Area Manager Description
+        data_type: string
+        description: Full description/name of the area manager
+        nullable: false
+        is_primary_key: false
+    usage_guidance: |
+      Use this table for area manager analysis, regional performance tracking, and territory management.
+      Join to Sales table using AreaManagerCode for area manager sales reporting.
+      Useful for analyzing sales performance by manager and region.
+    examples:
+      - "Sales by Area Manager"
+      - "Top performing area managers"
+      - "Regional sales performance"
+      - "Area manager territory analysis"
+    tags:
+      - dimension
+      - sales
+      - territory
+      - manager
+      - region
+    related_tables:
+      - Sales
+    mandatory_filters:
+      - Date (via Sales)
+      - Organization
+    security:
+      row_level_security: false
+      object_level_security: false
+      access_level: Standard
+    data_quality_rules:
+      - rule: Not_Null_Key
+        description: AreaManagerCode must never be null
+        severity: Critical
+      - rule: Unique_Manager
+        description: Each area manager must have a unique code
+        severity: High
+
+  - name: ARTICOLI_COLORE
+    business_name: Article Color
+    description: |
+      Product color and collection metadata table used for product analytics.
+      Contains color codes, descriptions, collection information, and product classification.
+      Used for product color analysis, collection performance, and seasonal product tracking.
+      This is a dimension table that connects products to their colors and collection metadata.
+    table_type: Dimension
+    schema: dbo
+    owner: Product Analytics
+    owner_email: product-analytics@company.com
+    certified: true
+    certification_date: 2026-08-13
+    certified_by: Data Governance Team
+    hidden: false
+    sensitive: false
+    contains_pii: false
+    row_count_estimate: 100000
+    refresh_frequency: Daily
+    refresh_time: 03:00 UTC
+    granularity: Article-Color
+    primary_key: KEY_ART_COL
+    foreign_keys:
+      - Item Code
+    columns:
+      - name: KEY_ART_COL
+        business_name: Article-Color Key
+        data_type: string
+        description: Unique identifier combining article and color (Primary Key)
+        nullable: false
+        is_primary_key: true
+      - name: Item Code
+        business_name: Item Code
+        data_type: string
+        description: Product item code (foreign key to ARTICOLI)
+        nullable: false
+        is_primary_key: false
+      - name: Color Code
+        business_name: Color Code
+        data_type: string
+        description: Color identifier code
+        nullable: false
+        is_primary_key: false
+      - name: Color Description
+        business_name: Color Description
+        data_type: string
+        description: Color name/description (e.g., Red, Blue, Black, White)
+        nullable: true
+        is_primary_key: false
+      - name: Color Group Code
+        business_name: Color Group Code
+        data_type: string
+        description: Color group identifier (e.g., NEUTRAL, PASTEL, VIVID, DARK)
+        nullable: true
+        is_primary_key: false
+      - name: Color Group Description
+        business_name: Color Group Description
+        data_type: string
+        description: Color group description (e.g., Neutrals, Pastels, Vivid Colors)
+        nullable: true
+        is_primary_key: false
+      - name: Collection Year
+        business_name: Collection Year
+        data_type: string
+        description: Year of the product collection (e.g., 2025, 2026)
+        nullable: true
+        is_primary_key: false
+      - name: Collection Season
+        business_name: Collection Season
+        data_type: string
+        description: Season of the collection (e.g., Spring/Summer, Fall/Winter, Pre-Fall)
+        nullable: true
+        is_primary_key: false
+      - name: Collection Code
+        business_name: Collection Code
+        data_type: string
+        description: Collection identifier code
+        nullable: true
+        is_primary_key: false
+      - name: Buying Logic Code
+        business_name: Buying Logic Code
+        data_type: string
+        description: Buying logic classification code
+        nullable: true
+        is_primary_key: false
+      - name: Selling Logic Code
+        business_name: Selling Logic Code
+        data_type: string
+        description: Selling logic classification code
+        nullable: true
+        is_primary_key: false
+      - name: Marketing Type Code
+        business_name: Marketing Type Code
+        data_type: string
+        description: Marketing type classification code
+        nullable: true
+        is_primary_key: false
+      - name: Validity Flag
+        business_name: Validity Flag
+        data_type: string
+        description: Validity indicator (Active/Inactive)
+        nullable: true
+        is_primary_key: false
+      - name: Sponsor Event Code
+        business_name: Sponsor Event Code
+        data_type: string
+        description: Sponsor event code if applicable
+        nullable: true
+        is_primary_key: false
+      - name: Delivery
+        business_name: Delivery
+        data_type: string
+        description: Delivery information
+        nullable: true
+        is_primary_key: false
+      - name: Delivery Date From
+        business_name: Delivery Start Date
+        data_type: dateTime
+        description: Start date of the delivery window
+        nullable: true
+        is_primary_key: false
+      - name: Delivery Date To
+        business_name: Delivery End Date
+        data_type: dateTime
+        description: End date of the delivery window
+        nullable: true
+        is_primary_key: false
+      - name: Flag Retail
+        business_name: Retail Flag
+        data_type: string
+        description: Flag indicating if item is available for retail (Y/N)
+        nullable: true
+        is_primary_key: false
+      - name: Composition Code
+        business_name: Composition Code
+        data_type: string
+        description: Product composition/material code (e.g., 100% Cotton, Wool Blend)
+        nullable: true
+        is_primary_key: false
+      - name: Sub Seasonality Code
+        business_name: Sub Seasonality Code
+        data_type: string
+        description: Sub-seasonality classification code
+        nullable: true
+        is_primary_key: false
+      - name: COD_ANN_FUORI_CARTELLA
+        business_name: Year Outside Catalog
+        data_type: string
+        description: Year code for items outside the main catalog
+        nullable: true
+        is_primary_key: false
+      - name: COD_STG_FUORI_CARTELLA
+        business_name: Season Outside Catalog
+        data_type: string
+        description: Season code for items outside the main catalog
+        nullable: true
+        is_primary_key: false
+    usage_guidance: |
+      Use this table for product color analysis, collection performance tracking, and seasonal product analysis.
+      KEY_ART_COL is the primary key combining article and color.
+      Join to ARTICOLI via Item Code for product hierarchy details.
+      Join to Sales table for color and collection performance analysis.
+      Useful for analyzing product performance by color, collection, and seasonality.
+    examples:
+      - "Sales by color"
+      - "Best selling colors by collection"
+      - "Collection performance by season"
+      - "Product performance by color group"
+      - "Retail vs wholesale product segmentation by color"
+      - "Sales by collection year"
+      - "Sales by color group"
+    tags:
+      - dimension
+      - product
+      - color
+      - collection
+      - season
+      - retail
+      - article
+    related_tables:
+      - ARTICOLI
+      - Sales
+    mandatory_filters:
+      - Date (via Sales)
+      - Organization
+    security:
+      row_level_security: false
+      object_level_security: false
+      access_level: Standard
+    data_quality_rules:
+      - rule: Not_Null_Key
+        description: KEY_ART_COL must never be null
+        severity: Critical
+      - rule: Valid_Color
+        description: Color Code must be present
+        severity: High
+      - rule: Valid_Item
+        description: Item Code must be present
+        severity: High
+
+  - name: ARTICOLI
+    business_name: Article Master
+    description: |
+      Product master data table containing product hierarchy and classification information.
+      Includes product categories, subcategories, families, gender, and commercial classifications.
+      This is the master dimension table for all product-related analysis.
+      Links to ARTICOLI_COLORE for color/collection details, BUSINESS for business classification, and Sales for performance analysis.
+    table_type: Dimension
+    schema: dbo
+    owner: Product Analytics
+    owner_email: product-analytics@company.com
+    certified: true
+    certification_date: 2026-08-13
+    certified_by: Data Governance Team
+    hidden: false
+    sensitive: false
+    contains_pii: false
+    row_count_estimate: 50000
+    refresh_frequency: Daily
+    refresh_time: 03:00 UTC
+    granularity: Article
+    primary_key: Item Code
+    foreign_keys:
+      - Business Code
+    columns:
+      - name: Item Code
+        business_name: Item Code
+        data_type: string
+        description: Unique product/item identifier (Primary Key)
+        nullable: false
+        is_primary_key: true
+      - name: Business Code
+        business_name: Business Code
+        data_type: string
+        description: Business classification code (foreign key to BUSINESS)
+        nullable: true
+        is_primary_key: false
+      - name: Category Code
+        business_name: Category Code
+        data_type: string
+        description: Product category code
+        nullable: true
+        is_primary_key: false
+      - name: Sub Category Code
+        business_name: Sub Category Code
+        data_type: string
+        description: Product sub-category code
+        nullable: true
+        is_primary_key: false
+      - name: Item Description
+        business_name: Item Description
+        data_type: string
+        description: Product description/name
+        nullable: true
+        is_primary_key: false
+      - name: Family Code
+        business_name: Family Code
+        data_type: string
+        description: Product family code
+        nullable: true
+        is_primary_key: false
+      - name: Gender Code
+        business_name: Gender Code
+        data_type: string
+        description: Gender target (Men, Women, Unisex, Kids)
+        nullable: true
+        is_primary_key: false
+      - name: Cites Code
+        business_name: Cites Code
+        data_type: string
+        description: CITES (Convention on International Trade in Endangered Species) code
+        nullable: true
+        is_primary_key: false
+      - name: Commercial Model Code
+        business_name: Commercial Model Code
+        data_type: string
+        description: Commercial model classification code
+        nullable: true
+        is_primary_key: false
+      - name: Sales Category Code
+        business_name: Sales Category Code
+        data_type: string
+        description: Sales category classification code
+        nullable: true
+        is_primary_key: false
+      - name: Commercial Family Code
+        business_name: Commercial Family Code
+        data_type: string
+        description: Commercial family code
+        nullable: true
+        is_primary_key: false
+      - name: Stage of Life Code
+        business_name: Stage of Life Code
+        data_type: string
+        description: Stage of life classification code
+        nullable: true
+        is_primary_key: false
+    usage_guidance: |
+      Use this table for product hierarchy analysis, category performance, and product classification reporting.
+      This is the master product table that contains all product attributes.
+      Join to ARTICOLI_COLORE via Item Code for color and collection analysis.
+      Join to BUSINESS via Business Code for business classification analysis.
+      Join to Sales table for product performance analysis.
+    examples:
+      - "Sales by Category"
+      - "Sales by Gender"
+      - "Product performance by Family"
+      - "Sales by Commercial Model"
+      - "Category performance by Stage of Life"
+      - "Sales by Sub Category"
+      - "Sales by Business Code"
+    tags:
+      - dimension
+      - product
+      - master
+      - category
+      - hierarchy
+      - classification
+    related_tables:
+      - ARTICOLI_COLORE
+      - BUSINESS
+      - Sales
+    mandatory_filters:
+      - Date (via Sales)
+      - Organization
+    security:
+      row_level_security: false
+      object_level_security: false
+      access_level: Standard
+    data_quality_rules:
+      - rule: Not_Null_Key
+        description: Item Code must never be null
+        severity: Critical
+      - rule: Valid_Category
+        description: Category Code should be present for proper hierarchy
+        severity: High
+
+  - name: BUSINESS
+    business_name: Business Classification
+    description: |
+      Business classification master data table containing business hierarchy and categorization.
+      Includes business codes, descriptions, macrobusiness classifications, and macro categories.
+      This is a dimension table for business-level analysis and classification.
+      Links to ARTICOLI via Business Code for product-business relationship.
+    table_type: Dimension
+    schema: dbo
+    owner: Business Intelligence
+    owner_email: bi@company.com
+    certified: true
+    certification_date: 2026-08-13
+    certified_by: Data Governance Team
+    hidden: false
+    sensitive: false
+    contains_pii: false
+    row_count_estimate: 100
+    refresh_frequency: Weekly
+    refresh_time: 05:00 UTC
+    granularity: Business
+    primary_key: Business Code
+    foreign_keys: []
+    columns:
+      - name: Business Code
+        business_name: Business Code
+        data_type: string
+        description: Unique business classification code (Primary Key)
+        nullable: false
+        is_primary_key: true
+      - name: Business Description
+        business_name: Business Description
+        data_type: string
+        description: Business description/name
+        nullable: true
+        is_primary_key: false
+      - name: Macrobusiness Code
+        business_name: Macrobusiness Code
+        data_type: string
+        description: Macro business classification code
+        nullable: true
+        is_primary_key: false
+      - name: Macrobusiness Description
+        business_name: Macrobusiness Description
+        data_type: string
+        description: Macro business description
+        nullable: true
+        is_primary_key: false
+      - name: Ordinamento Business
+        business_name: Business Sort Order
+        data_type: double
+        description: Business sort order for display
+        nullable: true
+        is_primary_key: false
+      - name: Ordinamento Macrobusiness
+        business_name: Macrobusiness Sort Order
+        data_type: double
+        description: Macro business sort order for display
+        nullable: true
+        is_primary_key: false
+      - name: Macro Business Grp
+        business_name: Macro Business Group
+        data_type: string
+        description: Macro business group classification
+        nullable: true
+        is_primary_key: false
+      - name: Ordinamento Macro Business Grp
+        business_name: Macro Business Group Sort Order
+        data_type: double
+        description: Macro business group sort order for display
+        nullable: true
+        is_primary_key: false
+      - name: Macro Business Grp vs LY
+        business_name: Macro Business Group YoY
+        data_type: string
+        description: Macro business group with year-over-year comparison indicator
+        nullable: true
+        is_primary_key: false
+      - name: Macro Category
+        business_name: Macro Category
+        data_type: string
+        description: Macro category classification (e.g., CLOTHING, ACCESSORIES, FOOTWEAR)
+        nullable: true
+        is_primary_key: false
+      - name: Macro Category Ord
+        business_name: Macro Category Sort Order
+        data_type: double
+        description: Macro category sort order for display
+        nullable: true
+        is_primary_key: false
+    usage_guidance: |
+      Use this table for business classification analysis, macro business reporting, and business hierarchy analysis.
+      This is the master business classification table.
+      Join to ARTICOLI via Business Code for product-business analysis.
+      Join to Sales table via Business Code for business performance analysis.
+    examples:
+      - "Sales by Business"
+      - "Sales by Macrobusiness"
+      - "Sales by Macro Category"
+      - "Business performance by Macro Business Group"
+      - "Sales by Business Code"
+    tags:
+      - dimension
+      - business
+      - classification
+      - hierarchy
+      - macro
+    related_tables:
+      - ARTICOLI
+      - Sales
+    mandatory_filters:
+      - Date (via Sales)
+      - Organization
+    security:
+      row_level_security: false
+      object_level_security: false
+      access_level: Standard
+    data_quality_rules:
+      - rule: Not_Null_Key
+        description: Business Code must never be null
+        severity: Critical
+      - rule: Unique_Business
+        description: Business Code must be unique
+        severity: High
+
+  # -----------------------------------------------------------------
+  # Calendar/Date Dimension Table (from TMDL - CALENDARIO)
+  # -----------------------------------------------------------------
+  - name: CALENDARIO
+    business_name: Calendar
+    description: |
+      Comprehensive calendar dimension table used for time intelligence across all fact tables.
+      Contains both calendar and fiscal year hierarchies, along with year-over-year and 
+      week-over-week comparison fields. Includes multiple historical reference dates 
+      (1, 2, 3 years ago) for time-based analysis.
+      This is the primary date dimension for all time-based reporting.
+    table_type: Dimension
+    schema: dbo
+    owner: BI Platform
+    owner_email: bi-platform@company.com
+    certified: true
+    certification_date: 2026-08-13
+    certified_by: Data Governance Team
+    hidden: false
+    sensitive: false
+    contains_pii: false
+    row_count_estimate: 3650
+    refresh_frequency: Monthly
+    refresh_time: 01:00 UTC
+    granularity: Day
+    primary_key: Date
+    foreign_keys: []
+    columns:
+      - name: Date
+        business_name: Date
+        data_type: dateTime
+        description: Full date value (Primary Key)
+        nullable: false
+        is_primary_key: true
+      - name: ANNO_COD
+        business_name: Year Code
+        data_type: string
+        description: Year code (e.g., 2026)
+        nullable: true
+        is_primary_key: false
+      - name: ANNO_MESE_COD
+        business_name: Year-Month Code
+        data_type: string
+        description: Year-Month code (e.g., 2026-01)
+        nullable: true
+        is_primary_key: false
+      - name: ANNO_MESE_DESC
+        business_name: Year-Month Description
+        data_type: string
+        description: Year-Month description (e.g., Jan 2026)
+        nullable: true
+        is_primary_key: false
+      - name: MESE_COD
+        business_name: Month Number
+        data_type: integer
+        description: Month number (1-12)
+        nullable: true
+        is_primary_key: false
+      - name: MESE_DES
+        business_name: Month Description
+        data_type: string
+        description: Month description (e.g., January)
+        nullable: true
+        is_primary_key: false
+      - name: WEEK_COD
+        business_name: Week Code
+        data_type: string
+        description: Week code
+        nullable: true
+        is_primary_key: false
+      - name: DAY_OF_WEEK_COD
+        business_name: Day of Week Code
+        data_type: string
+        description: Day of week code
+        nullable: true
+        is_primary_key: false
+      - name: END_MONTH_DTA
+        business_name: End of Month Date
+        data_type: dateTime
+        description: End of month date for period comparisons
+        nullable: true
+        is_primary_key: false
+      - name: Fiscal Year
+        business_name: Fiscal Year
+        data_type: int64
+        description: Fiscal year number
+        nullable: true
+        is_primary_key: false
+      - name: Fiscal Month
+        business_name: Fiscal Month
+        data_type: double
+        description: Fiscal month number
+        nullable: true
+        is_primary_key: false
+      - name: Fiscal Week
+        business_name: Fiscal Week
+        data_type: double
+        description: Fiscal week number
+        nullable: true
+        is_primary_key: false
+      - name: Year_Month_Week_Fiscal
+        business_name: Fiscal Year-Month-Week
+        data_type: string
+        description: Fiscal year-month-week composite key
+        nullable: true
+        is_primary_key: false
+      - name: Year_Week_Fiscal
+        business_name: Fiscal Year-Week
+        data_type: string
+        description: Fiscal year-week composite key
+        nullable: true
+        is_primary_key: false
+      - name: Year_Month_Day
+        business_name: Year-Month-Day
+        data_type: string
+        description: Year-month-day composite key
+        nullable: true
+        is_primary_key: false
+      - name: COD_AGO_DTA
+        business_name: Previous Year Date
+        data_type: dateTime
+        description: Date from one year ago (Year-over-Year comparison)
+        nullable: true
+        is_primary_key: false
+      - name: ANNO_AGO_COD
+        business_name: Previous Year Code
+        data_type: string
+        description: Year code from one year ago
+        nullable: true
+        is_primary_key: false
+      - name: ANNO_MESE_AGO_COD
+        business_name: Previous Year-Month Code
+        data_type: string
+        description: Year-Month code from one year ago
+        nullable: true
+        is_primary_key: false
+      - name: DATA_2AGO_DTA
+        business_name: Two Years Ago Date
+        data_type: dateTime
+        description: Date from two years ago
+        nullable: true
+        is_primary_key: false
+      - name: ANNO_2AGO_COD
+        business_name: Two Years Ago Code
+        data_type: string
+        description: Year code from two years ago
+        nullable: true
+        is_primary_key: false
+      - name: ANNO_MESE_2AGO_COD
+        business_name: Two Years Ago Year-Month Code
+        data_type: string
+        description: Year-Month code from two years ago
+        nullable: true
+        is_primary_key: false
+      - name: COD_3AGO_DTA
+        business_name: Three Years Ago Date
+        data_type: dateTime
+        description: Date from three years ago
+        nullable: true
+        is_primary_key: false
+      - name: ANNO_3AGO_COD
+        business_name: Three Years Ago Code
+        data_type: string
+        description: Year code from three years ago
+        nullable: true
+        is_primary_key: false
+      - name: ANNO_MESE_3AGO_COD
+        business_name: Three Years Ago Year-Month Code
+        data_type: string
+        description: Year-Month code from three years ago
+        nullable: true
+        is_primary_key: false
+      - name: DATA_WAGO_DTA
+        business_name: One Week Ago Date
+        data_type: dateTime
+        description: Date from one week ago (Week-over-Week comparison)
+        nullable: true
+        is_primary_key: false
+      - name: DATA_2WAGO_DTA
+        business_name: Two Weeks Ago Date
+        data_type: dateTime
+        description: Date from two weeks ago
+        nullable: true
+        is_primary_key: false
+      - name: DAAT_3WAGO_DTA
+        business_name: Three Weeks Ago Date
+        data_type: dateTime
+        description: Date from three weeks ago
+        nullable: true
+        is_primary_key: false
+      - name: Date LY
+        business_name: Last Year Date
+        data_type: dateTime
+        description: Calculated date from last year for YoY comparisons
+        nullable: true
+        is_primary_key: false
+      - name: year_month_week_fiscal_ord
+        business_name: Fiscal Week Order
+        data_type: dateTime
+        description: Fiscal week order for sorting
+        nullable: true
+        is_primary_key: false
+    usage_guidance: |
+      This is the primary date dimension for all time-based analysis in the semantic model.
+      Always join to Sales table for time intelligence and period comparisons.
+      Supports both calendar and fiscal year hierarchies.
+      Use for YoY, QoQ, MoM, and WoW comparisons using the built-in historical reference fields.
+    examples:
+      - "Sales by Month"
+      - "Year-over-Year Growth"
+      - "Sales vs Previous Year"
+      - "Fiscal Year Sales Performance"
+      - "Weekly Sales Trend"
+      - "Quarterly Revenue Comparison"
+      - "YoY Revenue Growth"
+      - "Sales by Fiscal Week"
+    tags:
+      - dimension
+      - date
+      - time
+      - calendar
+      - fiscal
+      - time_intelligence
+    related_tables:
+      - Sales
+    mandatory_filters:
+      - Date
+    security:
+      row_level_security: false
+      object_level_security: false
+      access_level: Standard
+    data_quality_rules:
+      - rule: Unique_Dates
+        description: Date must be unique and represent a valid date
+        severity: Critical
+      - rule: Continuous_Dates
+        description: No gaps in date sequence (daily continuity)
+        severity: High
+      - rule: Valid_Range
+        description: Dates must be between 2021-01-01 and 2030-12-31
+        severity: High
+
+  # -----------------------------------------------------------------
+  # Category or Family Table (from TMDL - Category or Family)
+  # -----------------------------------------------------------------
+  - name: Category or Family
+    business_name: Category or Family
+    description: |
+      Calculated dimension table that combines Category (from SCONTRINI) and Commercial Family (from FAMIGLIA_COMMERCIALE).
+      This unified hierarchy allows for flexible product categorization analysis.
+      Users can analyze sales by either Category or Commercial Family using this single dimension.
+    table_type: Dimension
+    schema: dbo
+    owner: Product Analytics
+    owner_email: product-analytics@company.com
+    certified: true
+    certification_date: 2026-08-13
+    certified_by: Data Governance Team
+    hidden: false
+    sensitive: false
+    contains_pii: false
+    row_count_estimate: 200
+    refresh_frequency: Daily
+    refresh_time: 03:00 UTC
+    granularity: Category/Family
+    primary_key: Category or Family
+    foreign_keys: []
+    columns:
+      - name: Category or Family
+        business_name: Category or Family
+        data_type: string
+        description: Category or Family name for product classification (Primary Key)
+        nullable: false
+        is_primary_key: true
+      - name: Campi di Category or Family
+        business_name: Category or Family Fields
+        data_type: string
+        description: Hidden field containing the actual category/family values
+        nullable: true
+        is_primary_key: false
+        is_hidden: true
+      - name: Ordine di Category or Family
+        business_name: Category or Family Sort Order
+        data_type: double
+        description: Sort order for display and ordering
+        nullable: true
+        is_primary_key: false
+    usage_guidance: |
+      Use this table for product categorization analysis when you want to analyze sales by either Category or Commercial Family.
+      This unified dimension simplifies reporting by combining both hierarchies.
+      Useful for sales analysis by product category or commercial family.
+    examples:
+      - "Sales by Category or Family"
+      - "Product performance by Category or Family"
+      - "Category vs Family comparison"
+      - "Sales by product classification"
+    tags:
+      - dimension
+      - product
+      - category
+      - family
+      - hierarchy
+      - classification
+    related_tables:
+      - Sales
+      - ARTICOLI
+    mandatory_filters:
+      - Date (via Sales)
+      - Organization
+    security:
+      row_level_security: false
+      object_level_security: false
+      access_level: Standard
+    data_quality_rules:
+      - rule: Not_Null_Key
+        description: Category or Family must never be null
+        severity: Critical
+      - rule: Unique_Value
+        description: Each category or family value must be unique
+        severity: High
+
+  # -----------------------------------------------------------------
+  # Currency Selector Table (from TMDL - Currency Selector)
+  # -----------------------------------------------------------------
+  - name: Currency Selector
+    business_name: Currency Selector
+    description: |
+      Currency dimension table used for multi-currency reporting and analysis.
+      Allows users to select different currencies for financial reporting.
+      Supports currency conversion and multi-currency views.
+      This is a dimension table that enables flexible currency selection for reports.
+    table_type: Dimension
+    schema: dbo
+    owner: Finance Analytics
+    owner_email: finance-analytics@company.com
+    certified: true
+    certification_date: 2026-08-13
+    certified_by: Data Governance Team
+    hidden: false
+    sensitive: false
+    contains_pii: false
+    row_count_estimate: 10
+    refresh_frequency: Monthly
+    refresh_time: 06:00 UTC
+    granularity: Currency
+    primary_key: Currency
+    foreign_keys: []
+    columns:
+      - name: Currency
+        business_name: Currency
+        data_type: string
+        description: Currency code or name (e.g., USD, EUR, GBP, BRL)
+        nullable: false
+        is_primary_key: true
+    usage_guidance: |
+      Use this table for multi-currency reporting and analysis.
+      Join to Sales and other fact tables for currency-specific analysis.
+      Select a currency to view financial data in that currency.
+      Useful for international financial reporting and analysis.
+    examples:
+      - "Sales by Currency"
+      - "Revenue in USD vs EUR"
+      - "Multi-currency reporting"
+      - "Currency conversion analysis"
+    tags:
+      - dimension
+      - currency
+      - finance
+      - reporting
+      - conversion
+    related_tables:
+      - Sales
+      - BUSINESS
+    mandatory_filters:
+      - Date (via Sales)
+      - Organization
+    security:
+      row_level_security: false
+      object_level_security: false
+      access_level: Standard
+    data_quality_rules:
+      - rule: Not_Null_Key
+        description: Currency must never be null
+        severity: Critical
+      - rule: Unique_Currency
+        description: Each currency code must be unique
+        severity: High
+      - rule: Valid_Currency
+        description: Currency must be a valid ISO currency code
+        severity: Medium
+
+# =====================================================================
+# Table Quality Standards
+# =====================================================================
+quality_standards:
+  - standard: Primary Key
+    description: Every table must have a clearly defined primary key
+    required: true
+
+  - standard: Business Description
+    description: Every table must have a clear business description
+    required: true
+
+  - standard: Owner
+    description: Every table must have a designated owner
+    required: true
+
+  - standard: Certification
+    description: All production tables must be certified
+    required: true
+
+  - standard: Columns
+    description: Each table must have at least 3 columns with proper definitions
+    required: true
+
+  - standard: Usage Guidance
+    description: Every table must include usage guidance for end users
+    required: false
+    recommended: true
+
+# =====================================================================
+# Table Statistics
+# =====================================================================
+table_statistics:
+  total_tables: 10
+  fact_tables: 1
+  dimension_tables: 9
+  certified_tables: 10
+  tables_with_pii: 1
+  total_columns: 124
+  avg_columns_per_table: 12.4
+  tables_with_usage_guidance: 10
+  last_validated: 2026-08-13
+  next_review: 2026-09-13
+
+# =====================================================================
+# Change Log
+# =====================================================================
+change_log:
+  - date: 2026-08-13
+    version: 1.0.6
+    changes: |
+      - Added CALENDARIO (Calendar) table from TMDL semantic model
+      - Added comprehensive date hierarchy columns
+      - Added fiscal year, fiscal month, fiscal week columns
+      - Added YoY and WoW comparison fields (1, 2, 3 years ago)
+      - Added date composite keys for time intelligence
+      - Updated table statistics
+    author: Data Governance Team
+
+  - date: 2026-08-13
+    version: 1.0.5
+    changes: |
+      - Added BUSINESS (Business Classification) table from TMDL semantic model
+      - Added business hierarchy columns (Business Code, Macrobusiness, Macro Category, Macro Business Group)
+      - Updated ARTICOLI with Business Code foreign key reference
+      - Updated Sales table with Business Code foreign key
+      - Updated table statistics
+    author: Data Governance Team
+
+  - date: 2026-08-13
+    version: 1.0.4
+    changes: |
+      - Added ARTICOLI (Article Master) table from TMDL semantic model
+      - Added product hierarchy columns (Category, Sub Category, Family, Gender)
+      - Added commercial classification columns
+      - Updated ARTICOLI_COLORE with Item Code foreign key reference
+      - Updated Sales table with Item Code foreign key
+      - Updated table statistics
+    author: Data Governance Team
+
+  - date: 2026-08-13
+    version: 1.0.3
+    changes: |
+      - Added ARTICOLI_COLORE table from TMDL semantic model
+      - Added product color and collection tracking columns
+      - Updated Sales table with ARTICOLI_COLORE foreign key
+      - Updated table statistics
+    author: Data Governance Team
+
+  - date: 2026-08-12
+    version: 1.0.2
+    changes: |
+      - Added AREA_MANAGER table from TMDL semantic model
+      - Added area manager columns (AreaManagerCode, AreaManagerDescription)
+      - Updated Sales table with AreaManagerCode foreign key
+      - Updated table statistics
+    author: Data Governance Team
+
+  - date: 2026-08-12
+    version: 1.0.1
+    changes: |
+      - Added ACTIVE_CUSTOMER_MONTH table from TMDL semantic model
+      - Added customer activity tracking columns
+      - Updated table statistics
+    author: Data Governance Team
+
+  - date: 2026-07-30
+    version: 1.0.0
+    changes: |
+      - Initial version of curated tables
+      - Added 1 fact table (Sales) and 3 dimension tables (Customer, Product, Date)
+      - Defined all columns, data types, and constraints
+      - Established quality standards and validation rules
+      - Added usage guidance for each table
+    author: Data Governance Team

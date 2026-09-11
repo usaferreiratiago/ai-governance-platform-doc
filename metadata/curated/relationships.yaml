@@ -1,0 +1,330 @@
+# =====================================================================
+# Semantic Model Relationships - Curated Data Model
+# =====================================================================
+# This file defines all approved relationships between tables in the semantic model.
+# Relationships must be reviewed and approved by the Data Governance Team.
+# =====================================================================
+
+version: 1.0.0
+last_updated: 2026-07-30
+status: Approved
+domain: Retail & E-commerce
+
+# =====================================================================
+# Relationship Definitions
+# =====================================================================
+relationships:
+  # -----------------------------------------------------------------
+  # Sales to Product (Product Dimension)
+  # -----------------------------------------------------------------
+  - relationship_id: REL-001
+    relationship_name: Sales to Product
+    from_table: Sales
+    from_column: ProductKey
+    from_column_description: Foreign key referencing the product sold
+    to_table: Product
+    to_column: ProductKey
+    to_column_description: Primary key of the product dimension table
+    cardinality: ManyToOne
+    relationship_type: Dimension
+    active: true
+    business_description: |
+      Links each sales transaction to the product dimension.
+      Enables product-level analysis including product names, categories, and attributes.
+    usage_guidance: |
+      Use this relationship when analyzing sales by product, product category, or product attributes.
+      Always join Sales to Product for product-level reporting.
+      Supports product hierarchy analysis (Category → Subcategory → Product).
+    join_type: Inner
+    filter_behavior: BothDirections
+    cross_filtering: OneDirection
+    security: Standard
+    certified: true
+    certification_date: 2026-07-01
+    certified_by: Data Governance Team
+    owner: Retail Analytics Team
+    examples:
+      - "Sales by Product Category"
+      - "Top 10 Products by Revenue"
+      - "Product Performance Analysis"
+    tags:
+      - core_relationship
+      - product
+      - dimension
+    related_relationships:
+      - REL-002
+      - REL-003
+    validation_rules:
+      - rule: No_orphans
+        description: All ProductKey values in Sales must exist in Product table.
+      - rule: Unique_keys
+        description: ProductKey must be unique in Product table.
+    comments: |
+      This is the primary relationship for product analytics.
+      Includes all product master data attributes.
+
+  # -----------------------------------------------------------------
+  # Sales to Customer (Customer Dimension)
+  # -----------------------------------------------------------------
+  - relationship_id: REL-002
+    relationship_name: Sales to Customer
+    from_table: Sales
+    from_column: CustomerKey
+    from_column_description: Foreign key referencing the customer who made the purchase
+    to_table: Customer
+    to_column: CustomerKey
+    to_column_description: Primary key of the customer dimension table
+    cardinality: ManyToOne
+    relationship_type: Dimension
+    active: true
+    business_description: |
+      Links each sales transaction to the customer dimension.
+      Enables customer-level analysis including customer segments, demographics, and purchase behavior.
+    usage_guidance: |
+      Use this relationship when analyzing sales by customer, customer segment, or customer attributes.
+      Always join Sales to Customer for customer-level reporting.
+      Supports customer 360 analysis and customer lifetime value calculations.
+    join_type: Inner
+    filter_behavior: BothDirections
+    cross_filtering: OneDirection
+    security: Restricted
+    data_classification: Confidential
+    certified: true
+    certification_date: 2026-07-01
+    certified_by: Data Governance Team
+    owner: Customer Analytics Team
+    examples:
+      - "Sales by Customer Segment"
+      - "Top Customers by Revenue"
+      - "Customer Retention Analysis"
+    tags:
+      - core_relationship
+      - customer
+      - dimension
+    related_relationships:
+      - REL-001
+      - REL-003
+    validation_rules:
+      - rule: No_orphans
+        description: All CustomerKey values in Sales must exist in Customer table.
+      - rule: Unique_keys
+        description: CustomerKey must be unique in Customer table.
+      - rule: GDPR_compliance
+        description: Customer data must be handled in compliance with GDPR.
+    comments: |
+      PII (Personally Identifiable Information) is present in Customer table.
+      Access should be restricted to authorized users only.
+
+  # -----------------------------------------------------------------
+  # Sales to Date (Date Dimension)
+  # -----------------------------------------------------------------
+  - relationship_id: REL-003
+    relationship_name: Sales to Date
+    from_table: Sales
+    from_column: DateKey
+    from_column_description: Foreign key referencing the date of the transaction
+    to_table: Date
+    to_column: DateKey
+    to_column_description: Primary key of the date dimension table
+    cardinality: ManyToOne
+    relationship_type: Dimension
+    active: true
+    business_description: |
+      Links each sales transaction to the date dimension.
+      Enables time-based analysis including daily, weekly, monthly, quarterly, and yearly trends.
+    usage_guidance: |
+      Use this relationship for all time-based analysis.
+      Always join Sales to Date for period comparisons and time series analysis.
+      Supports fiscal year analysis and calendar year analysis.
+      Critical for YoY, QoQ, and MoM comparisons.
+    join_type: Inner
+    filter_behavior: BothDirections
+    cross_filtering: OneDirection
+    security: Standard
+    certified: true
+    certification_date: 2026-07-01
+    certified_by: Data Governance Team
+    owner: Data Engineering Team
+    examples:
+      - "Sales by Month"
+      - "Year-over-Year Growth"
+      - "Seasonal Sales Patterns"
+    tags:
+      - core_relationship
+      - date
+      - time
+      - dimension
+    related_relationships:
+      - REL-001
+      - REL-002
+    validation_rules:
+      - rule: No_orphans
+        description: All DateKey values in Sales must exist in Date table.
+      - rule: Unique_keys
+        description: DateKey must be unique in Date table.
+      - rule: Continuous_dates
+        description: Date table must have continuous dates without gaps.
+    comments: |
+      Date table includes fiscal year and calendar year hierarchies.
+      Supports both Gregorian and fiscal calendars.
+      Includes holiday indicators for retail analysis.
+
+  # -----------------------------------------------------------------
+  # Additional Example: Sales to Region (Optional)
+  # -----------------------------------------------------------------
+  - relationship_id: REL-004
+    relationship_name: Sales to Region
+    from_table: Sales
+    from_column: RegionKey
+    from_column_description: Foreign key referencing the region of the sale
+    to_table: Region
+    to_column: RegionKey
+    to_column_description: Primary key of the region dimension table
+    cardinality: ManyToOne
+    relationship_type: Dimension
+    active: false
+    business_description: |
+      Links each sales transaction to the region dimension.
+      Enables geographic analysis by region, country, state, and city.
+    usage_guidance: |
+      Use this relationship when analyzing sales by geographic region.
+      Supports regional performance analysis and market penetration studies.
+    join_type: Inner
+    filter_behavior: BothDirections
+    cross_filtering: OneDirection
+    security: Standard
+    certified: false
+    certification_date: null
+    certified_by: null
+    owner: Regional Sales Team
+    examples:
+      - "Sales by Region"
+      - "Top Regions by Revenue"
+      - "Regional Performance Dashboard"
+    tags:
+      - regional
+      - geographic
+      - dimension
+    related_relationships:
+      - REL-001
+      - REL-002
+    validation_rules:
+      - rule: No_orphans
+        description: All RegionKey values in Sales must exist in Region table.
+      - rule: Unique_keys
+        description: RegionKey must be unique in Region table.
+
+# =====================================================================
+# Relationship Quality Standards
+# =====================================================================
+quality_standards:
+  - standard: Naming convention
+    description: Relationship names must follow the format 'FromTable to ToTable'
+  
+  - standard: Cardinality definition
+    description: All relationships must clearly define cardinality (OneToOne, OneToMany, ManyToOne, ManyToMany)
+  
+  - standard: Active relationships
+    description: By default, relationships should be active unless specifically deactivated
+  
+  - standard: Business description
+    description: Each relationship must have a clear business description explaining its purpose
+  
+  - standard: Usage guidance
+    description: Each relationship must include guidance on when and how to use it
+  
+  - standard: Validation rules
+    description: Each relationship must define at least one validation rule (e.g., No orphans, Unique keys)
+
+# =====================================================================
+# Relationship Security Guidelines
+# =====================================================================
+security_guidelines:
+  Standard:
+    description: Available to all users with standard access
+    applies_to:
+      - REL-001
+      - REL-003
+  
+  Restricted:
+    description: Limited to authorized users only (requires special permissions)
+    applies_to:
+      - REL-002
+  
+  Confidential:
+    description: Highly restricted access (requires executive approval)
+    applies_to: []
+
+# =====================================================================
+# Data Lineage References
+# =====================================================================
+data_lineage:
+  - relationship: REL-001
+    source_system: ERP
+    source_table: SalesTransactions
+    transformation: ProductKey mapping to Product dimension
+    etl_job: ETL_Sales_Product_Load
+    update_frequency: Daily
+  
+  - relationship: REL-002
+    source_system: CRM
+    source_table: CustomerTransactions
+    transformation: CustomerKey mapping to Customer dimension
+    etl_job: ETL_Sales_Customer_Load
+    update_frequency: Daily
+  
+  - relationship: REL-003
+    source_system: Data Warehouse
+    source_table: SalesTransactions
+    transformation: DateKey mapping to Date dimension
+    etl_job: ETL_Sales_Date_Load
+    update_frequency: Daily
+
+# =====================================================================
+# Performance Considerations
+# =====================================================================
+performance_guidelines:
+  - relationship: REL-001
+    index_recommended: true
+    index_name: idx_sales_productkey
+    column: ProductKey
+  
+  - relationship: REL-002
+    index_recommended: true
+    index_name: idx_sales_customerkey
+    column: CustomerKey
+  
+  - relationship: REL-003
+    index_recommended: true
+    index_name: idx_sales_datekey
+    column: DateKey
+
+# =====================================================================
+# Change Log
+# =====================================================================
+change_log:
+  - date: 2026-07-30
+    version: 1.0.0
+    changes: |
+      - Initial version of curated relationships
+      - Added 3 core relationships (Sales → Product, Customer, Date)
+      - Added 1 optional relationship (Sales → Region) - currently inactive
+      - Established quality standards and validation rules
+      - Defined security guidelines and data lineage
+    author: Data Governance Team
+
+# =====================================================================
+# Relationship Statistics
+# =====================================================================
+relationship_statistics:
+  total_relationships: 4
+  active_relationships: 3
+  inactive_relationships: 1
+  by_cardinality:
+    ManyToOne: 4
+    OneToOne: 0
+    OneToMany: 0
+    ManyToMany: 0
+  certified_relationships: 3
+  last_validated: 2026-07-30
+  next_review: 2026-08-30
