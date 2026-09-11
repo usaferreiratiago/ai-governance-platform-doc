@@ -1,0 +1,133 @@
+version: 1.0.0
+domain: Retail & E-commerce
+owner: Retail Analytics
+approval_required: true
+last_reviewed: 2026-07-30
+
+terms:
+  - id: KPI-001
+    business_term: Net Revenue
+    category: Revenue
+    description: Revenue after discounts, returns, and commercial allowances.
+    synonyms:
+      - revenue
+      - sales
+      - turnover
+      - net sales
+      - sales amount
+    related_tables:
+      - Sales
+      - Date
+    related_measures:
+      - Net Revenue
+    certified: true
+    approved_by: Retail Analytics
+
+  - id: KPI-002
+    business_term: Gross Margin %
+    category: Profitability
+    description: Gross profit divided by net revenue, expressed as a percentage.
+    synonyms:
+      - gross margin
+      - margin
+      - profitability
+      - margin percentage
+    related_tables:
+      - Sales
+      - Product
+      - Date
+    related_measures:
+      - Gross Margin %
+    certified: true
+    approved_by: Retail Analytics
+
+  - id: KPI-003
+    business_term: Average Unit Price
+    category: Pricing
+    description: Average selling price per unit sold.
+    synonyms:
+      - unit price
+      - average price
+      - average receipt
+      - average ticket
+    related_tables:
+      - Sales
+      - Date
+    related_measures:
+      - Average Unit Price
+    certified: true
+    approved_by: Retail Analytics
+
+  - id: KPI-004
+    business_term: Inventory Value
+    category: Inventory
+    description: Monetary value of inventory available in stock.
+    synonyms:
+      - inventory
+      - stock value
+      - inventory valuation
+      - stock
+    related_tables:
+      - Product
+      - Date
+    related_measures:
+      - Inventory Value
+    certified: true
+    approved_by: Supply Chain Analytics
+
+  - id: KPI-005
+    business_term: Return Rate
+    category: Returns
+    description: Percentage of sold units that were returned by customers.
+    synonyms:
+      - returns
+      - refund rate
+      - return percentage
+    related_tables:
+      - Sales
+      - Date
+    related_measures:
+      - Return Rate
+    certified: true
+    approved_by: Retail Analytics
+
+  - id: DIM-001
+    business_term: Product
+    category: Dimension
+    description: Product sold through retail or e-commerce channels.
+    synonyms:
+      - item
+      - sku
+      - article
+      - product item
+    related_tables:
+      - Product
+    certified: true
+    approved_by: Product Analytics
+
+  - id: DIM-002
+    business_term: Customer
+    category: Dimension
+    description: Customer entity used for segmentation and analytics.
+    synonyms:
+      - consumer
+      - client
+      - shopper
+    related_tables:
+      - Customer
+    certified: true
+    approved_by: CRM Analytics
+
+  - id: DIM-003
+    business_term: Calendar Date
+    category: Dimension
+    description: Corporate calendar date used for time intelligence.
+    synonyms:
+      - date
+      - day
+      - calendar
+      - reporting date
+    related_tables:
+      - Date
+    certified: true
+    approved_by: BI Platform

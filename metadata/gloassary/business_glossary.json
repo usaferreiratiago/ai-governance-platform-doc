@@ -1,0 +1,21 @@
+{
+  "version": "1.0.0",
+  "domain": "Retail & E-commerce",
+  "terms": [
+    {
+      "business_term": "Net Revenue",
+      "synonyms": ["revenue", "sales", "turnover"],
+      "related_measures": ["Net Revenue"]
+    },
+    {
+      "business_term": "Gross Margin %",
+      "synonyms": ["gross margin", "margin", "profitability"],
+      "related_measures": ["Gross Margin %"]
+    },
+    {
+      "business_term": "Average Unit Price",
+      "synonyms": ["unit price", "average price"],
+      "related_measures": ["Average Unit Price"]
+    }
+  ]
+}
