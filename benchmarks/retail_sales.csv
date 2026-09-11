@@ -1,0 +1,31 @@
+benchmark_id,domain,question,expected_measure,expected_dimensions,mandatory_filters,expected_behavior,expected_keywords,ground_truth_value,tolerance,owner,status
+RET-001,retail,What was retail net revenue in Q2 2026,Net Revenue,Date|Channel,Q2 2026,answer,retail net revenue|Q2 2026,7013421,0.01,Retail Analytics,approved
+RET-002,retail,What was retail revenue in June 2026,Net Revenue,Date|Channel,June 2026,answer,retail revenue|June 2026,2341800,0.01,Retail Analytics,approved
+RET-003,retail,Show retail revenue by month for Q2 2026,Net Revenue,Date|Channel,Q2 2026,answer,retail revenue by month|Q2 2026,7013421,0.01,Retail Analytics,approved
+RET-004,retail,What was retail gross margin in Q2 2026,Gross Margin %,Date|Channel,Q2 2026,answer,retail gross margin|Q2 2026,0.336,0.001,Retail Analytics,approved
+RET-005,retail,What was retail average unit price in Q2 2026,Average Unit Price,Date|Channel,Q2 2026,answer,retail average unit price|Q2 2026,94.12,0.01,Retail Analytics,approved
+RET-006,retail,How many units were sold in retail stores in Q2 2026,Units Sold,Date|Channel,Q2 2026,answer,units sold retail|Q2 2026,74520,1,Retail Analytics,approved
+RET-007,retail,How many retail transactions occurred in Q2 2026,Transactions,Date|Channel,Q2 2026,answer,retail transactions|Q2 2026,82640,1,Retail Analytics,approved
+RET-008,retail,What was retail average basket size in Q2 2026,Average Basket Size,Date|Channel,Q2 2026,answer,retail basket size|Q2 2026,2.61,0.01,Retail Analytics,approved
+RET-009,retail,What was retail average transaction value in Q2 2026,Average Transaction Value,Date|Channel,Q2 2026,answer,average transaction value retail|Q2 2026,84.88,0.01,Retail Analytics,approved
+RET-010,retail,What was retail return rate in Q2 2026,Return Rate,Date|Channel,Q2 2026,answer,retail return rate|Q2 2026,0.022,0.001,Retail Analytics,approved
+RET-011,retail,What was revenue in Milan stores in Q2 2026,Net Revenue,Date|Store City,Q2 2026,answer,Milan stores revenue|Q2 2026,1453200,0.01,Retail Analytics,approved
+RET-012,retail,What was revenue in Rome stores in Q2 2026,Net Revenue,Date|Store City,Q2 2026,answer,Rome stores revenue|Q2 2026,982400,0.01,Retail Analytics,approved
+RET-013,retail,What was revenue in Paris stores in Q2 2026,Net Revenue,Date|Store City,Q2 2026,answer,Paris stores revenue|Q2 2026,1287600,0.01,Retail Analytics,approved
+RET-014,retail,What was revenue in New York stores in Q2 2026,Net Revenue,Date|Store City,Q2 2026,answer,New York stores revenue|Q2 2026,1568400,0.01,Retail Analytics,approved
+RET-015,retail,What was revenue in London stores in Q2 2026,Net Revenue,Date|Store City,Q2 2026,answer,London stores revenue|Q2 2026,1123400,0.01,Retail Analytics,approved
+RET-016,retail,Which retail store generated the highest revenue in Q2 2026,Net Revenue,Date|Store,Q2 2026,answer,highest retail store revenue|Q2 2026,New York Fifth Avenue,exact,Retail Operations,approved
+RET-017,retail,Which retail store generated the lowest revenue in Q2 2026,Net Revenue,Date|Store,Q2 2026,answer,lowest retail store revenue|Q2 2026,Rome Via Condotti,exact,Retail Operations,approved
+RET-018,retail,Show the top 5 retail stores by revenue in Q2 2026,Net Revenue,Date|Store,Q2 2026,answer,top 5 retail stores revenue|Q2 2026,New York Fifth Avenue,exact,Retail Operations,approved
+RET-019,retail,What was revenue for the cashmere category in retail stores in Q2 2026,Net Revenue,Date|Channel|Product Category,Q2 2026,answer,cashmere retail revenue|Q2 2026,2987400,0.01,Merchandising,approved
+RET-020,retail,What was revenue for ready-to-wear in retail stores in Q2 2026,Net Revenue,Date|Channel|Product Category,Q2 2026,answer,ready-to-wear retail revenue|Q2 2026,3258100,0.01,Merchandising,approved
+RET-021,retail,What was revenue for accessories in retail stores in Q2 2026,Net Revenue,Date|Channel|Product Category,Q2 2026,answer,accessories retail revenue|Q2 2026,768921,0.01,Merchandising,approved
+RET-022,retail,Which retail product category generated the highest revenue in Q2 2026,Net Revenue,Date|Channel|Product Category,Q2 2026,answer,highest retail category revenue|Q2 2026,Ready-to-Wear,exact,Merchandising,approved
+RET-023,retail,Which retail product category generated the lowest revenue in Q2 2026,Net Revenue,Date|Channel|Product Category,Q2 2026,answer,lowest retail category revenue|Q2 2026,Accessories,exact,Merchandising,approved
+RET-024,retail,What was revenue growth for retail stores versus Q1 2026,Revenue Growth %,Date|Channel,Q2 2026,answer,retail revenue growth|Q1 2026|Q2 2026,0.061,0.001,Retail Analytics,approved
+RET-025,retail,What was retail gross margin growth versus Q1 2026,Gross Margin Growth %,Date|Channel,Q2 2026,answer,retail gross margin growth|Q1 2026|Q2 2026,0.018,0.001,Retail Analytics,approved
+RET-026,retail,What was revenue for menswear stores in Q2 2026,Net Revenue,Date|Store Format,Q2 2026,answer,menswear store revenue|Q2 2026,2418600,0.01,Retail Analytics,approved
+RET-027,retail,What was revenue for womenswear stores in Q2 2026,Net Revenue,Date|Store Format,Q2 2026,answer,womenswear store revenue|Q2 2026,3185400,0.01,Retail Analytics,approved
+RET-028,retail,What was revenue for flagship stores in Q2 2026,Net Revenue,Date|Store Format,Q2 2026,answer,flagship store revenue|Q2 2026,4693200,0.01,Retail Operations,approved
+RET-029,retail,What was revenue for outlet stores in Q2 2026,Net Revenue,Date|Store Format,Q2 2026,answer,outlet store revenue|Q2 2026,582400,0.01,Retail Operations,approved
+RET-030,retail,What was the share of revenue from flagship stores in Q2 2026,Revenue Share %,Date|Store Format,Q2 2026,answer,flagship revenue share|Q2 2026,0.669,0.001,Retail Operations,approved

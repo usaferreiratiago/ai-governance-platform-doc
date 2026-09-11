@@ -1,0 +1,31 @@
+benchmark_id,domain,question,expected_measure,expected_dimensions,mandatory_filters,expected_behavior,expected_keywords,ground_truth_value,tolerance,owner,status
+ECO-001,ecommerce,What was net revenue in Q2 2026,Net Revenue,Date,Q2 2026,answer,Net Revenue|Q2 2026,12435221,0.01,Retail Analytics,approved
+ECO-002,ecommerce,What was revenue in June 2026,Net Revenue,Date,June 2026,answer,revenue|June 2026,4128400,0.01,Retail Analytics,approved
+ECO-003,ecommerce,Show revenue by month for Q2 2026,Net Revenue,Date,Q2 2026,answer,revenue by month|Q2 2026,12435221,0.01,Retail Analytics,approved
+ECO-004,ecommerce,What was gross margin in Q2 2026,Gross Margin %,Date,Q2 2026,answer,gross margin|Q2 2026,0.314,0.001,Retail Analytics,approved
+ECO-005,ecommerce,What was average unit price in Q2 2026,Average Unit Price,Date,Q2 2026,answer,average unit price|Q2 2026,89.34,0.01,Retail Analytics,approved
+ECO-006,ecommerce,What was return rate in Q2 2026,Return Rate,Date,Q2 2026,answer,return rate|Q2 2026,0.027,0.001,Retail Analytics,approved
+ECO-007,ecommerce,How many orders were placed in Q2 2026,Orders,Date,Q2 2026,answer,orders|Q2 2026,148250,1,E-commerce Analytics,approved
+ECO-008,ecommerce,How many units were sold in Q2 2026,Units Sold,Date,Q2 2026,answer,units sold|Q2 2026,139200,1,Retail Analytics,approved
+ECO-009,ecommerce,What was average order value in Q2 2026,Average Order Value,Date,Q2 2026,answer,average order value|Q2 2026,83.88,0.01,E-commerce Analytics,approved
+ECO-010,ecommerce,What was inventory value at the end of Q2 2026,Inventory Value,Date,Q2 2026,answer,inventory value|Q2 2026,5864200,0.01,Supply Chain Analytics,approved
+ECO-011,ecommerce,What was revenue in Italy in Q2 2026,Net Revenue,Date|Country,Q2 2026,answer,revenue|Italy|Q2 2026,3215400,0.01,Retail Analytics,approved
+ECO-012,ecommerce,What was revenue in France in Q2 2026,Net Revenue,Date|Country,Q2 2026,answer,revenue|France|Q2 2026,2874300,0.01,Retail Analytics,approved
+ECO-013,ecommerce,What was revenue in the United States in Q2 2026,Net Revenue,Date|Country,Q2 2026,answer,revenue|United States|Q2 2026,3521100,0.01,Retail Analytics,approved
+ECO-014,ecommerce,What was revenue in the online channel in Q2 2026,Net Revenue,Date|Channel,Q2 2026,answer,revenue|online|Q2 2026,5421800,0.01,E-commerce Analytics,approved
+ECO-015,ecommerce,What was revenue in retail stores in Q2 2026,Net Revenue,Date|Channel,Q2 2026,answer,revenue|retail|Q2 2026,7013421,0.01,Retail Analytics,approved
+ECO-016,ecommerce,Which product category generated the highest revenue in Q2 2026,Net Revenue,Date|Product Category,Q2 2026,answer,highest revenue|category|Q2 2026,Ready-to-Wear,exact,Merchandising,approved
+ECO-017,ecommerce,Which product category generated the lowest revenue in Q2 2026,Net Revenue,Date|Product Category,Q2 2026,answer,lowest revenue|category|Q2 2026,Accessories,exact,Merchandising,approved
+ECO-018,ecommerce,Show the top 5 products by revenue in Q2 2026,Net Revenue,Date|Product,Q2 2026,answer,top 5 products|revenue|Q2 2026,Cashmere Sweater A,exact,Merchandising,approved
+ECO-019,ecommerce,Show the top 5 customers by revenue in Q2 2026,Net Revenue,Date|Customer,Q2 2026,answer,top 5 customers|revenue|Q2 2026,Customer C1023,exact,CRM Analytics,approved
+ECO-020,ecommerce,How many active customers purchased in Q2 2026,Active Customers,Date,Q2 2026,answer,active customers|Q2 2026,52340,1,CRM Analytics,approved
+ECO-021,ecommerce,What was repeat customer revenue in Q2 2026,Repeat Customer Revenue,Date,Q2 2026,answer,repeat customer revenue|Q2 2026,4872300,0.01,CRM Analytics,approved
+ECO-022,ecommerce,What percentage of revenue came from repeat customers in Q2 2026,Repeat Customer Revenue %,Date,Q2 2026,answer,repeat customers percentage|Q2 2026,0.392,0.001,CRM Analytics,approved
+ECO-023,ecommerce,What was the average basket size in Q2 2026,Average Basket Size,Date,Q2 2026,answer,average basket size|Q2 2026,2.48,0.01,E-commerce Analytics,approved
+ECO-024,ecommerce,What was revenue growth versus Q1 2026,Revenue Growth %,Date,Q2 2026,answer,revenue growth|Q1 2026|Q2 2026,0.084,0.001,Retail Analytics,approved
+ECO-025,ecommerce,What was gross margin growth versus Q1 2026,Gross Margin Growth %,Date,Q2 2026,answer,gross margin growth|Q1 2026|Q2 2026,0.021,0.001,Retail Analytics,approved
+ECO-026,ecommerce,What was the return rate for online orders in Q2 2026,Return Rate,Date|Channel,Q2 2026,answer,return rate|online|Q2 2026,0.034,0.001,E-commerce Analytics,approved
+ECO-027,ecommerce,What was the return rate for retail orders in Q2 2026,Return Rate,Date|Channel,Q2 2026,answer,return rate|retail|Q2 2026,0.022,0.001,Retail Analytics,approved
+ECO-028,ecommerce,What was revenue for the cashmere category in Q2 2026,Net Revenue,Date|Product Category,Q2 2026,answer,revenue|cashmere|Q2 2026,4635200,0.01,Merchandising,approved
+ECO-029,ecommerce,What was revenue for the accessories category in Q2 2026,Net Revenue,Date|Product Category,Q2 2026,answer,revenue|accessories|Q2 2026,1189400,0.01,Merchandising,approved
+ECO-030,ecommerce,What was revenue for ready-to-wear in Q2 2026,Net Revenue,Date|Product Category,Q2 2026,answer,revenue|ready-to-wear|Q2 2026,5827600,0.01,Merchandising,approved
