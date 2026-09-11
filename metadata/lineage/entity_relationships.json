@@ -1,0 +1,11 @@
+{
+  "Sales": [
+    {
+      "target_table": "Calendar",
+      "source_column": "DateKey",
+      "target_column": "Date",
+      "cardinality": "Unknown",
+      "relationship_type": ""
+    }
+  ]
+}
