@@ -1,0 +1,111 @@
+domain: Retail & E-commerce
+terms:
+- business_term: Net Revenue
+  category: Financial
+  description: Revenue after discounts, returns, and allowances
+  field_name: net_revenue
+  is_certified: true
+  synonyms:
+  - revenue
+  - sales
+  - turnover
+  - net sales
+  table_name: sales
+- business_term: Gross Margin %
+  category: Financial
+  description: Gross profit divided by net revenue, expressed as a percentage
+  field_name: gross_margin_percent
+  is_certified: true
+  synonyms:
+  - margin
+  - gross margin
+  - profitability
+  - gross profit %
+  table_name: sales
+- business_term: Average Unit Price
+  category: Commercial
+  description: Average selling price per unit sold
+  field_name: avg_unit_price
+  is_certified: true
+  synonyms:
+  - unit price
+  - average price
+  - average receipt
+  - avg price per unit
+  table_name: sales
+- business_term: Inventory Value
+  category: Inventory
+  description: Monetary value of inventory on hand, calculated at standard cost
+  field_name: inventory_value
+  is_certified: true
+  synonyms:
+  - stock value
+  - inventory
+  - stock
+  - inventory amount
+  table_name: product
+- business_term: Return Rate
+  category: Operational
+  description: Percentage of sold units that were returned by customers
+  field_name: return_rate
+  is_certified: true
+  synonyms:
+  - returns
+  - refund rate
+  - return percentage
+  - return ratio
+  table_name: sales
+- business_term: Sales Total
+  category: Commercial
+  description: Total gross sales revenue before discounts and returns
+  field_name: sales_total
+  is_certified: true
+  synonyms:
+  - gross sales
+  - total sales
+  - gross revenue
+  table_name: sales
+- business_term: Customer Count
+  category: CRM
+  description: Total number of active customers
+  field_name: customer_count
+  is_certified: true
+  synonyms:
+  - customers
+  - active customers
+  - customer base
+  - client count
+  table_name: customers
+- business_term: Order Count
+  category: Operational
+  description: Total number of orders placed
+  field_name: order_count
+  is_certified: true
+  synonyms:
+  - orders
+  - order volume
+  - order total
+  table_name: orders
+- business_term: Average Order Value
+  category: Commercial
+  description: Average value of orders placed
+  field_name: avg_order_value
+  is_certified: true
+  synonyms:
+  - AOV
+  - order value
+  - average basket
+  - avg order amount
+  table_name: orders
+- business_term: Customer Lifetime Value
+  category: CRM
+  description: Total predicted revenue from a customer over their lifetime
+  field_name: lifetime_value
+  is_certified: false
+  synonyms:
+  - CLV
+  - lifetime value
+  - customer value
+  - LTV
+  table_name: customers
+version: 1.0.0
