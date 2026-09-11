@@ -1,0 +1,10 @@
+.venv
+__pycache__
+*.pyc
+.git
+*.db
+*.sqlite
+evaluation/raw_responses
+semantic-model/backups
+.streamlit
+.pytest_cache

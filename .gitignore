@@ -1,0 +1,11 @@
+.venv/
+sha256*
+__pycache__/
+*.pyc
+.env
+.env.example
+.streamlit/secrets.toml
+governance.db
+db/*.db
+db/*.db-shm
+db/*.db-wal.env
