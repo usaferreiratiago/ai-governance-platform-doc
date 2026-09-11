@@ -1,0 +1,50 @@
+[
+  {
+    "measure": "Net Revenue",
+    "table": "Sales",
+    "business_description": "Revenue excluding taxes, discounts, and returns.",
+    "business_purpose": "Use this metric to analyze actual sales performance.",
+    "recommended_user_intents": [
+      "revenue",
+      "sales",
+      "turnover",
+      "net sales"
+    ],
+    "enterprise_synonyms": [
+      "revenue",
+      "sales",
+      "turnover"
+    ],
+    "example_questions": [
+      "What was net revenue in Q2 2026?",
+      "Show revenue by region.",
+      "Compare revenue year over year."
+    ],
+    "calculation_type": "additive",
+    "confidence": 0.98
+  },
+  {
+    "measure": "Average Selling Price",
+    "table": "Sales",
+    "business_description": "Average selling price per unit calculated from total revenue divided by total quantity sold.",
+    "business_purpose": "Use this metric when analyzing pricing behavior or average customer ticket.",
+    "recommended_user_intents": [
+      "average price",
+      "average ticket",
+      "average receipt",
+      "item value"
+    ],
+    "enterprise_synonyms": [
+      "average ticket",
+      "average receipt",
+      "average item value"
+    ],
+    "example_questions": [
+      "What is the average selling price this month?",
+      "Show average ticket by region.",
+      "Which category has the highest average selling price?"
+    ],
+    "calculation_type": "ratio",
+    "confidence": 0.95
+  }
+]
