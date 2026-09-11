@@ -1,0 +1,1512 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 1121.6427568399474,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 1786.5664861156702,
+            "y": 532.25223857983383
+          },
+          "nodeIndex": "AREA_MANAGER",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 21,
+          "expandedHeight": 128
+        },
+        {
+          "location": {
+            "x": 752.34271356783916,
+            "y": 1004.0788944723616
+          },
+          "nodeIndex": "ARTICOLI",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 22,
+          "expandedHeight": 300
+        },
+        {
+          "location": {
+            "x": 1133.8951676304471,
+            "y": 331.234151494491
+          },
+          "nodeIndex": "ARTICOLI_COLORE",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 23,
+          "expandedHeight": 300
+        },
+        {
+          "location": {
+            "x": 356.94497487437189,
+            "y": 1382.2525354509978
+          },
+          "nodeIndex": "BUSINESS",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 41,
+          "expandedHeight": 200
+        },
+        {
+          "location": {
+            "x": 334.5849246231154,
+            "y": 700.69631490787265
+          },
+          "nodeIndex": "CLASSE_PRODOTTO",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 24,
+          "expandedHeight": 224
+        },
+        {
+          "location": {
+            "x": 491.61072026800662,
+            "y": 509.58023450586256
+          },
+          "nodeIndex": "EVENTI_SPONSOR",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 40,
+          "expandedHeight": 128
+        },
+        {
+          "location": {
+            "x": 347.63316582914575,
+            "y": 1044.0541038525962
+          },
+          "nodeIndex": "FAMIGLIA_COMMERCIALE",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 25,
+          "expandedHeight": 128
+        },
+        {
+          "location": {
+            "x": 2843.6770402379443,
+            "y": 759.68162878349187
+          },
+          "nodeIndex": "GERARCHIA_AREA",
+          "nodeLineageTag": "922d9c64-bba0-4ca2-b4e4-99578c8365bf",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 51,
+          "expandedHeight": 296
+        },
+        {
+          "location": {
+            "x": 1421.4452261306533,
+            "y": 667.09346733668337
+          },
+          "nodeIndex": "LOGICA_ACQUISTO",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 26,
+          "expandedHeight": 128
+        },
+        {
+          "location": {
+            "x": 1474.7793969849245,
+            "y": 360.99932998324959
+          },
+          "nodeIndex": "LOGICA_VENDITA",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 27,
+          "expandedHeight": 128
+        },
+        {
+          "location": {
+            "x": 500.99413735343364,
+            "y": 259.0700167504188
+          },
+          "nodeIndex": "MARKETING_TYPE",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 28,
+          "expandedHeight": 128
+        },
+        {
+          "location": {
+            "x": 2123.9276958494311,
+            "y": 536.64115384291642
+          },
+          "nodeIndex": "NAZIONI",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 29,
+          "expandedHeight": 187.66666666666674
+        },
+        {
+          "location": {
+            "x": 2419.3394177310179,
+            "y": 886.02653311488075
+          },
+          "nodeIndex": "NEGOZI",
+          "nodeLineageTag": "2e2027f6-d69a-4c49-a92b-47fc4f55e93e",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 47,
+          "expandedHeight": 300
+        },
+        {
+          "location": {
+            "x": 2665.4309054171822,
+            "y": 505.78200852748591
+          },
+          "nodeIndex": "OPERATORI_NEGOZI",
+          "size": {
+            "height": 72,
+            "width": 234
+          },
+          "zIndex": 30,
+          "expandedHeight": 200
+        },
+        {
+          "location": {
+            "x": 336.86247906197656,
+            "y": 853.21524288107207
+          },
+          "nodeIndex": "SALES_CATEGORY",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 31,
+          "expandedHeight": 152
+        },
+        {
+          "location": {
+            "x": 1096.8824002760871,
+            "y": 974.09269210373475
+          },
+          "nodeIndex": "SCONTRINI",
+          "size": {
+            "height": 344,
+            "width": 234
+          },
+          "zIndex": 50,
+          "expandedHeight": 300
+        },
+        {
+          "location": {
+            "x": 348.1281407035176,
+            "y": 1226.2636515912898
+          },
+          "nodeIndex": "SOTTO_CLASSE_PRODOTTO",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 32,
+          "expandedHeight": 152
+        },
+        {
+          "location": {
+            "x": 504.51825795644891,
+            "y": 386.60887772194303
+          },
+          "nodeIndex": "STAGIONALITA",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 33,
+          "expandedHeight": 176
+        },
+        {
+          "location": {
+            "x": 1789.1310602768285,
+            "y": 1450.7812295674244
+          },
+          "nodeIndex": "TRAFFICO_CLIE_NEG",
+          "nodeLineageTag": "c874f298-24db-4fef-b2be-ffdd7925e5bf",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 34,
+          "expandedHeight": 152
+        },
+        {
+          "location": {
+            "x": 2397.7523983554133,
+            "y": 359.74455896547283
+          },
+          "nodeIndex": "_measure",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 35
+        },
+        {
+          "location": {
+            "x": 1776.4338531998433,
+            "y": 1642.2068500396126
+          },
+          "nodeIndex": "DIPENDENTI_NEGOZIO_STR",
+          "nodeLineageTag": "3a502b0d-3002-486f-9eb6-1c429bb008e4",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 42,
+          "expandedHeight": 224
+        },
+        {
+          "location": {
+            "x": 1141.6870403377068,
+            "y": 1479.7624862245573
+          },
+          "nodeIndex": "CUSTOMER",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 36,
+          "expandedHeight": 488.33333333333326
+        },
+        {
+          "location": {
+            "x": 1595.9373964305271,
+            "y": 928.67597657037311
+          },
+          "nodeIndex": "CALENDARIO",
+          "nodeLineageTag": "ed9a727c-e7bc-434f-bf80-a9204a249c49",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 48,
+          "expandedHeight": 300
+        },
+        {
+          "location": {
+            "x": 787.06955632433642,
+            "y": 1605.4971297021125
+          },
+          "nodeIndex": "ACTIVE_CUSTOMER_MONTH",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 37,
+          "expandedHeight": 189.04522613065342
+        },
+        {
+          "location": {
+            "x": 2394.6826557027562,
+            "y": 472.50799451804482
+          },
+          "nodeIndex": "SCONTRINI_TEMP",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 38,
+          "expandedHeight": 160
+        },
+        {
+          "location": {
+            "x": 2668.5101263895235,
+            "y": 372.9572102938937
+          },
+          "nodeIndex": "SCONTRINI_SALES_ASS_TEMP",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 44,
+          "expandedHeight": 200
+        },
+        {
+          "location": {
+            "x": 2450.2622511960117,
+            "y": 1567.4784172935381
+          },
+          "nodeIndex": "RLS_STORE_OPS_TABLE",
+          "nodeLineageTag": "3f880bbe-2a63-4e47-9035-b3dcd978fbab",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 18,
+          "expandedHeight": 200
+        },
+        {
+          "location": {
+            "x": 2455.8333055562566,
+            "y": 1320.1589210710169
+          },
+          "nodeIndex": "RLS_STORE_OPS_TABLE (Temp)",
+          "nodeLineageTag": "f0075c90-fbb4-44f0-bef3-a2557be733b2",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 52,
+          "expandedHeight": 124
+        },
+        {
+          "location": {
+            "x": 749.75149954125743,
+            "y": 1254.970749896888
+          },
+          "nodeIndex": "Scontrini e Category",
+          "size": {
+            "height": 131.63595195407538,
+            "width": 234
+          },
+          "zIndex": 19
+        },
+        {
+          "location": {
+            "x": 2940.0507696890904,
+            "y": 436.80244011285242
+          },
+          "nodeIndex": "Parameter",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 15
+        },
+        {
+          "location": {
+            "x": 2395.8730815796662,
+            "y": 70.0604504936739
+          },
+          "nodeIndex": "KPI Selector",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 16
+        },
+        {
+          "location": {
+            "x": 2395.87742834257,
+            "y": 211.62057526095441
+          },
+          "nodeIndex": "Period Selector",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 46
+        },
+        {
+          "location": {
+            "x": 1803.1548806022538,
+            "y": 221.66874462025362
+          },
+          "nodeIndex": "SCONTRINI_HIGHVALUE",
+          "nodeLineageTag": "8143fa51-b0ab-4479-8351-7b61a20c3815",
+          "size": {
+            "height": 200,
+            "width": 255.51898734177234
+          },
+          "zIndex": 17
+        },
+        {
+          "location": {
+            "x": 1058.8041500646793,
+            "y": 660.22117532410448
+          },
+          "nodeIndex": "SALES EXCHANGE CURR SAME DATE",
+          "nodeLineageTag": "845f5f2b-e9dc-4a9d-9981-99de6039d672",
+          "size": {
+            "height": 128,
+            "width": 318
+          },
+          "zIndex": 53,
+          "expandedHeight": 300
+        },
+        {
+          "location": {
+            "x": 679.52444303698928,
+            "y": 643.7917191867075
+          },
+          "nodeIndex": "SALES EXCHANGE CURRENT",
+          "nodeLineageTag": "1a3ba4d9-bbce-4194-8d47-90f9dc51d45b",
+          "size": {
+            "height": 300,
+            "width": 272
+          },
+          "zIndex": 10
+        },
+        {
+          "location": {
+            "x": 2666.9,
+            "y": 232
+          },
+          "nodeIndex": "Currency Selector",
+          "size": {
+            "height": 124,
+            "width": 234
+          },
+          "zIndex": 11
+        },
+        {
+          "location": {
+            "x": 2945.0999267578127,
+            "y": 234
+          },
+          "nodeIndex": "Drill",
+          "size": {
+            "height": 72,
+            "width": 234
+          },
+          "zIndex": 12,
+          "expandedHeight": 152
+        },
+        {
+          "location": {
+            "x": 2667.7,
+            "y": 68
+          },
+          "nodeIndex": "Selettore Temporale",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 13
+        },
+        {
+          "location": {
+            "x": 2942.3000732421879,
+            "y": 68
+          },
+          "nodeIndex": "Category or Family",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 14
+        },
+        {
+          "location": {
+            "x": 2083.0680656900822,
+            "y": 1094.7650595463244
+          },
+          "nodeIndex": "TARGET",
+          "nodeLineageTag": "5c6b48bd-c30d-4678-a622-3883418f917d",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 45,
+          "expandedHeight": 224
+        },
+        {
+          "location": {
+            "x": 2093.5399034736292,
+            "y": 1346.6810975307469
+          },
+          "nodeIndex": "TARGET EXCHANGE",
+          "nodeLineageTag": "8f75f183-fb56-4880-b6d9-53d68855fefc",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 9,
+          "expandedHeight": 296
+        },
+        {
+          "location": {
+            "x": 1526.1000732421876,
+            "y": 496
+          },
+          "nodeIndex": "Filter Markdown-FullPrice",
+          "nodeLineageTag": "a72a7202-c439-4923-b57f-912ef38719c0",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 8
+        },
+        {
+          "location": {
+            "x": 2424.5,
+            "y": 612
+          },
+          "nodeIndex": "Xaxis",
+          "nodeLineageTag": "857c7d0f-ef4e-4396-95f3-64c5f196b745",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 7
+        },
+        {
+          "location": {
+            "x": 3326.7,
+            "y": 72
+          },
+          "nodeIndex": "GENERE PRODOTTO",
+          "nodeLineageTag": "8fb8ba32-d046-4a99-8ad1-b51b89f91704",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 3708.2,
+            "y": 60
+          },
+          "nodeIndex": "MACRO COLLECTION",
+          "nodeLineageTag": "96becc69-6ef8-4139-a699-c5fec959cb44",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 4089.8,
+            "y": 0
+          },
+          "nodeIndex": "OFFER",
+          "nodeLineageTag": "166c4e85-3ca6-4651-939f-3cfea76145ca",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 4471.4,
+            "y": 72
+          },
+          "nodeIndex": "STAGE OF LIFE",
+          "nodeLineageTag": "2ea44f5d-ac80-4e1a-9c2d-244efa67217b",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 6
+        },
+        {
+          "location": {
+            "x": 2851.6666666666665,
+            "y": 1213.3333333333333
+          },
+          "nodeIndex": "RLS_STORE_MAN_TABLE (Temp)",
+          "nodeLineageTag": "720b35ae-7c66-48b5-be92-d30910de523c",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 49
+        },
+        {
+          "location": {
+            "x": 2867.5682737870093,
+            "y": 1458.0771837783548
+          },
+          "nodeIndex": "RLS_STORE_MAN_TABLE",
+          "nodeLineageTag": "d28c6b34-5267-4741-a18d-24a88c986a21",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 1116.08343,
+            "y": 1709.556365
+          },
+          "nodeIndex": "Scontrini e Macro Category",
+          "nodeLineageTag": "e0b40ae1-146c-4528-b536-154a6d49c30f",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 4216.9965558824852,
+            "y": 947.94839727112048
+          },
+          "nodeIndex": "Store_Selection_Table",
+          "nodeLineageTag": "fd6f08b8-571f-48b2-9b34-45fe06ef1c11",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2944.39470077661,
+            "y": 322.90604537840738
+          },
+          "nodeIndex": "LOG_ESECUZIONI_DWH",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0,
+          "expandedHeight": 165.04522613065325
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 52.007050322486933,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 1,
+      "scrollPosition": {
+        "x": 117,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 251.13199353497635,
+            "y": 197.37386935440142
+          },
+          "nodeIndex": "ARTICOLI",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0,
+          "expandedHeight": 300
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 20.046566130927257
+          },
+          "nodeIndex": "SALES_CATEGORY",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0,
+          "expandedHeight": 152
+        },
+        {
+          "location": {
+            "x": 292.05695160269937,
+            "y": 0
+          },
+          "nodeIndex": "FAMIGLIA_COMMERCIALE",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 393.33902900222955,
+            "y": 494.23015004066974
+          },
+          "nodeIndex": "BUSINESS",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0,
+          "expandedHeight": 200
+        },
+        {
+          "location": {
+            "x": 53.971524198650314,
+            "y": 550.41005001355654
+          },
+          "nodeIndex": "SOTTO_CLASSE_PRODOTTO",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0,
+          "expandedHeight": 152
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 405.72830807224187
+          },
+          "nodeIndex": "CLASSE_PRODOTTO",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0,
+          "expandedHeight": 224
+        },
+        {
+          "location": {
+            "x": 951.68676618515349,
+            "y": 196.11624683527097
+          },
+          "nodeIndex": "SCONTRINI",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0,
+          "expandedHeight": 300
+        },
+        {
+          "location": {
+            "x": 1055.5132307630886,
+            "y": 0
+          },
+          "nodeIndex": "LOGICA_ACQUISTO",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0,
+          "expandedHeight": 128
+        },
+        {
+          "location": {
+            "x": 1126.4472339956005,
+            "y": 495.60267908808783
+          },
+          "nodeIndex": "NEGOZI",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0,
+          "expandedHeight": 300
+        },
+        {
+          "location": {
+            "x": 1328.4549388534058,
+            "y": 0
+          },
+          "nodeIndex": "ARTICOLI_COLORE",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0,
+          "expandedHeight": 300
+        },
+        {
+          "location": {
+            "x": 1373.1742017608592,
+            "y": 702.23651459149175
+          },
+          "nodeIndex": "EVENTI_SPONSOR",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0,
+          "expandedHeight": 128
+        },
+        {
+          "location": {
+            "x": 1530.4626437112115,
+            "y": 231.91323228896758
+          },
+          "nodeIndex": "LOGICA_VENDITA",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0,
+          "expandedHeight": 128
+        },
+        {
+          "location": {
+            "x": 1588.7518923457862,
+            "y": 0
+          },
+          "nodeIndex": "STAGIONALITA",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0,
+          "expandedHeight": 176
+        },
+        {
+          "location": {
+            "x": 1516.2758418882233,
+            "y": 356.81875972012978
+          },
+          "nodeIndex": "MARKETING_TYPE",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 793.36582751250148,
+            "y": 0
+          },
+          "nodeIndex": "CUSTOMER",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0,
+          "expandedHeight": 300
+        },
+        {
+          "location": {
+            "x": 728.599998474121,
+            "y": 560.368508126468
+          },
+          "nodeIndex": "CALENDARIO",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0,
+          "expandedHeight": 300
+        },
+        {
+          "location": {
+            "x": 68.605359702054386,
+            "y": 772.55369805161877
+          },
+          "nodeIndex": "Scontrini e Category",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Scontrini",
+      "zoomValue": 64.849011621715988,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 2,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 828,
+            "y": 211
+          },
+          "nodeIndex": "NEGOZI",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0,
+          "expandedHeight": 300
+        },
+        {
+          "location": {
+            "x": 392,
+            "y": 399
+          },
+          "nodeIndex": "NAZIONI",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0,
+          "expandedHeight": 176
+        },
+        {
+          "location": {
+            "x": 473,
+            "y": 0
+          },
+          "nodeIndex": "GERARCHIA_AREA",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0,
+          "expandedHeight": 296
+        },
+        {
+          "location": {
+            "x": 839,
+            "y": 0
+          },
+          "nodeIndex": "AREA_MANAGER",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0,
+          "expandedHeight": 128
+        },
+        {
+          "location": {
+            "x": -12,
+            "y": 33
+          },
+          "nodeIndex": "CALENDARIO",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0,
+          "expandedHeight": 300
+        }
+      ],
+      "name": "Target",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 3,
+      "scrollPosition": {
+        "x": 61.599998474121094,
+        "y": 17.600000381469727
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 289,
+            "y": 185
+          },
+          "nodeIndex": "TRAFFICO_CLIE_NEG",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 703,
+            "y": 182
+          },
+          "nodeIndex": "NEGOZI",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0,
+          "expandedHeight": 300
+        },
+        {
+          "location": {
+            "x": 859,
+            "y": 417
+          },
+          "nodeIndex": "AREA_MANAGER",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0,
+          "expandedHeight": 128
+        },
+        {
+          "location": {
+            "x": 329,
+            "y": 422
+          },
+          "nodeIndex": "GERARCHIA_AREA",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0,
+          "expandedHeight": 296
+        },
+        {
+          "location": {
+            "x": 700,
+            "y": 0
+          },
+          "nodeIndex": "NAZIONI",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0,
+          "expandedHeight": 176
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 5
+          },
+          "nodeIndex": "CALENDARIO",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0,
+          "expandedHeight": 300
+        }
+      ],
+      "name": "Traffico",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 4,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 0,
+            "y": 120
+          },
+          "nodeIndex": "NEGOZI",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 649,
+            "y": 0
+          },
+          "nodeIndex": "RLS_STORE_OPS_TABLE",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 395,
+            "y": 318
+          },
+          "nodeIndex": "RLS_STORE_OPS_TABLE (Temp)",
+          "size": {
+            "height": 124,
+            "width": 312
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "RLS_STORE_OPS",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 5,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 0,
+            "y": 209.29649161334012
+          },
+          "nodeIndex": "NEGOZI",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 744.68341708542732,
+            "y": 435.65326633165824
+          },
+          "nodeIndex": "RLS_STORE_MAN_TABLE",
+          "nodeLineageTag": "d28c6b34-5267-4741-a18d-24a88c986a21",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 531.61809045226141,
+            "y": 57.763819095477373
+          },
+          "nodeIndex": "RLS_STORE_MAN_TABLE (Temp)",
+          "nodeLineageTag": "720b35ae-7c66-48b5-be92-d30910de523c",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "RLS_STORE_MANAGER",
+      "zoomValue": 74.755822689706989,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 6,
+      "scrollPosition": {
+        "x": 0,
+        "y": 293.60000610351563
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 515,
+            "y": 0
+          },
+          "nodeIndex": "NEGOZI",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 239,
+            "y": 444
+          },
+          "nodeIndex": "CUSTOMER",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Layout 1",
+      "zoomValue": 99.5,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 7,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 327,
+            "y": 58
+          },
+          "nodeIndex": "SCONTRINI",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 0
+          },
+          "nodeIndex": "SALES EXCHANGE CURRENT",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 592,
+            "y": 304
+          },
+          "nodeIndex": "SALES EXCHANGE CURR SAME DATE",
+          "size": {
+            "height": 300,
+            "width": 323
+          },
+          "zIndex": 3
+        }
+      ],
+      "name": "Layout 3",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 8,
+      "scrollPosition": {
+        "x": 570.4000244140625,
+        "y": 292
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 0,
+            "y": 395.5
+          },
+          "nodeIndex": "AREA_MANAGER",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 54.2,
+            "y": 0
+          },
+          "nodeIndex": "NEGOZI",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 685.8,
+            "y": 509.1
+          },
+          "nodeIndex": "CUSTOMER",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 713,
+            "y": 0
+          },
+          "nodeIndex": "SCONTRINI",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 386.9,
+            "y": 977.2
+          },
+          "nodeIndex": "DIPENDENTI_NEGOZIO_STR",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1108.4,
+            "y": 85.8
+          },
+          "nodeIndex": "ACTIVE_CUSTOMER_MONTH",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 394,
+            "y": 195.90001678466797
+          },
+          "nodeIndex": "NAZIONI",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Layout 4",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 9,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 0,
+            "y": 0
+          },
+          "nodeIndex": "NAZIONI",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 269.6
+          },
+          "nodeIndex": "AREA_MANAGER",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 492.2,
+            "y": 68.199999999999989
+          },
+          "nodeIndex": "NEGOZI",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Layout 5",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 10,
+      "scrollPosition": {
+        "x": 689,
+        "y": 75
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 730.4,
+            "y": 253.1
+          },
+          "nodeIndex": "CALENDARIO",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 839.3,
+            "y": 736.5
+          },
+          "nodeIndex": "SCONTRINI",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 720,
+            "y": 0
+          },
+          "nodeIndex": "TRAFFICO_CLIE_NEG",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 458.1,
+            "y": 120
+          },
+          "nodeIndex": "SCONTRINI_HIGHVALUE",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Layout 6",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}
